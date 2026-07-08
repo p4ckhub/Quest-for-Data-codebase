@@ -1,0 +1,23 @@
+{
+  "name": "quest-for-data-codebase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "toolchain:fetch": "ts-node scripts/fetch-toolchain.ts",
+    "toolchain:verify": "ts-node scripts/verify-toolchain.ts",
+    "accept:phase0": "ts-node scripts/accept-phase0.ts",
+    "sandbox:test": "ts-node tests/sandbox.test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
+  }
+}
