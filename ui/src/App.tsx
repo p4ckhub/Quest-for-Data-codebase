@@ -67,7 +67,14 @@ function App() {
             type="text"
             placeholder="Enter your name"
             value={player?.name || ''}
-            onChange={(e) => setPlayer({...player, name: e.target.value})}
+            onChange={(e) => {
+              const name = e.target.value;
+              if (name.length > 0 && player?.class) {
+                setPlayer({ name, class: player.class, level: 1 });
+              } else {
+                setPlayer(name ? { name, class: 'warrior', level: 1 } : null);
+              }
+            }}
           />
           <div className="class-selection">
             {['warrior', 'archer', 'mage'].map((cls) => (

@@ -11,5 +11,6 @@
     "outDir": "./dist",
     "rootDir": "./",
     "types": ["node"]
-  }
+  },
+  "exclude": ["ui", "dist", "node_modules", "**/*.config.ts"]
 }

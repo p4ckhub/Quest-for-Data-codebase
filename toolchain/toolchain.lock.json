@@ -1,8 +1,24 @@
 {
-  "version": 1,
-  "release_tag": "20260616",
-  "release_url": "https://github.com/mstorsjo/llvm-mingw/releases/download/20260616/llvm-mingw-20260616-msvcrt-x86_64.zip",
-  "sha256": "744809646fdefe24a357399788d68fb07ecc65fa0be71baa2406793ce25c9813",
-  "extracted_at": "2026-07-08T03:29:34.751Z",
-  "clang_version_output": ""
+  "version": 2,
+  "profiles": {
+    "linux-native": {
+      "type": "system",
+      "compiler": "g++",
+      "version": "13.3.0",
+      "path": "/usr/bin/g++",
+      "platform": "linux",
+      "used_for": "local lesson compiles on Linux"
+    },
+    "windows-cross": {
+      "type": "tarball",
+      "source": "https://github.com/mstorsjo/llvm-mingw/releases/download/20260616/llvm-mingw-20260616-ucrt-ubuntu-22.04-x86_64.tar.xz",
+      "extracted_dir": "llvm-mingw-20260616-ucrt-ubuntu-22.04-x86_64",
+      "sha256": null,
+      "clang_pp_path": "bin/x86_64-w64-mingw32-clang++",
+      "host_platform": "linux",
+      "target_platform": "windows",
+      "used_for": "cross-compiling to Windows PE binaries"
+    }
+  },
+  "extracted_at": ""
 }

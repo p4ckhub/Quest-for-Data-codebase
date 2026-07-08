@@ -1,0 +1,18 @@
+# Build outputs
+dist/
+ui/dist/
+
+# Toolchain archives and extracted directories (lock file stays in git)
+toolchain/*.zip
+toolchain/*.tar.*
+toolchain/llvm-mingw-*
+!toolchain/toolchain.lock.json
+
+# Node modules
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
