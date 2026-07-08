@@ -7,7 +7,7 @@
     "build": "cd ui && npm run build",
     "test": "vitest",
     "toolchain:fetch": "ts-node scripts/fetch-toolchain.ts",
-    "toolchain:verify": "node scripts/verify-toolchain.js",
+    "toolchain:verify": "ts-node scripts/verify-toolchain.ts",
     "accept:phase0": "ts-node scripts/accept-phase0.ts",
     "sandbox:test": "ts-node tests/sandbox.test.ts",
     "electron:dev": "concurrently \"cd ui && npm run dev\" \"electron app/main.ts\"",

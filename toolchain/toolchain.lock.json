@@ -4,21 +4,12 @@
     "linux-native": {
       "type": "system",
       "compiler": "g++",
-      "version": "13.3.0",
+      "version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
       "path": "/usr/bin/g++",
       "platform": "linux",
       "used_for": "local lesson compiles on Linux"
-    },
-    "windows-cross": {
-      "type": "tarball",
-      "source": "https://github.com/mstorsjo/llvm-mingw/releases/download/20260616/llvm-mingw-20260616-ucrt-ubuntu-22.04-x86_64.tar.xz",
-      "extracted_dir": "llvm-mingw-20260616-ucrt-ubuntu-22.04-x86_64",
-      "sha256": null,
-      "clang_pp_path": "bin/x86_64-w64-mingw32-clang++",
-      "host_platform": "linux",
-      "target_platform": "windows",
-      "used_for": "cross-compiling to Windows PE binaries"
     }
   },
-  "extracted_at": ""
+  "extracted_at": "",
+  "updated_at": "2026-07-08T21:59:30.125Z"
 }

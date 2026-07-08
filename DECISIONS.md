@@ -30,14 +30,14 @@ Related: PHASE0_DETAILED.md Task 0.3
 
 ---
 
-## 4. Platform amendment - Dual-profile toolchain (Linux native + Windows cross)
+## 4. Platform amendment - Single-profile toolchain (Linux native only)
 Date: 2026-07-08
-Rationale: Game must be bootable on Linux (development machine) and Windows (release target).
+Rationale: Windows support dropped from Phase 0. Game only needs to run on Linux development machine; release target TBD.
 Notes:
-- `toolchain/toolchain.lock.json` now contains two profiles:
-  - `linux-native`: Uses system g++/clang from apt for local development and Linux runtime
-  - `windows-cross`: llvm-mingw UCRT Ubuntu-hosted tarball, cross-compiles to PE32+ Windows binaries
-- Verification script actually executes clang++ --version for host-runnable profiles and exits 1 if empty
-- Smoke test: compiles+runs hello-world with linux-native; cross-compiles same file with windows-cross and verifies PE32+ output
-- toolchain.zip (Windows-hosted PE32+ archive) removed from tree; archives gitignored
+- `toolchain/toolchain.lock.json` now contains single profile `linux-native`
+- Uses system g++ (Ubuntu 13.3.0) for all local lesson compiles
+- Removed windows-cross/llvm-mingw directories and references from toolchain scripts
+- Archives (.tar.*) still gitignored; lock file stays in git
 Related: PHASE0_COMPLETION_PLAN.md Parts B.1, C.1
+
+---
