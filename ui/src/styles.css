@@ -1,0 +1,161 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.app {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #1a1a2e;
+  color: #eee;
+  height: 100vh;
+}
+
+.title-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.title-logo {
+  font-size: 4rem;
+  color: #e94560;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+}
+
+.save-slot {
+  width: 400px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  background: rgba(233, 69, 96, 0.2);
+  border: 1px solid #e94560;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.save-slot:hover {
+  background: rgba(233, 69, 96, 0.4);
+  transform: scale(1.02);
+}
+
+.btn {
+  padding: 0.75rem 2rem;
+  margin: 0.5rem;
+  font-size: 1rem;
+  background: #e94560;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #ff6b81;
+}
+
+.char-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.class-selection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.class-card {
+  width: 280px;
+  padding: 1.5rem;
+  margin: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.class-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.map-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #0f0f23;
+}
+
+.zone-nodes button {
+  padding: 1rem;
+  margin: 0.5rem;
+  background: rgba(233, 69, 96, 0.2);
+  border: 1px solid #e94560;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lesson-screen {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.game-panel {
+  flex: 55;
+  background: #0f0f23;
+  border-right: 2px solid #e94560;
+  padding: 1rem;
+}
+
+.scene-canvas {
+  width: 100%;
+  height: calc(100% - 4rem);
+  background: #0d0d1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.forge-panel {
+  flex: 45;
+  display: flex;
+  flex-direction: column;
+  background: #1a1a2e;
+}
+
+.objective-bar {
+  padding: 1rem;
+  background: rgba(233, 69, 96, 0.2);
+  border-bottom: 1px solid #e94560;
+}
+
+.code-editor {
+  flex: 1;
+  width: 100%;
+  background: #0d0d1a;
+  color: #eee;
+  border: none;
+  padding: 1rem;
+  font-family: 'Consolas', monospace;
+  resize: none;
+}
+
+.action-bar {
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.spell-screen, .settings-screen {
+  padding: 2rem;
+  background: #1a1a2e;
+  height: 100vh;
+}

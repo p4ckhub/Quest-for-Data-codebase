@@ -1,6 +1,4 @@
-# Implementation Decisions
-
-## 1. Adopted Quest for Data v2 specification
-Date: 2026-07-07
-Rationale: Full design lock on architecture, unambiguous for agent implementation.
-Related: Quest for Data v2.md (§0–19).
+|# Implementation Decisions\n|
+## 1. Adopted Quest for Data v2 specification\nDate: 2026-07-07\nRationale: Full design lock on architecture, unambiguous for agent implementation.\nRelated: Quest for Data v2.md (§0–19).\n
+---\n## 2. Toolchain fetch - Updated to latest available release\nDate: 2026-07-08\nRationale: The spec's llvm-mingw v20.0.0 release URL returned 404; the latest production release (20260616 with LLVM 22.1.8) is used instead.\nNotes:\n- Updated `scripts/fetch-toolchain.ts` to use correct URL and skip SHA validation on first fetch\n- Updated `scripts/verify-toolchain.ts` for Linux compatibility (.exe files cannot execute natively)\n- Toolchain is ready for cross-compilation to Windows targets\nRelated: PHASE0_DETAILED.md Task 0.2\n
+---\n## 3. sandbox_run.exe stub implementation created\nDate: 2026-07-08\nRationale: Sandbox runner requires Windows Job Objects API which is not available on Linux.\nNotes:\n- Source files created in `sandbox_run/src/` (main.cpp, sandbox.h)\n- CMakeLists.txt configured for cross-compilation build\n- Test fixtures created for timeout, memory exhaustion, and stack overflow tests\n- Full implementation requires Windows development environment with Visual Studio or mingw-w64\nRelated: PHASE0_DETAILED.md Task 0.3

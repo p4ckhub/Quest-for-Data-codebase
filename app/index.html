@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quest for Data</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #1a1a2e;
+      color: #eee;
+      overflow: hidden;
+    }
+    .screen { display: none; width: 100%; height: 100%; }
+    .screen.active { display: flex; }
+    .title-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+    .title-logo { font-size: 4rem; color: #e94560; margin-bottom: 2rem; text-shadow: 0 0 20px rgba(233, 69, 96, 0.5); }
+    .save-slot { width: 400px; padding: 1rem; margin: 0.5rem 0; background: rgba(233, 69, 96, 0.2); border: 1px solid #e94560; border-radius: 8px; cursor: pointer; }
+    .button { padding: 0.75rem 2rem; margin: 0.5rem; font-size: 1rem; background: #e94560; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    .lesson-container { display: flex; width: 100%; height: 100%; }
+    .game-panel { flex: 55; background: #0f0f23; border-right: 2px solid #e94560; padding: 1rem; position: relative; }
+    .forge-panel { flex: 45; display: flex; flex-direction: column; background: #1a1a2e; }
+    .objective-bar { padding: 1rem; background: rgba(233, 69, 96, 0.2); border-bottom: 1px solid #e94560; }
+    .monaco-container { flex: 1; width: 100%; border-top: 1px solid #333; }
+    .console-tabs { max-height: 30vh; background: #0d0d1a; display: flex; flex-direction: column; }
+    .tabs { display: flex; border-bottom: 1px solid #333; }
+    .tab { padding: 0.5rem 1rem; cursor: pointer; color: #aaa; }
+    .tab.active { background: #1a1a2e; color: #e94560; border-bottom: 2px solid #e94560; }
+    .console-content { flex: 1; padding: 1rem; overflow: auto; font-family: monospace; }
+    .char-creation-container, .world-map-container { display: flex; justify-content: center; align-items: center; height: 100vh; background: #0f0f23; }
+    .class-card { width: 280px; padding: 1.5rem; margin: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; }
+    .map-container { width: 600px; height: 500px; border: 2px solid #e94560; border-radius: 8px; position: relative; }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <!-- Title Screen -->
+    <div id="title-screen" class="screen active">
+      <div class="title-container">
+        <h1 class="title-logo">Quest for Data</h1>
+        <button class="button" onclick="gameApp.newGame()">New Game</button>
+        <div id="save-slots"></div>
+        <button class="button" onclick="gameApp.settings()">Settings</button>
+      </div>
+    </div>
+
+    <!-- Character Creation Screen -->
+    <div id="char-creation-screen" class="screen">
+      <div class="char-creation-container">
+        <h2>Create Your Character</h2>
+        <input type="text" id="player-name" placeholder="Enter your name" style="margin: 1rem; padding: 0.5rem;">
+        <div id="class-selection"></div>
+      </div>
+    </div>
+
+    <!-- World Map Screen -->
+    <div id="world-map-screen" class="screen">
+      <div class="world-map-container">
+        <h2>World Map</h2>
+        <div class="map-container" id="world-map"></div>
+        <button class="button" onclick="gameApp.showScreen('title')">Back</button>
+      </div>
+    </div>
+
+    <!-- Lesson/Encounter Screen -->
+    <div id="lesson-screen" class="screen">
+      <div class="lesson-container">
+        <div class="game-panel">
+          <h3>Game Panel</h3>
+          <div id="scene-canvas" style="width: 100%; height: calc(100% - 4rem);"></div>
+        </div>
+        <div class="forge-panel">
+          <div class="objective-bar">
+            <strong id="lesson-objective">Objective goes here</strong>
+          </div>
+          <div class="monaco-container" id="editor-container"></div>
+          <div style="padding: 1rem;">
+            <button class="button" onclick="gameApp.castCode()">CAST</button> <span id="attempts">Attempt: 0/3</span>
+          </div>
+          <div class="console-tabs">
+            <div class="tabs">
+              <span class="tab active" data-tab="output">Output</span>
+              <span class="tab" data-tab="errors">Errors</span>
+              <span class="tab" data-tab="raw">Raw</span>
+            </div>
+            <div id="console-output" class="console-content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spellbook Screen -->
+    <div id="spellbook-screen" class="screen">
+      <div style="padding: 2rem; background: #1a1a2e; height: 100vh;">
+        <h2>Spellbook</h2>
+        <div id="spells-list"></div>
+        <button class="button" onclick="gameApp.showScreen('title')">Back</button>
+      </div>
+    </div>
+
+    <!-- Inventory Screen -->
+    <div id="inventory-screen" class="screen">
+      <div style="padding: 2rem; background: #1a1a2e; height: 100vh;">
+        <h2>Inventory</h2>
+        <div id="inventory-grid"></div>
+        <button class="button" onclick="gameApp.showScreen('title')">Back</button>
+      </div>
+    </div>
+
+    <!-- Settings Screen -->
+    <div id="settings-screen" class="screen">
+      <div style="padding: 2rem; max-width: 600px; margin: 0 auto; background: #1a1a2e;">
+        <h2>Settings</h2>
+        <p><label><input type="checkbox" id="reduced-motion"> Reduced Motion</label></p>
+        <p><label><input type="checkbox" id="colorblind-safe"> Colorblind-Safe Palette</label></p>
+        <button class="button" onclick="gameApp.showScreen('title')">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && vite build -c ui/vite.config.ts",
     "test": "vitest",
     "toolchain:fetch": "ts-node scripts/fetch-toolchain.ts",
     "toolchain:verify": "ts-node scripts/verify-toolchain.ts",
     "accept:phase0": "ts-node scripts/accept-phase0.ts",
-    "sandbox:test": "ts-node tests/sandbox.test.ts"
+    "sandbox:test": "ts-node tests/sandbox.test.ts",
+    "electron:dev": "concurrently \"vite -c ui/vite.config.ts\" \"electron app/main.ts\"",
+    "electron:build": "tsc && vite build -c ui/vite.config.ts && electron-builder"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +20,9 @@
     "@types/node": "^26.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "electron": "^28.0.0",
+    "concurrently": "^8.0.0",
+    "electron-builder": "^24.0.0"
   }
 }

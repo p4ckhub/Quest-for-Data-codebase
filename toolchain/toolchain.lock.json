@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "release_tag": "20260616",
+  "release_url": "https://github.com/mstorsjo/llvm-mingw/releases/download/20260616/llvm-mingw-20260616-msvcrt-x86_64.zip",
+  "sha256": "744809646fdefe24a357399788d68fb07ecc65fa0be71baa2406793ce25c9813",
+  "extracted_at": "2026-07-08T03:29:34.751Z",
+  "clang_version_output": ""
+}
