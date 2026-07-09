@@ -9,8 +9,9 @@
     "resolveJsonModule": true,
     "declaration": true,
     "outDir": "./dist",
-    "rootDir": "./",
-    "types": ["node"]
+    "rootDir": ".",
+    "moduleResolution": "node"
   },
-  "exclude": ["ui", "dist", "node_modules", "**/*.config.ts"]
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules"]
 }

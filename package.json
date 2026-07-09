@@ -10,7 +10,9 @@
     "toolchain:verify": "ts-node scripts/verify-toolchain.ts",
     "accept:phase0": "ts-node scripts/accept-phase0.ts",
     "sandbox:test": "ts-node tests/sandbox.test.ts",
-    "electron:dev": "concurrently \"cd ui && npm run dev\" \"electron app/main.ts\"",
+    "pch:gameapi": "g++ -std=c++17 -O0 -g0 -Igameapi gameapi/gameapi.h -o gameapi/gameapi.gch",
+    "smoke:gameapi": "ts-node scripts/smoke-gameapi.ts",
+    "electron:dev": "concurrently \\\"cd ui && npm run dev\\\" \\\"electron app/main.ts\\\"",
     "electron:build": "cd ui && npm run build"
   },
   "keywords": [],
@@ -24,7 +26,11 @@
     "electron-builder": "^24.13.3",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "ajv": "^6.15.0",
+    "js-yaml": "^5.2.1"
   }
 }
