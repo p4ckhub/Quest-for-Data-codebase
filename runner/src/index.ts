@@ -4,14 +4,31 @@ import { execSync } from 'child_process';
 import * as yaml from 'js-yaml';
 
 const TOOLCHAIN_DIR = path.join(__dirname, '../../toolchain');
-const PCH_PATH = path.join(TOOLCHAIN_DIR, 'pch', 'linux-native', 'gameapi.gch');
+
+// Read compiler path from toolchain lock file
+function getCompilerPath(): string {
+  const lockPath = path.join(TOOLCHAIN_DIR, 'toolchain.lock.json');
+  const lockData = JSON.parse(fs.readFileSync(lockPath, 'utf-8'));
+  const linuxNative = lockData.profiles?.['linux-native'];
+  if (linuxNative && linuxNative.path) {
+    return linuxNative.path;
+  }
+  // Fallback to g++ if not found
+  return '/usr/bin/g++';
+}
+
+const PCH_PATH = path.join(TOOLCHAIN_DIR, 'pch', 'linux-native', 'gameapi.pch');
+const USE_PCH = false; // PCH not compatible with g++, disabled
+const COMPILER_PATH = getCompilerPath();
 
 export interface Lesson {
   id: string;
+  kind: 'program' | 'functions';
   objective: string;
   starter_code: string;
   prelude?: string;
   epilogue?: string;
+  harness?: string;
   validation?: Validation;
   hints?: Hint[];
 }
@@ -51,7 +68,19 @@ export async function runLesson(lesson: Lesson, playerCode: string): Promise<Run
     
     // 2. Compile with linux-native toolchain
     const exePath = path.join(tempDir, 'lesson.exe');
-    const compileCmd = `clang++ -std=c++17 -O0 -g0 -Wall -fno-color-diagnostics -include-pch ${PCH_PATH} -I${TOOLCHAIN_DIR}/../gameapi ${mainCpp} -o ${exePath}`;
+    const pchFlag = USE_PCH ? `-include-pch ${PCH_PATH}` : '';
+    const gameapiCpp = path.join(TOOLCHAIN_DIR, '..', 'gameapi', 'gameapi.cpp');
+    const jsonInclude = path.join(TOOLCHAIN_DIR, '..', 'gameapi', 'third_party');
+    
+    let extraSources = `${mainCpp} ${gameapiCpp}`;
+    
+    // For kind=functions, include the harness file (player functions + harness main)
+    if (lesson.kind === 'functions' && lesson.harness) {
+      const harnessPath = path.join(TOOLCHAIN_DIR, '..', 'gameapi', lesson.harness);
+      extraSources = `${mainCpp} ${harnessPath} ${gameapiCpp}`;
+    }
+    
+    const compileCmd = `${COMPILER_PATH} -std=c++17 -O0 -g0 -Wall ${pchFlag} -I${TOOLCHAIN_DIR}/../gameapi -I${jsonInclude} ${extraSources} -o ${exePath}`;
     
     let compileOutput: string;
     let compileSuccessful = true;

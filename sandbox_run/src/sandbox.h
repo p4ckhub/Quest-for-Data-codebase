@@ -1,41 +1,31 @@
 #ifndef SANDBOX_H
 #define SANDBOX_H
 
-#include <windows.h>
 #include <string>
 #include <vector>
+#include <cstdint>
 
 // Configuration for running a process in the sandbox
 struct RunConfig {
-    DWORD wall_ms;      // Wall-clock timeout in milliseconds
-    DWORD cpu_ms;       // CPU time limit in milliseconds  
-    DWORD mem_mb;       // Memory limit in megabytes
-    DWORD stdout_cap_kb; // Stdout output cap in kilobytes
-    std::string stdin_file;  // Path to input file (empty for pipe)
-    std::string cwd;        // Working directory
-    std::string exe;        // Executable path
-    std::vector<std::string> args; // Command line arguments
+    uint64_t wall_ms;       // Wall-clock timeout in milliseconds
+    uint64_t cpu_ms;        // CPU time limit in milliseconds  
+    uint64_t mem_mb;        // Memory limit in megabytes
+    uint64_t stdout_cap_kb; // Stdout output cap in kilobytes
+    std::string stdin_file;  // Path to input file (empty for no stdin)
+    std::string cwd;         // Working directory (fresh temp dir if empty)
+    std::string exe;         // Executable path
+    std::vector<std::string> args; // Command line arguments (without exe)
 };
 
 // Result of running a sandboxed process
 struct RunResult {
     int exit_code;
-    DWORD wall_ms;
-    DWORD cpu_ms;
-    std::string killed_by;   // "wall_timeout", "cpu_timeout", "memory", "output_cap", or null
+    uint64_t wall_ms;
+    uint64_t cpu_ms;
+    std::string killed_by;   // "wall_timeout", "cpu_timeout", "memory", "output_cap", or empty/null
 };
 
-// Create and configure a Job Object for resource limiting
-HANDLE create_job_object(const RunConfig& config);
-
-// Spawn a process with the job object attached
-BOOL spawn_sandboxed_process(HANDLE job, const RunConfig& config, 
-                            PROCESS_INFORMATION* pi, HANDLE* stdin_write,
-                            HANDLE* stdout_read);
-
-// Monitor the process and enforce limits
-RunResult monitor_process(HANDLE process, HANDLE stdout_read, DWORD wall_ms_limit,
-                         DWORD mem_mb_limit, DWORD stdout_cap_kb,
-                         DWORD cpu_ms_limit = 0);
+// Run the sandboxed process (POSIX implementation)
+RunResult run_sandboxed(const RunConfig& config);
 
 #endif // SANDBOX_H

@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["id", "kind", "zone", "act", "title", "concept", "concepts_required", "narrative", "objective", "starter_code", "validation", "hints", "rewards"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+    "kind": { "enum": ["program", "functions"] },
+    "zone": { "type": "string" },
+    "act": { "type": "number", "enum": [1, 2, 3] },
+    "title": { "type": "string" },
+    "concept": { "type": "string" },
+    "concepts_required": { "type": "array", "items": { "type": "string" } },
+    "narrative": { "type": "string" },
+    "objective": { "type": "string" },
+    "starter_code": { "type": "string" },
+    "prelude": { "type": "string" },
+    "epilogue": { "type": "string" },
+    "harness": { "type": "string" },
+    "stdin_fixture": { "type": "string" },
+    "solution": { "type": "string" },
+    "validation": {
+      "type": "object",
+      "required": ["checks"],
+      "properties": {
+        "checks": { "type": "array" }
+      }
+    },
+    "hints": { "type": "array" },
+    "rewards": { "type": "object" },
+    "limits": { "type": "object" }
+  }
+}

@@ -2,6 +2,7 @@
   "name": "quest-for-data-codebase",
   "version": "1.0.0",
   "description": "",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "build": "cd ui && npm run build",
@@ -12,7 +13,8 @@
     "sandbox:test": "ts-node tests/sandbox.test.ts",
     "pch:gameapi": "g++ -std=c++17 -O0 -g0 -Igameapi gameapi/gameapi.h -o gameapi/gameapi.gch",
     "smoke:gameapi": "ts-node scripts/smoke-gameapi.ts",
-    "electron:dev": "concurrently \\\"cd ui && npm run dev\\\" \\\"electron app/main.ts\\\"",
+    "lessons:validate": "ts-node scripts/validate-gold-lessons.ts",
+    "electron:dev": "concurrently \\\\\\\"cd ui && npm run dev\\\\\\\" \\\\\\\"electron app/main.ts\\\\\\\"",
     "electron:build": "cd ui && npm run build"
   },
   "keywords": [],
@@ -20,7 +22,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/electron": "^1.4.38",
-    "@types/node": "^26.1.0",
+    "@types/node": "^26.1.1",
     "concurrently": "^8.2.2",
     "electron": "^28.3.3",
     "electron-builder": "^24.13.3",

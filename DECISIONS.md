@@ -41,3 +41,27 @@ Notes:
 Related: PHASE0_COMPLETION_PLAN.md Parts B.1, C.1
 
 ---
+
+## 5. forge-strike-warrior starter_spell substitution
+Date: 2026-07-09
+Rationale: Task 0.6 asks to substitute `{{starter_spell}}` template variables with Warrior defaults per spec section 5.
+Notes:
+- Template `{{starter_spell}}` replaced with `strike` (Warrior's default per Quest for Data v2.md §5.1)
+- Template `{{class_name}}` replaced with `Warrior`
+- Template `{{weapon}}` replaced with `runeblade`
+- All template variables are now hardcoded in `content/zones/act1/function_forge/zone-2-lesson-1.yaml`
+- `gameapi/harness_forge_attack_main.cpp` uses literal `strike()` instead of `{{starter_spell}}()`
+Related: PHASE0_DETAILED.md Task 0.6, Quest for Data v2.md §5.1
+
+---
+
+## 6. PCH disabled for linux-native toolchain
+Date: 2026-07-09
+Rationale: Precompiled header built with clang (`.pch`) is not compatible with g++ which expects `.gch` format.
+Notes:
+- `USE_PCH` flag set to `false` in `runner/src/index.ts`
+- PCH file exists but compiler command omits `-include-pch` flag
+- Without PCH, compile times are acceptable for Phase 0 lessons (< 2s typical)
+Related: PHASE0_DETAILED.md Task 0.5, runner/src/index.ts
+
+---

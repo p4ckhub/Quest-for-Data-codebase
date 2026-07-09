@@ -1,0 +1,51 @@
+id: forge-strike-warrior
+kind: functions
+zone: function_forge
+act: 1
+title: "Forge Your First Spell"
+concept: functions_basics
+concepts_required: [main_function, variables_and_types, functions_basics]
+
+narrative: |
+  The Forge awaits your first true spell. A Warrior's strike
+  must strike with force between 5 and 10 — steady enough to trust,
+  wild enough to fear.
+
+objective: |
+  Write a function  int strike()  that returns a value
+  between 5 and 10 (inclusive). It may vary between calls or not —
+  but it must never leave that range.
+
+starter_code: |
+      int strike() {
+          // TODO: return your strike's force (5–10)
+      }
+
+harness: forge_attack_main.cpp
+
+solution: |
+      int strike() {
+          return 7;
+      }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_in_range, id: min_damage, min: 5, max: 10 }
+    - { type: check_in_range, id: max_damage, min: 5, max: 10 }
+
+hints:
+  - trigger: "error:missing_return"
+    message: "The spell fizzles — a function promising an int must 'return' one."
+  - trigger: "check_failed:max_damage"
+    message: "The Forge-master frowns: a strike above force 10 would shatter your runeblade."
+  - trigger: "attempt:3"
+    message: "Simplest honest spell: return 7;  — a fixed force is a fine first forging."
+
+grants_spell:
+  name: "strike"
+  signature: "int strike()"
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

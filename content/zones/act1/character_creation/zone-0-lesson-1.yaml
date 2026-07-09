@@ -1,0 +1,60 @@
+id: variables-101
+kind: program
+zone: character_creation
+act: 1
+title: "Awakening Your Stats"
+concept: variables_and_types
+concepts_required: [main_function, cout, variables_and_types]
+
+narrative: |
+  Three stat-crystals lie dark on the Vault floor. The Keeper's ledger
+  records their true values: vitality 100, aether 50, and a stamina
+  flow of 1.5. Speak their names and values to awaken them.
+
+objective: |
+  Inside main, declare and initialize: an int named hp with value 100,
+  an int named mp with value 50, and a float named staminaRegen with
+  value 1.5f.
+
+prelude: |
+    #include "gameapi.h"
+    int main() {
+
+starter_code: |
+        // TODO: awaken hp, mp, and staminaRegen here
+
+epilogue: |
+            static_assert(std::is_same<decltype(hp), int>::value, "hp must be an int");
+            static_assert(std::is_same<decltype(mp), int>::value, "mp must be an int");
+            static_assert(std::is_same<decltype(staminaRegen), float>::value, "staminaRegen must be a float");
+            gameapi::report("hp", hp);
+            gameapi::report("mp", mp);
+            gameapi::report("staminaRegen", staminaRegen);
+            return 0;
+            }
+
+solution: |
+      int hp = 100;
+      int mp = 50;
+      float staminaRegen = 1.5f;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: hp, expected: 100 }
+    - { type: check_equals, id: mp, expected: 50 }
+    - { type: check_equals, id: staminaRegen, expected: 1.5, tolerance: 0.001 }
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The Vault doesn't recognize that name yet — declare it before the crystal can hold it."
+  - trigger: "error:missing_semicolon"
+    message: "Your incantation trails off unfinished — each declaration must end with ';'."
+  - trigger: "check_failed:hp"
+    message: "The vitality crystal flickered but didn't hold — the ledger says hp must be exactly 100."
+  - trigger: "attempt:3"
+    message: "A declaration takes the form: type name = value;  — for example: int gold = 10;"
+
+rewards:
+  xp: 50
+  unlocks_zone_progress: true
