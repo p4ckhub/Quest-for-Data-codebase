@@ -7,8 +7,10 @@ import { useGameStore, ZoneInfo } from "../store";
 // list; the boss entry appears once all lessons are passed.
 
 export const WorldMapScreen: React.FC = () => {
-  const { zoneGraph, save, player, setScreen, selectLesson, startEncounter, zoneStatus, sandpitComplete } = useGameStore();
-  const [openZone, setOpenZone] = useState<string | null>(null);
+  const { zoneGraph, save, player, setScreen, selectLesson, startEncounter, zoneStatus, sandpitComplete, currentZoneId } = useGameStore();
+  // Reopen the zone the player just came from (Back/Continue from a lesson)
+  // instead of always collapsing to the top of the zone list.
+  const [openZone, setOpenZone] = useState<string | null>(currentZoneId ?? null);
 
   // The world stays out of reach until the sandpit's mandatory lessons are
   // done (PHASE1.5 §2) — a save mid-tutorial gets sent back
