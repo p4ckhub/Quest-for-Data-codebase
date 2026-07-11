@@ -161,21 +161,29 @@ async function main() {
         continue;
       }
 
-      // Open the zone accordion
-      await page.getByRole('button', { name: new RegExp(`Zone ${zone.number}:`, 'i') }).click();
+      // The accordion remembers the current zone across lesson visits
+      // (WorldMapScreen seeds openZone from currentZoneId), so it may already
+      // be open when we return — only click the zone header if the target
+      // inside it is not visible, otherwise the click would close it.
+      const zoneToggle = page.getByRole('button', { name: new RegExp(`Zone ${zone.number}:`, 'i') });
+      const ensureZoneOpen = async (target: ReturnType<typeof page.locator>) => {
+        await page.locator('.world-map-screen').waitFor({ timeout: 15000 });
+        if (!(await target.isVisible().catch(() => false))) await zoneToggle.click();
+      };
 
       for (const lesson of zone.lessons) {
-        await page.getByRole('button', { name: new RegExp(lesson.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') }).click();
+        const lessonButton = page.getByRole('button', { name: new RegExp(lesson.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') });
+        await ensureZoneOpen(lessonButton);
+        await lessonButton.click();
         const ok = await completeLesson(page, zone.id, lesson.id);
         if (ok) check(`zone ${zone.number}: lesson ${lesson.id} passed`, true);
         await page.getByRole('button', { name: 'Back', exact: true }).click();
-        // Re-open zone accordion after returning to the map
-        await page.getByRole('button', { name: new RegExp(`Zone ${zone.number}:`, 'i') }).click();
       }
 
       // Boss fight, if the zone has one
       if (zone.boss) {
         const bossButton = page.locator('.boss-entry');
+        await ensureZoneOpen(bossButton);
         await bossButton.waitFor({ timeout: 5000 });
         const disabled = await bossButton.isDisabled();
         check(`zone ${zone.number}: boss unlocked after lessons`, !disabled);

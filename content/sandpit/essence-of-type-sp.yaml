@@ -1,0 +1,105 @@
+id: essences-of-type-sp
+kind: program
+zone: vault_of_variables
+act: 1
+title: "Essences of Type sandpit"
+concept: type_safety
+concepts_required: [bool, char, type_safety]
+
+teaching: |
+  **THE KEEPER:** "Two kinds of crystal remain on this shelf, and both are
+  smaller than the ones you have lit before. Their smallness is the whole
+  lesson. Learn what each one refuses to hold, and you will know exactly
+  when to reach for it."
+
+  "The first kind is `bool`. It holds the answer to a yes-or-no question
+  and nothing else. Sealed or open. Lit or dark. It is always exactly
+  `true` or exactly `false`, and it cannot hold *mostly* or *we shall
+  see*. That refusal is a gift: when you read a `bool` later, there are
+  only two possibilities to reason about, and the Vault holds you to
+  both of them."
+
+  ```cpp
+  bool ward_holding = true;
+  ```
+
+  "The second kind is `char`. It holds one written character. Not a word.
+  Not a name. One mark: a letter, a digit, a stroke of punctuation. And
+  mind your quotes, because the Vault will refuse you over them. A single
+  mark travels in *single* quotes. `'R'` is a char. `"R"` is something
+  else entirely: double quotes always make an inscription, a string of
+  marks that merely happens to be one mark long. An inscription will not
+  pour into a char crystal, no matter how short it is."
+
+  ```cpp
+  char watch_sigil = 'R';
+  ```
+
+examples:
+  - prompt: "The Keeper reads a fact of each shape from the archive ledger, choosing the crystal to fit. 'The wax seal is broken, yes or no? And the wax bears the mark of house M.'"
+    code: |
+      bool seal_broken = true;
+      char house_mark = 'M';
+
+narrative: |
+  The last shelf of the wing holds two dark crystals, and the Keeper
+  reads from its card without looking up. "Two facts about this chamber.
+  First: the brazier beside you is lit. Second: the iron door is carved
+  with a single letter, K. Hold each fact in a crystal of the proper
+  kind. Choose the wrong kind and the Vault will refuse the casting;
+  it is never shy about that."
+
+objective: |
+  Light two crystals of the proper kind, one for each fact: brazier_lit
+  (the brazier is lit) and door_mark (the door is carved with the letter
+  K). The Keeper inspects both when the casting ends.
+
+prelude: |
+    #include "gameapi.h"
+    int main() {
+
+starter_code: |
+        // Two facts, two crystals. The shelf waits.
+
+epilogue: |
+            gameapi::report("brazier_lit", brazier_lit);
+            gameapi::report("door_mark", door_mark);
+            return 0;
+            }
+
+solution: |
+            bool brazier_lit = true;
+            char door_mark = 'K';
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: brazier_lit, expected: 1 }
+    - { type: check_equals, id: door_mark, expected: 75 }
+
+hints:
+  - trigger: "error:type_mismatch"
+    message: "Double quotes make an inscription, and an inscription will not pour into a char crystal. One mark, single quotes: 'K'"
+  - trigger: "error:undeclared_identifier"
+    message: "The Keeper inspects crystals named brazier_lit and door_mark, spelled exactly so. Light both before the inspection."
+  - trigger: "error:missing_semicolon"
+    message: "Each declaration is its own cast, and every cast ends with ';'"
+  - trigger: "check_failed:brazier_lit"
+    message: "The brazier IS lit. Of the two states a bool can hold, which one is that?"
+  - trigger: "check_failed:door_mark"
+    message: "The door's letter is K: one carved mark, in single quotes."
+  - trigger: "attempt:6"
+    message: "bool brazier_lit = true;  char door_mark = 'K';"
+
+rewards:
+  xp: 0
+
+glossary:
+  - { lore: "inscription", plain: "string" }
+  - { lore: "the Vault", plain: "the compiler" }
+  - { lore: "casting", plain: "run" }
+  - { lore: "crystal", plain: "variable" }
+  - { lore: "cast", plain: "statement" }
+  - { lore: "light", plain: "declare" }
+  - { lore: "kind", plain: "type" }
+  - { lore: "mark", plain: "character" }

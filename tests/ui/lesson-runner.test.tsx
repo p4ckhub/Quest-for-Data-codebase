@@ -51,8 +51,41 @@ describe("Friendly Error Translator", () => {
 });
 
 import { render, screen, waitFor } from "@testing-library/react";
-import LessonRunnerScreen, { renderTeachingParts } from "../../ui/src/components/LessonRunner";
+import LessonRunnerScreen, { renderTeachingParts, applyGlossary } from "../../ui/src/components/LessonRunner";
 import { useGameStore } from "../../ui/src/store";
+
+describe("applyGlossary", () => {
+  const glossary = [
+    { lore: "crystal", plain: "variable" },
+    { lore: "casting", plain: "run" },
+    { lore: "cast", plain: "statement" },
+    { lore: "the Vault", plain: "the compiler" },
+  ];
+
+  it("swaps lore terms on word boundaries", () => {
+    expect(applyGlossary("light a crystal", glossary)).toBe("light a variable");
+  });
+
+  it("pluralizes with a trailing s", () => {
+    expect(applyGlossary("two crystals remain", glossary)).toBe("two variables remain");
+  });
+
+  it("preserves a leading capital", () => {
+    expect(applyGlossary("Crystals hold values. The Vault refuses.", glossary)).toBe(
+      "Variables hold values. The compiler refuses."
+    );
+  });
+
+  it("prefers the longest term: casting is not treated as cast", () => {
+    expect(applyGlossary("the casting ends after a cast", glossary)).toBe(
+      "the run ends after a statement"
+    );
+  });
+
+  it("leaves partial words alone", () => {
+    expect(applyGlossary("broadcast crystalline", glossary)).toBe("broadcast crystalline");
+  });
+});
 
 describe("renderTeachingParts", () => {
   it("splits prose and fenced code blocks", () => {
@@ -154,5 +187,48 @@ describe("LessonRunnerScreen", () => {
 
     const objective = screen.getByText(/Test objective/);
     expect(objective.textContent).toContain("(HINT: Need help?)");
+  });
+
+  it("shows no glossary toggle for a lesson without a glossary", async () => {
+    render(<LessonRunnerScreen />);
+    await waitFor(() => {
+      expect(screen.getByText(/The way of the cast/)).toBeTruthy();
+    }, { timeout: 2000 });
+    expect(screen.queryByText(/Speak plainly/)).toBeNull();
+  });
+
+  it("flips teaching prose and objective to plain terms and back", async () => {
+    (window.gameapi?.lessons?.load as any).mockResolvedValue({
+      success: true,
+      lesson: {
+        id: "test-lesson",
+        teaching: 'Light a crystal:\n```cpp\nbool ward = true;\n```',
+        narrative: "A crystal waits in the dark.",
+        objective: "Light one crystal for the Vault.",
+        starter_code: "// go",
+        hints: [],
+        glossary: [
+          { lore: "crystal", plain: "variable" },
+          { lore: "light", plain: "declare" },
+        ],
+      },
+    });
+
+    render(<LessonRunnerScreen />);
+    await waitFor(() => {
+      expect(screen.getByText(/Light a crystal/)).toBeTruthy();
+    }, { timeout: 2000 });
+
+    const { fireEvent } = await import("@testing-library/react");
+    fireEvent.click(screen.getByText(/Speak plainly/));
+
+    expect(screen.getByText(/Declare a variable/)).toBeTruthy();
+    expect(screen.getByText(/Declare one variable for the Vault/)).toBeTruthy();
+    // The narrative stays in lore on purpose; code blocks are never flipped
+    expect(screen.getByText(/A crystal waits in the dark/)).toBeTruthy();
+    expect(screen.getByText(/bool ward = true;/)).toBeTruthy();
+
+    fireEvent.click(screen.getByText(/Speak in lore/));
+    expect(screen.getByText(/Light a crystal/)).toBeTruthy();
   });
 });

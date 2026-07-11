@@ -468,6 +468,13 @@
   color: #4cd137;
 }
 
+.glossary-toggle {
+  float: right;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-color: rgba(76, 209, 55, 0.4);
+}
+
 .teaching-panel p {
   color: #ccc;
   line-height: 1.5;

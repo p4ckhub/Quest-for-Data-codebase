@@ -40,6 +40,18 @@
     },
     "hints": { "type": "array" },
     "rewards": { "type": "object" },
-    "limits": { "type": "object" }
+    "limits": { "type": "object" },
+    "glossary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["lore", "plain"],
+        "properties": {
+          "lore": { "type": "string" },
+          "plain": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
   }
 }

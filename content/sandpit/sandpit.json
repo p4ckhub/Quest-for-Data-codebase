@@ -9,6 +9,7 @@
     { "file": "lesson-the-bell.yaml", "mandatory": false },
     { "file": "lesson-the-still-pool.yaml", "mandatory": false },
     { "file": "lesson-the-garment-rack.yaml", "mandatory": false },
-    { "file": "lesson-the-rope-dummy.yaml", "mandatory": false }
+    { "file": "lesson-the-rope-dummy.yaml", "mandatory": false },
+    { "file": "essence-of-type-sp.yaml", "mandatory": false }
   ]
 }

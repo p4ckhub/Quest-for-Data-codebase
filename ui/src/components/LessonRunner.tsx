@@ -9,6 +9,11 @@ interface Hint {
   message: string;
 }
 
+interface GlossaryEntry {
+  lore: string;
+  plain: string;
+}
+
 interface LessonData {
   id: string;
   title?: string;
@@ -21,6 +26,23 @@ interface LessonData {
   hints?: Hint[];
   rewards?: { xp?: number; items?: Array<{ item_id: string; count: number }> };
   grants_spell?: { name: string; signature: string };
+  glossary?: GlossaryEntry[];
+}
+
+// Glossary flip: swap lore terms for their plain C++ names in prose (never in
+// code). Longest term first so "casting" wins over "cast"; a trailing "s"
+// pluralizes the replacement; leading capitals are preserved.
+const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+export function applyGlossary(text: string, glossary: GlossaryEntry[]): string {
+  let out = text;
+  for (const { lore, plain } of [...glossary].sort((a, b) => b.lore.length - a.lore.length)) {
+    const re = new RegExp(`\\b${escapeRegex(lore)}(s?)\\b`, "gi");
+    out = out.replace(re, (m, s) => {
+      const p = plain + (s ? "s" : "");
+      return m[0] !== m[0].toLowerCase() ? p[0].toUpperCase() + p.slice(1) : p;
+    });
+  }
+  return out;
 }
 
 // Render a teaching block: fenced ``` sections become code blocks, the prose
@@ -36,38 +58,56 @@ export function renderTeachingParts(text: string): Array<{ kind: "prose" | "code
   return parts;
 }
 
-const proseSpans = (line: string): React.ReactNode[] =>
+// `flip` swaps lore terms for plain ones in prose text; backtick spans stay
+// untouched because they are code, not prose.
+const proseSpans = (line: string, flip?: (s: string) => string): React.ReactNode[] =>
   line.split(/(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*)/g).map((tok, i) => {
     if (tok.startsWith("`") && tok.endsWith("`")) return <code key={i}>{tok.slice(1, -1)}</code>;
-    if (tok.startsWith("**") && tok.endsWith("**")) return <strong key={i}>{tok.slice(2, -2)}</strong>;
-    if (tok.startsWith("*") && tok.endsWith("*")) return <em key={i}>{tok.slice(1, -1)}</em>;
-    return tok;
+    if (tok.startsWith("**") && tok.endsWith("**")) return <strong key={i}>{flip ? flip(tok.slice(2, -2)) : tok.slice(2, -2)}</strong>;
+    if (tok.startsWith("*") && tok.endsWith("*")) return <em key={i}>{flip ? flip(tok.slice(1, -1)) : tok.slice(1, -1)}</em>;
+    return flip ? flip(tok) : tok;
   });
 
-const TeachingBlock: React.FC<{ teaching: string; examples?: Array<{ prompt: string; code: string }> }> = ({ teaching, examples }) => (
-  <div className="teaching-panel">
-    <h4>✦ Guidance</h4>
-    {renderTeachingParts(teaching).map((part, i) =>
-      part.kind === "code" ? (
-        <pre key={i} className="teaching-code">{part.content}</pre>
-      ) : (
-        part.content.split(/\n\n+/).map((para, j) => (
-          <p key={`${i}-${j}`}>{proseSpans(para.replace(/\n/g, " "))}</p>
-        ))
-      )
-    )}
-    {examples && examples.length > 0 && (
-      <div className="teaching-examples">
-        {examples.map((ex, i) => (
-          <div key={i} className="teaching-example">
-            <p><em>{ex.prompt}</em></p>
-            <pre className="teaching-code">{ex.code}</pre>
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-);
+const TeachingBlock: React.FC<{
+  teaching: string;
+  examples?: Array<{ prompt: string; code: string }>;
+  glossary?: GlossaryEntry[];
+  plainTerms: boolean;
+  onTogglePlainTerms: () => void;
+}> = ({ teaching, examples, glossary, plainTerms, onTogglePlainTerms }) => {
+  const flip = plainTerms && glossary?.length ? (s: string) => applyGlossary(s, glossary) : undefined;
+  return (
+    <div className="teaching-panel">
+      <h4>
+        ✦ Guidance
+        {glossary && glossary.length > 0 && (
+          <button className="btn glossary-toggle" onClick={onTogglePlainTerms}>
+            {plainTerms ? "✦ Speak in lore" : "📖 Speak plainly"}
+          </button>
+        )}
+      </h4>
+      {renderTeachingParts(teaching).map((part, i) =>
+        part.kind === "code" ? (
+          <pre key={i} className="teaching-code">{part.content}</pre>
+        ) : (
+          part.content.split(/\n\n+/).map((para, j) => (
+            <p key={`${i}-${j}`}>{proseSpans(para.replace(/\n/g, " "), flip)}</p>
+          ))
+        )
+      )}
+      {examples && examples.length > 0 && (
+        <div className="teaching-examples">
+          {examples.map((ex, i) => (
+            <div key={i} className="teaching-example">
+              <p><em>{flip ? flip(ex.prompt) : ex.prompt}</em></p>
+              <pre className="teaching-code">{ex.code}</pre>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 interface TranslatedError {
   message: string;
@@ -86,6 +126,7 @@ interface RunnerState {
   alreadyPassed: boolean;
   activeHints: string[];
   showSolution: boolean;
+  plainTerms: boolean;
 }
 
 const LessonRunnerScreen: React.FC = () => {
@@ -103,6 +144,7 @@ const LessonRunnerScreen: React.FC = () => {
     alreadyPassed: false,
     activeHints: [],
     showSolution: false,
+    plainTerms: false,
   });
 
   // Load the lesson selected on the world map
@@ -129,6 +171,7 @@ const LessonRunnerScreen: React.FC = () => {
             rawOutput: "",
             activeHints: [],
             showSolution: false,
+            plainTerms: false,
           }));
         }
       } catch (e) {
@@ -242,6 +285,13 @@ const LessonRunnerScreen: React.FC = () => {
     }
   };
 
+  // Glossary flip covers the explanatory text (teaching, objective, hints);
+  // the narrative stays in lore on purpose — it is scene, not explanation.
+  const flipText =
+    state.plainTerms && lesson?.glossary?.length
+      ? (s: string) => applyGlossary(s, lesson.glossary!)
+      : (s: string) => s;
+
   if (!currentLessonId) {
     return (
       <div className="lesson-runner-screen">
@@ -260,7 +310,15 @@ const LessonRunnerScreen: React.FC = () => {
           {state.passed || state.alreadyPassed ? "✨ The chamber glows with completed magic." : "The chamber awaits your incantation."}
         </div>
         {/* Teaching Panel — always visible, above the narrative (PHASE1.5 §3) */}
-        {lesson?.teaching && <TeachingBlock teaching={lesson.teaching} examples={lesson.examples} />}
+        {lesson?.teaching && (
+          <TeachingBlock
+            teaching={lesson.teaching}
+            examples={lesson.examples}
+            glossary={lesson.glossary}
+            plainTerms={state.plainTerms}
+            onTogglePlainTerms={() => setState((p) => ({ ...p, plainTerms: !p.plainTerms }))}
+          />
+        )}
         {/* Narrative Box */}
         <div className="narrative-box">
           <p>{lesson?.narrative || ""}</p>
@@ -284,9 +342,9 @@ const LessonRunnerScreen: React.FC = () => {
             <objective> (HINT: <the-hint>) */}
         <div className="objective-bar">
           <h4>
-            {lesson?.objective || "Lesson Objective"}
+            {flipText(lesson?.objective || "Lesson Objective")}
             {state.activeHints.map((hint, i) => (
-              <span key={i} className="hint-inline"> (HINT: {hint})</span>
+              <span key={i} className="hint-inline"> (HINT: {flipText(hint)})</span>
             ))}
           </h4>
         </div>
