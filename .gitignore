@@ -14,8 +14,13 @@ ui/node_modules/
 
 # Compiler byproducts (regenerated on build; never hand-edited)
 *.gch
+*.pch
 *.o
 a.out
+/sandbox_run/sandbox_run
+/sandbox_run/sandbox_run_bin
+/sandbox_run/tests/output_test
+/test_sandbox_run
 
 # Runtime/scratch output (not source)
 state.json
