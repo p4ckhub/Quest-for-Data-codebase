@@ -18,6 +18,7 @@ interface LessonData {
   id: string;
   title?: string;
   teaching?: string;
+  teaching_plain?: string;
   examples?: Array<{ prompt: string; code: string }>;
   narrative?: string;
   objective?: string;
@@ -70,23 +71,29 @@ const proseSpans = (line: string, flip?: (s: string) => string): React.ReactNode
 
 const TeachingBlock: React.FC<{
   teaching: string;
+  teachingPlain?: string;
   examples?: Array<{ prompt: string; code: string }>;
   glossary?: GlossaryEntry[];
   plainTerms: boolean;
   onTogglePlainTerms: () => void;
-}> = ({ teaching, examples, glossary, plainTerms, onTogglePlainTerms }) => {
-  const flip = plainTerms && glossary?.length ? (s: string) => applyGlossary(s, glossary) : undefined;
+}> = ({ teaching, teachingPlain, examples, glossary, plainTerms, onTogglePlainTerms }) => {
+  // Plain mode prefers a fully authored technical text (teaching_plain);
+  // the glossary word-swap is only the fallback when a lesson has glossary
+  // terms but no plain text of its own.
+  const usePlainText = plainTerms && !!teachingPlain;
+  const flip = plainTerms && !usePlainText && glossary?.length ? (s: string) => applyGlossary(s, glossary) : undefined;
+  const hasToggle = !!teachingPlain || (glossary?.length ?? 0) > 0;
   return (
     <div className="teaching-panel">
       <h4>
         ✦ Guidance
-        {glossary && glossary.length > 0 && (
+        {hasToggle && (
           <button className="btn glossary-toggle" onClick={onTogglePlainTerms}>
             {plainTerms ? "✦ Speak in lore" : "📖 Speak plainly"}
           </button>
         )}
       </h4>
-      {renderTeachingParts(teaching).map((part, i) =>
+      {renderTeachingParts(usePlainText ? teachingPlain! : teaching).map((part, i) =>
         part.kind === "code" ? (
           <pre key={i} className="teaching-code">{part.content}</pre>
         ) : (
@@ -95,7 +102,9 @@ const TeachingBlock: React.FC<{
           ))
         )
       )}
-      {examples && examples.length > 0 && (
+      {/* The lore worked example is scene-voiced; a self-contained plain
+          text replaces it rather than mixing the two registers. */}
+      {!usePlainText && examples && examples.length > 0 && (
         <div className="teaching-examples">
           {examples.map((ex, i) => (
             <div key={i} className="teaching-example">
@@ -313,6 +322,7 @@ const LessonRunnerScreen: React.FC = () => {
         {lesson?.teaching && (
           <TeachingBlock
             teaching={lesson.teaching}
+            teachingPlain={lesson.teaching_plain}
             examples={lesson.examples}
             glossary={lesson.glossary}
             plainTerms={state.plainTerms}

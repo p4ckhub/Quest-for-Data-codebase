@@ -11,6 +11,7 @@
     "concept": { "type": "string" },
     "concepts_required": { "type": "array", "items": { "type": "string" } },
     "teaching": { "type": "string", "minLength": 1 },
+    "teaching_plain": { "type": "string", "minLength": 1 },
     "examples": {
       "type": "array",
       "minItems": 1,

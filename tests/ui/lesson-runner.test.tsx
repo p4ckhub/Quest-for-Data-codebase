@@ -231,4 +231,46 @@ describe("LessonRunnerScreen", () => {
     fireEvent.click(screen.getByText(/Speak in lore/));
     expect(screen.getByText(/Light a crystal/)).toBeTruthy();
   });
+
+  it("swaps in the authored teaching_plain wholesale and hides the lore example", async () => {
+    (window.gameapi?.lessons?.load as any).mockResolvedValue({
+      success: true,
+      lesson: {
+        id: "test-lesson",
+        teaching: 'The Keeper gestures at the shelf of crystals:\n```cpp\nbool ward = true;\n```',
+        teaching_plain: 'bool holds true or false.\n```cpp\nbool gate_sealed = false;\n```',
+        examples: [{ prompt: "The Keeper reads from the ledger", code: "char house_mark = 'M';" }],
+        narrative: "A crystal waits in the dark.",
+        objective: "Light one crystal.",
+        starter_code: "// go",
+        hints: [],
+        glossary: [
+          { lore: "crystal", plain: "variable" },
+          { lore: "light", plain: "declare" },
+        ],
+      },
+    });
+
+    render(<LessonRunnerScreen />);
+    await waitFor(() => {
+      expect(screen.getByText(/The Keeper gestures/)).toBeTruthy();
+    }, { timeout: 2000 });
+
+    const { fireEvent } = await import("@testing-library/react");
+    fireEvent.click(screen.getByText(/Speak plainly/));
+
+    // The whole teaching text is replaced, not word-swapped
+    expect(screen.getByText(/bool holds true or false/)).toBeTruthy();
+    expect(screen.getByText(/bool gate_sealed = false;/)).toBeTruthy();
+    expect(screen.queryByText(/The Keeper gestures/)).toBeNull();
+    // The lore-voiced worked example is hidden; plain text is self-contained
+    expect(screen.queryByText(/reads from the ledger/)).toBeNull();
+    // Objective still flips via the glossary; narrative stays lore
+    expect(screen.getByText(/Declare one variable/)).toBeTruthy();
+    expect(screen.getByText(/A crystal waits in the dark/)).toBeTruthy();
+
+    fireEvent.click(screen.getByText(/Speak in lore/));
+    expect(screen.getByText(/The Keeper gestures/)).toBeTruthy();
+    expect(screen.getByText(/reads from the ledger/)).toBeTruthy();
+  });
 });

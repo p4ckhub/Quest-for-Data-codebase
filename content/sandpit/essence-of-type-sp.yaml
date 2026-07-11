@@ -7,33 +7,65 @@ concept: type_safety
 concepts_required: [bool, char, type_safety]
 
 teaching: |
-  **THE KEEPER:** "Two kinds of crystal remain on this shelf, and both are
-  smaller than the ones you have lit before. Their smallness is the whole
-  lesson. Learn what each one refuses to hold, and you will know exactly
-  when to reach for it."
+  **THE KEEPER:** "Every shelf in this wing is cut for one shape of
+  crystal and will take no other. That is not stubbornness, champion.
+  A shelf that accepts anything holds nothing safely."
 
-  "The first kind is `bool`. It holds the answer to a yes-or-no question
-  and nothing else. Sealed or open. Lit or dark. It is always exactly
-  `true` or exactly `false`, and it cannot hold *mostly* or *we shall
-  see*. That refusal is a gift: when you read a `bool` later, there are
-  only two possibilities to reason about, and the Vault holds you to
-  both of them."
+  "Two shapes remain for you tonight. The first is the truth-crystal.
+  It refuses everything but two states: lit or dark, sealed or open,
+  yes or no. Ask it a question and it can never mumble. That refusal
+  is a gift, because whoever reads the crystal later has exactly two
+  possibilities to reason about, and never a third."
+
+  "The second is the mark-crystal. It carries one written mark. One
+  letter, one digit, one stroke of punctuation. Press a whole word
+  against it and it cracks in your hands."
+
+  Here the craft beneath the realm shows through: in C++, the
+  truth-crystal is called `bool` and holds exactly `true` or `false`.
+  The mark-crystal is called `char` and holds exactly one character,
+  wrapped in *single* quotes.
 
   ```cpp
   bool ward_holding = true;
+  char watch_sigil = 'R';
   ```
 
-  "The second kind is `char`. It holds one written character. Not a word.
-  Not a name. One mark: a letter, a digit, a stroke of punctuation. And
-  mind your quotes, because the Vault will refuse you over them. A single
-  mark travels in *single* quotes. `'R'` is a char. `"R"` is something
-  else entirely: double quotes always make an inscription, a string of
-  marks that merely happens to be one mark long. An inscription will not
-  pour into a char crystal, no matter how short it is."
+  "Mind the quotes on a mark. `'R'` in single quotes is one mark and
+  settles into a char. `"R"` in double quotes is an inscription, a
+  different shape entirely, and the Vault will refuse to shelve it,
+  however short it is. I have watched a hundred apprentices crack a
+  crystal on that one habit. Choose the kind before you choose the
+  value, and the shelf will hold."
+
+teaching_plain: |
+  Two more fundamental types.
+
+  `bool` holds exactly one of two values: `true` or `false`.
+
+  ```cpp
+  bool ward_holding = true;
+  bool gate_sealed = false;
+  ```
+
+  `char` holds exactly one character, written in single quotes.
 
   ```cpp
   char watch_sigil = 'R';
+  char grade = 'A';
+  char digit = '7';
   ```
+
+  Single quotes make a `char`. Double quotes make a string, which is a
+  different type. `'K'` initializes a char; `"K"` does not.
+
+  ```cpp
+  char door_mark = 'K';    // compiles
+  char door_mark = "K";    // error: cannot initialize a char with a string
+  ```
+
+  The declaration form is the same for every type: type, name, `=`,
+  value, `;`.
 
 examples:
   - prompt: "The Keeper reads a fact of each shape from the archive ledger, choosing the crystal to fit. 'The wax seal is broken, yes or no? And the wax bears the mark of house M.'"
