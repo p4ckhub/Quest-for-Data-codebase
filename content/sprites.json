@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "sprites": {
+    "player_warrior": { "shape": "square", "color": "#c0392b", "label": "⚔️" },
+    "player_archer": { "shape": "diamond", "color": "#27ae60", "label": "🏹" },
+    "player_mage": { "shape": "circle", "color": "#8e44ad", "label": "🧙" },
+    "enemy_training_dummy": { "shape": "rectangle", "color": "#7f8c8d", "label": "🪶" },
+    "enemy_forge_wraith": { "shape": "hexagon", "color": "#34495e", "label": "👻" },
+    "projectile_arrow": { "shape": "triangle", "color": "#27ae60", "label": " ➡️" },
+    "projectile_bolt": { "shape": "line", "color": "#8e44ad", "label": " ⚡" },
+    "backdrop_zone_0": { "shape": "square", "color": "#2c3e50", "label": "🏛️" },
+    "backdrop_zone_1": { "shape": "square", "color": "#1a252f", "label": "💎" },
+    "backdrop_zone_2": { "shape": "square", "color": "#3e2723", "label": "🔥" }
+  }
+}

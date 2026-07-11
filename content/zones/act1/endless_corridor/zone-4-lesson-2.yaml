@@ -1,0 +1,55 @@
+id: torches-of-the-deep
+kind: program
+zone: endless_corridor
+act: 1
+title: "Torches of the Deep"
+concept: for_loop
+concepts_required: [main_function, variables_and_types, while_loop, for_loop]
+
+narrative: |
+  Ten cold torches line the next stretch of the Corridor, numbered 1
+  through 10. Each one, lit, feeds the door ahead a spark equal to its
+  number. When you know exactly how many times a thing must happen, the
+  for loop is the incantation of choice: counter, condition, and step
+  in a single breath.
+
+objective: |
+  A variable  int sparks = 0;  is already declared. Write a for loop
+  with a counter running from 1 to 10 (inclusive) that adds the counter
+  to sparks each pass. When the last torch is lit, sparks must equal 55.
+
+prelude: |
+  #include "gameapi.h"
+  int main() {
+      int sparks = 0;
+
+starter_code: |
+      // TODO: for each torch number 1 through 10,
+      //   add the torch number to sparks
+
+epilogue: |
+      gameapi::report("sparks", sparks);
+      return 0;
+      }
+
+solution: |
+      for (int torch = 1; torch <= 10; ++torch) {
+          sparks += torch;
+      }
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: sparks, expected: 55 }
+
+hints:
+  - trigger: "check_failed:exit_status"
+    message: "A for loop that never steps its counter burns forever. Make sure the third clause moves the counter forward."
+  - trigger: "check_failed:sparks"
+    message: "1+2+...+10 = 55. Check your bounds: start at 1, and use <= 10 so the tenth torch is counted too."
+  - trigger: "attempt:6"
+    message: "The shape: for (int torch = 1; torch <= 10; ++torch) { sparks += torch; }"
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

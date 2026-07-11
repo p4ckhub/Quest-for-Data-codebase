@@ -1,0 +1,70 @@
+id: marks-of-the-maker
+kind: program
+zone: character_creation
+act: 1
+title: "Marks of the Maker"
+concept: comments_and_timing
+concepts_required: [comments, timing]
+
+teaching: |
+  Some marks are written for the realm; others are written for whoever
+  comes after you — including the you of next season, who will remember
+  nothing. A line begun with `//` is a *maker's mark*: the realm passes
+  over it entirely, but every maker who reads the working sees it:
+
+  ```cpp
+  // The beacon must light before the gate is named, or the watch stays blind
+  std::cout << "The beacon is lit." << std::endl;
+  ```
+
+  The realm executes only the second line. The first belongs to people.
+  A good mark says *why* the working exists — the realm can always see
+  what the code does; only your mark can say what it is *for*.
+
+examples:
+  - prompt: "Marks can also ride at the end of a line, where a choice needs defending:"
+    code: |
+      std::cout << "Three knocks." << std::endl; // three, never four -- the fourth wakes it
+
+narrative: |
+  The World advances only one tick per run — each compilation is a
+  moment in time. Leave behind your mark with comments to guide those
+  who follow.
+
+objective: |
+  Write a program that includes a comment explaining its purpose.
+  The code itself can be simple (e.g., print a message), but the
+  comment must clearly describe what it does.
+
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    int main() {
+
+starter_code: |
+        // TODO: Add a descriptive comment above
+        std::cout << "The world advances one tick!" << std::endl;
+
+epilogue: |
+            gameapi::report("tick", 1);
+            return 0;
+            }
+
+solution: |
+            // This program declares the moment the world advances
+            std::cout << "The world advances one tick!" << std::endl;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: tick, expected: 1 }
+
+hints:
+  - trigger: "error:missing_comment"
+    message: "A true {{class_name}} leaves marks on the code. Add a comment!"
+  - trigger: "attempt:6"
+    message: "Add // followed by your explanation above the cout line"
+
+rewards:
+  xp: 50
+  unlocks_zone_progress: true

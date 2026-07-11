@@ -1,5 +1,4 @@
 // Game App - Main Renderer Script
-const { readFile, writeFile, exists, directoryExists } = window.gameapi || {};
 
 // State management
 const AppState = {
@@ -14,24 +13,27 @@ const AppState = {
   loadSaveSlots: async () => {
     const slots = [];
     for (let i = 1; i <= 3; i++) {
-      const path = `/appdata/CodeQuest/saves/slot${i}.json`;
-      if await exists(path) {
-        try {
-          slots.push(JSON.parse(await readFile(path)));
-        } catch { }
-      }
+      try {
+        const result = await window.gameapi?.saves?.load(i);
+        if (result?.success && result.data) {
+          slots.push(result.data);
+        }
+      } catch { }
     }
     AppState.saveSlotData = slots;
   },
   
-  saveGame: async () => {
-    const path = `/appdata/CodeQuest/saves/slot1.json`;
-    await writeFile(path, JSON.stringify({
+  saveGame: async (slot = 1) => {
+    const data = {
+      save_version: 1,
+      created_utc: new Date().toISOString(),
+      updated_utc: new Date().toISOString(),
       player: AppState.player,
       zones: {},
       spellbook: [],
       inventory: []
-    }));
+    };
+    await window.gameapi?.saves?.write(slot, data);
   }
 };
 
@@ -39,7 +41,7 @@ const AppState = {
 const GameApp = {
   showScreen: (screenName) => {
     document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-    const screen = document.getElementById(`${screenName}-screen`);
+    const screen = document.getElementById(screenName + '-screen');
     if (screen) {
       screen.classList.add('active');
       AppState.screen = screenName;
@@ -51,14 +53,17 @@ const GameApp = {
   },
   
   loadSaveSlot: async (slotIndex) => {
-    const path = `/appdata/CodeQuest/saves/slot${slotIndex}.json`;
-    if await exists(path) {
-      try {
-        const data = JSON.parse(await readFile(path));
-        AppState.player = data.player;
-        AppState.saveGame();
+    try {
+      const result = await window.gameapi?.saves?.load(slotIndex);
+      if (result?.success && result.data) {
+        AppState.player = result.data.player;
+        await AppState.saveGame();
         GameApp.showScreen('world-map');
-      } catch (e) { console.error(e); }
+      } else if (result?.error) {
+        console.error('Failed to load save:', result.error);
+      }
+    } catch (e) { 
+      console.error(e); 
     }
   },
   
@@ -76,64 +81,69 @@ const GameApp = {
   },
   
   loadZone: async (zoneId) => {
-    // Load lesson content from disk
-    const path = `/appdata/CodeQuest/content/zones/${zoneId}.json`;
-    if await exists(path) {
-      try {
-        AppState.currentLesson = JSON.parse(await readFile(path));
-        document.getElementById('lesson-objective').textContent = AppState.currentLesson.objective;
-        
-        // Initialize Monaco editor with starter code
-        window.monaco?.editor?.create(document.getElementById('editor-container'), {
-          value: AppState.currentLesson.starter_code,
-          language: 'cpp',
-          theme: 'vs-dark'
-        });
-        
-        GameApp.showScreen('lesson');
-      } catch (e) { console.error(e); }
+    // Load lesson content
+    const result = await window.gameapi?.lessons?.load(zoneId);
+    if (result?.success && result.lesson) {
+      AppState.currentLesson = result.lesson;
+      document.getElementById('lesson-objective').textContent = AppState.currentLesson.objective;
+      
+      GameApp.showScreen('lesson');
+    } else if (result?.error) {
+      console.error('Failed to load zone:', result.error);
     }
   },
   
   castCode: async () => {
-    // Get code from editor
-    const editor = window.monaco?.editor?.getModels()?.[0];
+    // Get code from Monaco editor
+    const editor = window.monaco ? window.monaco.editor.getModels()[0] : null;
     if (!editor) return;
     
     const code = editor.getValue();
+    const className = AppState.player?.class || 'Warrior';
     
-    // Compile and run in sandbox (call runner service)
-    const result = await fetch('/api/run-lesson', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code, lessonId: AppState.currentLesson?.id })
-    }).then(r => r.json());
+    // Call lesson:cast IPC handler
+    const result = await window.gameapi?.lessons?.cast({
+      lessonId: AppState.currentLesson?.id || '',
+      playerCode: code,
+      className: className
+    });
     
     // Display result
     const consoleDiv = document.getElementById('console-output');
     
-    if (result.compile_error) {
-      consoleDiv.innerHTML = `<pre style="color: #e94560;">${result.compile_error}</pre>`;
-    } else if (!result.passed) {
-      consoleDiv.innerHTML = `<pre style="color: #fa8231;">Validation failed: ${result.message}</pre>`;
+    if (result?.compileError) {
+      consoleDiv.innerHTML = '<pre style="color: #e94560;">' + result.compileError + '</pre>';
+    } else if (!result?.success) {
+      consoleDiv.innerHTML = '<pre style="color: #fa8231;">Failed: ' + (result?.error || 'Unknown error') + '</pre>';
     } else {
-      consoleDiv.innerHTML = `<pre style="color: #4cd137;">Success! XP: +${AppState.currentLesson?.rewards?.xp || 0}</pre>`;
+      consoleDiv.innerHTML = '<pre style="color: #4cd137;">' + result.output + '</pre>';
       // Update attempts counter
       const lessonId = AppState.currentLesson?.id || 'unknown';
       AppState.lessonAttempts[lessonId] = (AppState.lessonAttempts[lessonId] || 0) + 1;
-      document.getElementById('attempts').textContent = `Attempt: ${AppState.lessonAttempts[lessonId]}/3`;
-      
-      // Update spellbook if lesson grants one
-      if (AppState.currentLesson?.grants_spell && AppState.player) {
-        AppState.player.spellbook.push(AppState.currentLesson.grants_spell);
-      }
+      document.getElementById('attempts').textContent = 'Attempt: ' + AppState.lessonAttempts[lessonId] + '/3';
     }
   }
 };
 
-// Initialize on load
+// Signal to main process that renderer is ready
+function sendRendererReady() {
+  // Try the exposed signal helper
+  if (window.readySignal && typeof window.readySignal.send === 'function') {
+    window.readySignal.send('renderer-ready');
+    console.log('Sent renderer-ready via readySignal');
+  } else {
+    console.warn('readySignal not available');
+  }
+}
+
+// Initialize on DOM content loaded
 document.addEventListener('DOMContentLoaded', async () => {
   await AppState.loadSaveSlots();
+  
+  // Send ready signal after a short delay to ensure window is fully initialized
+  setTimeout(() => {
+    sendRendererReady();
+  }, 100);
   
   // Render save slots
   const slotsDiv = document.getElementById('save-slots');
@@ -141,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     for (const [i, slot] of AppState.saveSlotData.entries()) {
       const btn = document.createElement('div');
       btn.className = 'save-slot';
-      btn.textContent = `Save Slot ${i + 1}: ${slot?.player?.name || 'Empty'}`;
+      btn.textContent = 'Save Slot ' + (i + 1) + ': ' + (slot?.player?.name || 'Empty');
       btn.onclick = () => GameApp.loadSaveSlot(i + 1);
       slotsDiv.appendChild(btn);
     }
@@ -160,10 +170,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   for (const cls of classes) {
     const card = document.createElement('div');
     card.className = 'class-card';
-    card.innerHTML = `
-      <h3>${cls.name}</h3>
-      <p style="color: #aaa;">${cls.desc}</p>
-    `;
+    card.innerHTML = '<h3>' + cls.name + '</h3><p style="color: #aaa;">' + cls.desc + '</p>';
     card.onclick = () => GameApp.selectCharClass(cls.id);
     classDiv.appendChild(card);
   }
@@ -172,10 +179,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const script = document.createElement('script');
   script.src = 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js';
   script.onload = () => {
-    require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
-    require(['vs/editor/editor.main'], (monaco) => {
-      window.monaco = monaco;
-    });
+    if (window.require) {
+      window.require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
+      window.require(['vs/editor/editor.main'], function(monaco) {
+        window.monaco = monaco;
+      });
+    }
   };
   document.head.appendChild(script);
 });

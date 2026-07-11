@@ -1,0 +1,83 @@
+id: the-lockbox
+kind: program
+zone: guild_of_artificers
+act: 1
+title: "The Lockbox"
+concept: classes_encapsulation
+concepts_required: [structs, functions_basics, if_else, classes_encapsulation]
+
+narrative: |
+  A struct lays its members bare — anyone may reach in and take. The
+  Guild's vaults are built differently: a class hides its gold behind
+  private walls, and the only hands that touch it are the methods the
+  class itself offers. This is encapsulation: the vault enforces its
+  own law, so no caller can ever break it.
+
+objective: |
+  Define a class named Lockbox. It must keep a private int member gold
+  (starting at 0) and offer three public methods:
+    void deposit(int amount)   — adds amount to the gold
+    void spend(int amount)     — subtracts amount ONLY if the box holds
+                                 at least that much; otherwise refuses
+                                 and changes nothing
+    int balance()              — returns the gold inside
+  The vault's law: the balance may never go negative.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+
+starter_code: |
+  class Lockbox {
+  // TODO: a private section holding  int gold = 0;
+  // TODO: a public section with deposit, spend, and balance
+  };
+
+epilogue: |
+  int main() {
+      Lockbox box;
+      box.deposit(50);
+      box.spend(20);
+      box.spend(100);  // more than the box holds — the law says: refused
+      gameapi::report("balance", box.balance());
+      gameapi::log("The Lockbox clicks shut. Its law held.");
+      return 0;
+  }
+
+solution: |
+  class Lockbox {
+  private:
+      int gold = 0;
+  public:
+      void deposit(int amount) {
+          gold += amount;
+      }
+      void spend(int amount) {
+          if (gold >= amount) {
+              gold -= amount;
+          }
+      }
+      int balance() {
+          return gold;
+      }
+  };
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: balance, expected: 30 }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:balance"
+    message: "Deposit 50, spend 20 — that's 30. The third call tries to spend 100 from a box holding 30: your spend must refuse it, not go negative."
+  - trigger: "error:missing_semicolon"
+    message: "Like a struct, a class definition ends with };"
+  - trigger: "error:undeclared_identifier"
+    message: "The seal calls box.deposit, box.spend, and box.balance — all three must exist, spelled exactly so, in the public section."
+  - trigger: "attempt:6"
+    message: "Guard the vault inside spend: if (gold >= amount) { gold -= amount; } — and nothing else."
+
+rewards:
+  xp: 110
+  unlocks_zone_progress: true

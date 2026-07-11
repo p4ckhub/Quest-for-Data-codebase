@@ -1,0 +1,87 @@
+id: sandpit-the-slow-circle
+kind: program
+zone: sandpit
+act: 1
+title: "The Slow Circle"
+concept: cout
+concepts_required: [cout]
+
+teaching: |
+  **THE FORERUNNER:** "Walk with me. Not with your feet — with your casts.
+  Here is the second law of the voice: *casts happen in order*, top to
+  bottom, one after another, like footsteps. This is how I take three
+  steps of my own:"
+
+  ```cpp
+  std::cout << "I step onto the cool morning sand." << std::endl;
+  std::cout << "I pass the basin, still and patient." << std::endl;
+  std::cout << "I stop where my own footprints began." << std::endl;
+  ```
+
+  "Three casts, three moments, in exactly the order they are written.
+  The realm never skips ahead and never doubles back. Whatever you write
+  first, happens first. Remember that — one day it will save your life."
+
+examples:
+  - prompt: "The Forerunner turns in place, casting as it turns:"
+    code: |
+      std::cout << "To the east, dunes." << std::endl;
+      std::cout << "To the west, more dunes." << std::endl;
+  - prompt: "It chuckles — order matters even when the walk is short:"
+    code: |
+      std::cout << "I leap." << std::endl;
+      std::cout << "I land." << std::endl;
+
+narrative: |
+  "You have a voice now," the Forerunner says. "So use it to *look*.
+  Walk the edge of the sandpit and name what you find — the rope dummy
+  slumped on its post, the garment rack leaning in the wind, the still
+  pool that shows the sky. Name each one, in that order, and this place
+  will start to feel like yours."
+
+objective: |
+  Walk the sandpit with three casts, one per line, printing exactly:
+  I see the rope dummy
+  I see the garment rack
+  I see the still pool
+
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    int main() {
+        std::cout << "[You rise. The sand shifts underfoot. The Forerunner watches you go.]" << std::endl;
+
+starter_code: |
+        // Three casts, three sights -- in order
+
+epilogue: |
+        std::cout << "[The Forerunner] Good. Dummy, rack, pool. You walked it exactly as you wrote it -- the realm did not skip a step, and it never will." << std::endl;
+        return 0;
+        }
+
+solution: |
+        std::cout << "I see the rope dummy" << std::endl;
+        std::cout << "I see the garment rack" << std::endl;
+        std::cout << "I see the still pool" << std::endl;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: dummy, text: "I see the rope dummy" }
+    - { type: stdout_contains, id: rack, text: "I see the garment rack" }
+    - { type: stdout_contains, id: pool, text: "I see the still pool" }
+
+hints:
+  - trigger: "error:missing_semicolon"
+    message: "Every step must be sealed — end each cast with ';'"
+  - trigger: "check_failed:dummy"
+    message: "The realm listens for the exact words: I see the rope dummy"
+  - trigger: "check_failed:rack"
+    message: "The second sight, word for word: I see the garment rack"
+  - trigger: "check_failed:pool"
+    message: "The third sight, word for word: I see the still pool"
+  - trigger: "attempt:2"
+    message: "Three full casts, one under the other: std::cout << \"I see the rope dummy\" << std::endl; — then the rack, then the pool."
+
+rewards:
+  xp: 0

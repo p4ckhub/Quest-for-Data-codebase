@@ -1,51 +1,77 @@
-id: forge-strike-warrior
+id: the-war-cry
 kind: functions
 zone: function_forge
 act: 1
-title: "Forge Your First Spell"
+title: "The War Cry"
 concept: functions_basics
-concepts_required: [main_function, variables_and_types, functions_basics]
+concepts_required: [main_function, functions_basics]
 
-narrative: |
-  The Forge awaits your first true spell. A Warrior's strike
-  must strike with force between 5 and 10 — steady enough to trust,
-  wild enough to fear.
+teaching: |
+  Until now, every working you have cast lived and died inside main.
+  The Forge teaches a greater craft: a *function* — a working forged
+  once, under its own name, cast whenever that name is spoken. The
+  simplest kind promises nothing back. Its mark is `void`:
 
-objective: |
-  Write a function  int strike()  that returns a value
-  between 5 and 10 (inclusive). It may vary between calls or not —
-  but it must never leave that range.
+  ```cpp
+  void herald_call() {
+      std::cout << "The Forge is lit!" << std::endl;
+  }
+  ```
 
-starter_code: |
-      int strike() {
-          // TODO: return your strike's force (5–10)
+  Read the forging marks: `void` is the promise of nothing — this
+  working *acts* instead of yielding. `herald_call` is its name. The
+  `()` is the mouth of the spell, empty for now. Between `{` and `}`
+  lies the deed itself. You forge the working; the Forge itself will
+  speak its name and cast it. No `return` is needed — when the deed
+  is done, the working simply ends.
+
+examples:
+  - prompt: "A void working may hold many deeds — each cast performs them all, in order:"
+    code: |
+      void sound_the_alarm() {
+          std::cout << "To the walls!" << std::endl;
+          std::cout << "Light the beacons!" << std::endl;
       }
 
-harness: forge_attack_main.cpp
+narrative: |
+  The Forge-master bars the door behind you. "Every {{class_name}}
+  who works this Forge begins the same way: not with steel, but with
+  voice. Forge me a war cry — a working the Forge can cast to hear
+  who you are. It need yield nothing. It need only *ring*."
+
+objective: |
+  Forge a function named war_cry — promising void, taking nothing —
+  whose deed is to print your war cry. The cry is yours to choose,
+  but a true war cry ends with an exclamation mark.
+
+prelude: |
+    #include <iostream>
+
+starter_code: |
+      void war_cry() {
+          // TODO: let the Forge hear you
+      }
+
+harness: forge_warcry_main.cpp
 
 solution: |
-      int strike() {
-          return 7;
+      void war_cry() {
+          std::cout << "For the Forge!" << std::endl;
       }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_in_range, id: min_damage, min: 5, max: 10 }
-    - { type: check_in_range, id: max_damage, min: 5, max: 10 }
+    - { type: stdout_matches, id: cry, regex: "\\S.*!" }
 
 hints:
-  - trigger: "error:missing_return"
-    message: "The spell fizzles — a function promising an int must 'return' one."
-  - trigger: "check_failed:max_damage"
-    message: "The Forge-master frowns: a strike above force 10 would shatter your runeblade."
-  - trigger: "attempt:3"
-    message: "Simplest honest spell: return 7;  — a fixed force is a fine first forging."
-
-grants_spell:
-  name: "strike"
-  signature: "int strike()"
+  - trigger: "error:missing_semicolon"
+    message: "The cout cast inside your working still ends with ';' — the forging braces change nothing about that."
+  - trigger: "check_failed:cry"
+    message: "The Forge heard nothing that rings. Print at least one word, and end the cry with an exclamation mark: !"
+  - trigger: "attempt:6"
+    message: 'The whole forging: void war_cry() { std::cout << "For the Forge!" << std::endl; }'
 
 rewards:
-  xp: 100
+  xp: 75
   unlocks_zone_progress: true

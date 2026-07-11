@@ -1,0 +1,79 @@
+id: shape-of-the-breath
+kind: program
+zone: character_creation
+act: 1
+title: "The Shape of the Breath"
+concept: escape_sequences
+concepts_required: [main_function, cout]
+
+teaching: |
+  Not every mark inside the quotes is a sound. Some marks shape the breath
+  itself. Each begins with `\` — the herald's baton — and the realm obeys
+  the mark instead of speaking it:
+
+  ```cpp
+  std::cout << "The roll is called:\n\tFirst watch\n\tSecond watch" << std::endl;
+  ```
+
+  One cast — yet it lands as three lines. `\n` breaks the breath and starts
+  a new line, right there inside the quotes. `\t` is the held pause — a deep
+  indent, as before a name of rank. And when you must *speak* a quote mark
+  rather than end the quotation, arm it: `\"` puts a true " into the words
+  instead of closing them.
+
+examples:
+  - prompt: "A single cast that bows twice:"
+    code: |
+      std::cout << "The gate speaks:\n\t\"Enter.\"" << std::endl;
+  - prompt: "The baton can shape a whole ledger in one breath:"
+    code: |
+      std::cout << "Provisions:\n\tbread\n\twater\n\tresolve" << std::endl;
+
+narrative: |
+  The Halls test more than volume — they test *form*. The archivist's
+  slate awaits a properly shaped entry: the chant of awakening, set down
+  as a heading with its word indented beneath, held in true quote marks.
+  One cast. Shape the breath; do not spend three.
+
+objective: |
+  With a SINGLE cast (one std::cout line), print:
+  The chant rings:
+  	"awake"
+  — a line break made with \n, the indent made with \t, and the quotes
+  around awake made with \" marks.
+
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    int main() {
+        std::cout << "[The slate is blank. The archivist's chalk hovers.]" << std::endl;
+
+starter_code: |
+        // One cast, shaped with \n, \t, and \" -- not three casts
+
+epilogue: |
+        gameapi::report("shaped", 1);
+        return 0;
+        }
+
+solution: |
+        std::cout << "The chant rings:\n\t\"awake\"" << std::endl;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: heading, text: "The chant rings:" }
+    - { type: stdout_contains, id: chant, text: "\t\"awake\"" }
+    - { type: check_equals, id: shaped, expected: 1 }
+
+hints:
+  - trigger: "error:missing_semicolon"
+    message: "However long the breath, the cast still ends in ';'"
+  - trigger: "check_failed:chant"
+    message: "The second line is a \\t pause, then \\\"awake\\\" in armed quotes — all inside the same string."
+  - trigger: "attempt:6"
+    message: "The whole shape: std::cout << \"The chant rings:\\n\\t\\\"awake\\\"\" << std::endl;"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

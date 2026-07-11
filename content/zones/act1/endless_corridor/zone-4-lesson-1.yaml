@@ -1,0 +1,63 @@
+id: wards-of-the-corridor
+kind: program
+zone: endless_corridor
+act: 1
+title: "Wards of the Corridor"
+concept: while_loop
+concepts_required: [main_function, variables_and_types, if_else, while_loop]
+
+narrative: |
+  The Endless Corridor earns its name: a sealed door bars the way, layered
+  in twelve wards, and each strike of your will shatters exactly three.
+  One blow is never enough. The Corridor teaches the oldest law of
+  spellcraft — repeat until the condition breaks, or march forever.
+
+objective: |
+  Two variables are already declared:  int wards = 12;  and
+  int strikes = 0;  Write a while loop that runs as long as wards is
+  greater than 0. Each pass must subtract 3 from wards and add 1 to
+  strikes. When the loop ends, wards must be exactly 0 and strikes
+  exactly 4. Beware: a loop whose condition never turns false marches
+  until the Corridor devours you.
+
+prelude: |
+  #include "gameapi.h"
+  int main() {
+      int wards = 12;
+      int strikes = 0;
+
+starter_code: |
+      // TODO: while wards is greater than 0:
+      //   subtract 3 from wards, add 1 to strikes
+
+epilogue: |
+      gameapi::report("wards", wards);
+      gameapi::report("strikes", strikes);
+      return 0;
+      }
+
+solution: |
+      while (wards > 0) {
+          wards -= 3;
+          strikes += 1;
+      }
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: wards, expected: 0 }
+    - { type: check_equals, id: strikes, expected: 4 }
+
+hints:
+  - trigger: "check_failed:exit_status"
+    message: "The Corridor devoured your echo — your loop never ended. Does wards actually shrink inside the loop body?"
+  - trigger: "check_failed:wards"
+    message: "Each strike shatters exactly 3 wards — subtract 3 each pass, and loop while wards > 0."
+  - trigger: "check_failed:strikes"
+    message: "Count your blows: add 1 to strikes on every pass through the loop."
+  - trigger: "attempt:6"
+    message: "The shape of persistence: while (condition) { change something; }  — your condition is wards > 0."
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

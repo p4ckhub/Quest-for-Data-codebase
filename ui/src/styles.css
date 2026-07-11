@@ -109,6 +109,12 @@
 
 .game-panel {
   flex: 55;
+  /* min-width: 0 lets this pane actually shrink; without it flex children
+     clip their text at narrow window widths instead of wrapping */
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
   background: #0f0f23;
   border-right: 2px solid #e94560;
   padding: 1rem;
@@ -116,7 +122,9 @@
 
 .scene-canvas {
   width: 100%;
-  height: calc(100% - 4rem);
+  /* fixed strip — height:100%-4rem made this eat the whole panel and pushed
+     the narrative box (and its hints) below the fold */
+  flex: 0 0 110px;
   background: #0d0d1a;
   display: flex;
   align-items: center;
@@ -126,6 +134,7 @@
 
 .forge-panel {
   flex: 45;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   background: #1a1a2e;
@@ -135,6 +144,15 @@
   padding: 1rem;
   background: rgba(233, 69, 96, 0.2);
   border-bottom: 1px solid #e94560;
+}
+
+.objective-bar h4 {
+  overflow-wrap: break-word;
+}
+
+.hint-inline {
+  color: #fa8231;
+  font-weight: normal;
 }
 
 .code-editor {
@@ -154,8 +172,379 @@
   gap: 1rem;
 }
 
-.spell-screen, .settings-screen {
+.spell-screen, .settings-screen, .inventory-screen {
   padding: 2rem;
   background: #1a1a2e;
   height: 100vh;
+}
+
+.world-map-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #0f0f23;
+  position: relative;
+}
+
+.zone-nodes {
+  position: relative;
+  width: 300px;
+  height: 350px;
+}
+
+.node {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(233, 69, 96, 0.2);
+  border: 2px solid #e94560;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.node:hover {
+  transform: scale(1.1);
+  background: rgba(233, 69, 96, 0.4);
+}
+
+.node-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: #e94560;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.node[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ribbon {
+  position: absolute;
+  top: -12px;
+  right: -20px;
+  background: #e94560;
+  color: white;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+}
+
+.class-card .ribbon {
+  top: 2px;
+  right: 2px;
+}
+
+.node[disabled] .ribbon {
+  background: #666;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.item-slot {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #444;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+}
+
+.spells-grid {
+  margin-top: 1rem;
+}
+
+.spell-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.setting-group {
+  margin-bottom: 1.5rem;
+}
+
+.setting-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.setting-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* === the sandpit (PHASE1.5 §2) === */
+.sandpit-screen {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background: #1a1a12;
+  padding: 1.5rem 2rem;
+}
+
+.sandpit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #c9a84c;
+  padding-bottom: 0.75rem;
+}
+
+.sandpit-header h2 {
+  color: #c9a84c;
+  text-transform: lowercase;
+}
+
+.sandpit-body {
+  max-width: 720px;
+  margin: 0 auto;
+  padding-top: 1rem;
+}
+
+.sandpit-intro {
+  color: #bbb;
+  line-height: 1.6;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+.sandpit-section {
+  margin-bottom: 1.5rem;
+}
+
+.sandpit-section h3 {
+  color: #c9a84c;
+  margin-bottom: 0.5rem;
+}
+
+.sandpit-note {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.sandpit-ceremony {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 1px solid #4cd1d1;
+  border-radius: 8px;
+  background: rgba(76, 209, 209, 0.06);
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.sandpit-ceremony .ceremony-words {
+  margin: 0.75rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid #4cd1d1;
+  color: #4cd1d1;
+  font-style: italic;
+}
+
+.sandpit-ceremony .cast-btn {
+  margin-top: 1rem;
+}
+
+/* === Lesson Runner / Forge Panel Styles === */
+.lesson-runner-screen {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: #1a1a2e;
+}
+
+.code-editor-container {
+  flex: 1;
+  min-height: 200px;
+  width: 100%;
+  border-bottom: 2px solid #e94560;
+}
+
+.console-panel {
+  display: flex;
+  flex-direction: column;
+  /* bounded height — height:100% here starves the flex editor pane above to 0px */
+  flex: 0 0 auto;
+  max-height: 45%;
+  overflow-y: auto;
+}
+
+.console-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.console-tabs .tab {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.console-tabs .tab:hover {
+  color: #fff;
+  background: rgba(233, 69, 96, 0.1);
+}
+
+.console-tabs .tab.active {
+  border-bottom: 2px solid #e94560;
+  color: #e94560;
+}
+
+.console-content {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background: #0d0d1a;
+}
+
+.console-output,
+.console-raw {
+  color: #4cd137;
+  font-family: 'Consolas', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.console-errors {
+  color: #e94560;
+  font-family: 'Consolas', monospace;
+}
+
+.console-errors .error-item {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  background: rgba(233, 69, 96, 0.1);
+  border-left: 3px solid #e94560;
+}
+
+.console-errors .hint-text {
+  margin-left: 0.5rem;
+  color: #fa8231;
+  font-size: 0.85rem;
+}
+
+.teaching-panel {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(76, 209, 55, 0.06);
+  border: 1px solid rgba(76, 209, 55, 0.4);
+  border-radius: 6px;
+}
+
+.teaching-panel h4 {
+  margin-bottom: 0.5rem;
+  color: #4cd137;
+}
+
+.teaching-panel p {
+  color: #ccc;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  overflow-wrap: break-word;
+}
+
+.teaching-panel code {
+  background: #10102a;
+  padding: 0 0.3rem;
+  border-radius: 3px;
+  color: #4cd137;
+  font-family: 'Consolas', monospace;
+}
+
+.teaching-code {
+  background: #10102a;
+  padding: 0.6rem;
+  margin: 0.5rem 0;
+  border-left: 3px solid #4cd137;
+  border-radius: 3px;
+  color: #eee;
+  font-family: 'Consolas', monospace;
+  font-size: 0.85rem;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.teaching-example {
+  margin-top: 0.75rem;
+}
+
+.narrative-box {
+  padding: 1rem;
+  background: rgba(26, 26, 46, 0.5);
+  border-top: 1px solid #e94560;
+  min-height: 100px;
+  flex-shrink: 0;
+}
+
+.narrative-box h4 {
+  margin-bottom: 0.5rem;
+  color: #e94560;
+}
+
+.narrative-box p {
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.hint-message {
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  background: rgba(250, 130, 49, 0.2);
+  border-left: 3px solid #fa8231;
+  color: #fa8231;
+  font-size: 0.9rem;
+}
+
+.attempt-counter {
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.cast-btn {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.7); }
+  75% { box-shadow: 0 0 0 10px rgba(233, 69, 96, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0); }
+}
+
+.game-events {
+  margin-top: 1rem;
 }

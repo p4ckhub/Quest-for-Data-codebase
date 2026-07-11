@@ -10,29 +10,45 @@
     "toolchain:fetch": "ts-node scripts/fetch-toolchain.ts",
     "toolchain:verify": "ts-node scripts/verify-toolchain.ts",
     "accept:phase0": "ts-node scripts/accept-phase0.ts",
+    "accept:phase1": "ts-node scripts/accept-phase1.ts",
+    "accept:phase2": "ts-node scripts/accept-phase2.ts",
+    "accept:phase3": "ts-node scripts/accept-phase3.ts",
+    "accept:phase4": "ts-node scripts/accept-phase4.ts",
     "sandbox:test": "ts-node tests/sandbox.test.ts",
     "pch:gameapi": "g++ -std=c++17 -O0 -g0 -Igameapi gameapi/gameapi.h -o gameapi/gameapi.gch",
     "smoke:gameapi": "ts-node scripts/smoke-gameapi.ts",
-    "lessons:validate": "ts-node scripts/validate-gold-lessons.ts",
-    "electron:dev": "concurrently \\\\\\\"cd ui && npm run dev\\\\\\\" \\\\\\\"electron app/main.ts\\\\\\\"",
-    "electron:build": "cd ui && npm run build"
+    "content:validate": "ts-node scripts/validate-content.ts",
+    "lessons:validate": "ts-node scripts/validate-lessons.ts",
+    "combat:test": "vitest run tests/combat.test.ts",
+    "electron:dev": "concurrently \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"cd ui && npm run dev\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"electron app/main.ts\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
+    "electron:build": "cd ui && npm run build",
+    "electron:smoke": "xvfb-run -a npx electron --no-sandbox dist/scripts/electron-smoke.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@testing-library/react": "^16.3.2",
     "@types/electron": "^1.4.38",
     "@types/node": "^26.1.1",
     "concurrently": "^8.2.2",
     "electron": "^28.3.3",
     "electron-builder": "^24.13.3",
+    "jsdom": "^29.1.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
     "vite": "^5.0.0",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "zustand": "^5.0.14"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "@vitejs/plugin-react": "^4.7.0",
     "ajv": "^6.15.0",
-    "js-yaml": "^5.2.1"
+    "js-yaml": "^5.2.1",
+    "monaco-editor": "^0.45.0",
+    "playwright": "^1.45.0"
   }
 }

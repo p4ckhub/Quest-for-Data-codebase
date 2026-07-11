@@ -1,0 +1,81 @@
+id: the-rekindled-crystal
+kind: program
+zone: vault_of_variables
+act: 1
+title: "The Rekindled Crystal"
+concept: assignment
+concepts_required: [variables_and_types, assignment]
+
+teaching: |
+  The Vault splits a hair that matters for the rest of your life here.
+  *Initialization* lights a crystal for the first time — kind, name,
+  value, all at once. *Assignment* rekindles a crystal that already
+  burns — name and new value only:
+
+  ```cpp
+  int sentries = 2;   // initialization: the crystal is born holding 2
+  sentries = 5;       // assignment: the same crystal, rekindled to 5
+  ```
+
+  Never speak the kind twice. `int sentries = 5;` on the second line
+  would try to birth a *second* crystal under the same name, and the
+  Vault refuses twins — "redefinition," it will say, and mean it.
+  Born once, changed freely: that is a variable's whole life.
+
+examples:
+  - prompt: "The Keeper rekindles a crystal three times without ever renaming it:"
+    code: |
+      int watch = 1;
+      watch = 2;
+      watch = 3;
+
+narrative: |
+  Two crystals sit on the rekindling stand. The lanterns crystal already
+  burns — the Keeper lit it at 2 this morning, but the ledger demands 9
+  by nightfall. Beside it, an unlit socket waits for a crystal of your
+  own making: oaths, born holding 1, then rekindled to 3 — for the two
+  you will swear before you leave this Vault.
+
+objective: |
+  The variable lanterns already exists holding 2 — assign it 9 (no int,
+  no redeclaring). Then initialize your own int named oaths with value 1,
+  and assign it 3.
+
+prelude: |
+    #include "gameapi.h"
+    int main() {
+        int lanterns = 2;
+
+starter_code: |
+        // Rekindle lanterns to 9, then birth oaths at 1 and rekindle it to 3
+
+epilogue: |
+        gameapi::report("lanterns", lanterns);
+        gameapi::report("oaths", oaths);
+        return 0;
+        }
+
+solution: |
+        lanterns = 9;
+        int oaths = 1;
+        oaths = 3;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: lanterns, expected: 9 }
+    - { type: check_equals, id: oaths, expected: 3 }
+
+hints:
+  - trigger: "error:redefinition"
+    message: "The Vault refuses twins — lanterns already exists. Rekindle it without the kind: lanterns = 9;"
+  - trigger: "error:undeclared_identifier"
+    message: "oaths must be born before it can change: int oaths = 1; comes first."
+  - trigger: "check_failed:lanterns"
+    message: "The ledger demands lanterns end at exactly 9."
+  - trigger: "attempt:6"
+    message: "Three lines: lanterns = 9;  then int oaths = 1;  then oaths = 3;"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

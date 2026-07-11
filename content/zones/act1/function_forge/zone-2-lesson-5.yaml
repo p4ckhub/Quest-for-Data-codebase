@@ -1,0 +1,86 @@
+id: many-forms-one-name
+kind: functions
+zone: function_forge
+act: 1
+title: "Many Forms, One Name"
+concept: function_overloading
+concepts_required: [main_function, functions_basics, parameters, overloading]
+
+teaching: |
+  The Forge's final art: one name, many forms. Two spells may share a
+  name so long as their *mouths* differ — different offerings, or a
+  different count of them. The realm is never confused; it looks at
+  what the caster brought and chooses the matching form:
+
+  ```cpp
+  int ward() {
+      return 5;              // cast bare: ward()
+  }
+
+  int ward(int stones) {
+      return stones * 5;     // cast with an offering: ward(3)
+  }
+  ```
+
+  This is called *overloading*. Speak `ward()` with nothing and the
+  first form answers; speak `ward(3)` and the second. What the realm
+  refuses is two forms whose mouths are *identical* — same name, same
+  offerings — for then it could never choose. Twins of the mouth are
+  redefinition; siblings of the mouth are an art.
+
+examples:
+  - prompt: "The forms may differ in kind of offering, not only in count:"
+    code: |
+      int mend(int salve) {
+          return salve + 1;
+      }
+
+      int mend(float essence) {
+          return static_cast<int>(essence * 2.0f);
+      }
+
+narrative: |
+  The Forge masters many forms. A single name — strike — can manifest
+  in different ways. Learn to overload: same name, different signatures.
+
+objective: |
+  Write two overloaded functions named attack:
+  1. attack() with no parameters, returns 7
+  2. attack(int fury) with one int parameter, returns fury + 3
+
+starter_code: |
+        // TODO: Overloaded function 1: attack() -> int
+        // TODO: Overloaded function 2: attack(int fury) -> int
+
+harness: forge_overload_main.cpp
+
+solution: |
+        int attack() {
+            return 7;
+        }
+
+        int attack(int fury) {
+            return fury + 3;
+        }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_in_range, id: min_damage, min: 7, max: 12 }
+
+hints:
+  - trigger: "error:redefinition"
+    message: "You must use different signatures (different parameters) for overloading."
+  - trigger: "error:missing_return"
+    message: "Each function promising an int must return one."
+  - trigger: "attempt:6"
+    message: 'Write two functions with the same name but different parameter lists'
+
+rewards:
+  xp: 125
+  unlocks_zone_progress: true
+
+grants_spell:
+  name: "attack"
+  signature: "int attack()"
+

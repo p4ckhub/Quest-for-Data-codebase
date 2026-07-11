@@ -1,0 +1,62 @@
+id: toll-of-the-bridge
+kind: program
+zone: crossroads_of_choices
+act: 1
+title: "Toll of the Bridge"
+concept: if_else
+concepts_required: [main_function, cout, variables_and_types, if_else]
+
+narrative: |
+  A stone troll blocks the bridge out of the Forge lands. Its palm is
+  open: five gold pieces, or the gate stays sealed. Your purse sits in
+  the variable gold — the Compiler has already counted it for you.
+  Weigh it, and let your incantation decide.
+
+objective: |
+  A variable  int gold = 7;  is already declared. Write an if/else that
+  sets the already-declared std::string named gate to exactly "open"
+  when gold >= 5, and to exactly "sealed" otherwise.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+  int main() {
+      int gold = 7;
+      std::string gate = "";
+
+starter_code: |
+      // TODO: if gold is at least 5, set gate to "open";
+      // otherwise set gate to "sealed"
+
+epilogue: |
+      gameapi::report("gate", gate);
+      gameapi::report("gold", gold);
+      return 0;
+      }
+
+solution: |
+      if (gold >= 5) {
+          gate = "open";
+      } else {
+          gate = "sealed";
+      }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: gate, expected: "open" }
+    - { type: check_equals, id: gold, expected: 7 }
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "gate and gold already exist — the Compiler declared them above your incantation. Just use them."
+  - trigger: "check_failed:gate"
+    message: "The troll counts 7 gold in your purse, and 7 >= 5 — the gate should read exactly \"open\"."
+  - trigger: "check_failed:gold"
+    message: "Don't spend the gold — compare it, don't change it."
+  - trigger: "attempt:6"
+    message: "The shape of a choice: if (condition) { ... } else { ... }  — your condition is gold >= 5."
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

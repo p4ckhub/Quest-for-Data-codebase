@@ -1,0 +1,77 @@
+id: sandpit-the-bell
+kind: program
+zone: sandpit
+act: 1
+title: "The Bell of Arrival"
+concept: cout
+concepts_required: [cout]
+
+teaching: |
+  **THE FORERUNNER:** "There is a bell at the sandpit's gate. Every soul
+  who trains here rings it — once for arriving, and once more for every
+  time they nearly quit and didn't. Before you ring it, learn this: a
+  single cast can carry *many* things, chained along the channel. Words
+  and numbers, side by side:"
+
+  ```cpp
+  std::cout << "The bell has hung here for " << 900 << " years." << std::endl;
+  ```
+
+  "One cast. Three passengers. Each `<<` hands the next thing to the voice —
+  words ride in quotes, but a number rides *bare*, no quotes at all, because
+  the realm knows a number when it hears one. Chain as many as you need;
+  the voice does not tire."
+
+examples:
+  - prompt: "The Forerunner chains a longer cast, unhurried:"
+    code: |
+      std::cout << "I have failed " << 10000 << " times, and I am still here." << std::endl;
+  - prompt: "And a short one — two numbers can ride together too:"
+    code: |
+      std::cout << 3 << " strikes, " << 1 << " bell." << std::endl;
+
+narrative: |
+  The bell hangs from a driftwood arch, older than the Forerunner will
+  admit. "Go on," it says. "Announce yourself. Say how many times you
+  ring it — and let the number travel bare in the cast, unquoted, the
+  way numbers are meant to travel."
+
+objective: |
+  Ring the bell with a single chained cast. Print exactly:
+  I ring the bell 3 times.
+  — carrying the 3 as a bare number (no quotes around it), chained
+  between the words with <<.
+
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    int main() {
+        std::cout << "[The bell waits, tarnished and patient.]" << std::endl;
+
+starter_code: |
+        // One cast: words, then the bare number 3, then more words
+
+epilogue: |
+        std::cout << "[The bell sings. Somewhere far off, something answers it.]" << std::endl;
+        std::cout << "[The Forerunner] Three rings. The realm counted with you -- it always does, when a number travels bare." << std::endl;
+        return 0;
+        }
+
+solution: |
+        std::cout << "I ring the bell " << 3 << " times." << std::endl;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: rang, text: "I ring the bell 3 times." }
+
+hints:
+  - trigger: "error:missing_semicolon"
+    message: "Even a long chained cast ends with a single ';'"
+  - trigger: "check_failed:rang"
+    message: "The realm listens for exactly: I ring the bell 3 times. — mind the spaces around the 3, and the final period."
+  - trigger: "attempt:2"
+    message: "The shape: std::cout << \"I ring the bell \" << 3 << \" times.\" << std::endl; — note the space before the closing quote and after the opening one, so the 3 doesn't touch the words."
+
+rewards:
+  xp: 0

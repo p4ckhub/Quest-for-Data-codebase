@@ -1,0 +1,76 @@
+id: parameters-of-power
+kind: functions
+zone: function_forge
+act: 1
+title: "Parameters of Power"
+concept: function_parameters
+concepts_required: [main_function, functions_basics, parameters]
+
+teaching: |
+  The mouth of a spell need not stay empty. A *parameter* is an
+  offering the caster places into that mouth — a named crystal, born
+  fresh at each cast, holding whatever the caster brought:
+
+  ```cpp
+  int braced(int shield) {
+      return shield * 2;
+  }
+  ```
+
+  Inside the braces, `shield` is a variable like any other — but its
+  value is chosen by whoever casts the spell. Cast `braced(3)` and
+  shield is born holding 3, so the yield is 6; cast `braced(10)` and
+  the same working yields 20. One forging, endless offerings. The
+  kind is declared in the mouth — `int shield` — because the Forge
+  must know what manner of thing may be poured in.
+
+examples:
+  - prompt: "A mouth may take two offerings, parted by a comma — the caster supplies both, in order:"
+    code: |
+      int flank(int blade, int swiftness) {
+          return blade + swiftness;
+      }
+
+narrative: |
+ Power flows through your veins, but it must be directed. Learn to
+ channel your fury with function parameters — each one a conduit of
+ your {{class_name}}'s might.
+
+objective: |
+  Write a function strike_with that takes one int parameter (fury) and
+  returns fury + 5 as the damage. The fury parameter must be used in
+  the return expression.
+
+starter_code: |
+        int strike_with(int fury) {
+            // TODO: Return fury + 5
+            return 0;
+        }
+
+harness: forge_parameters_main.cpp
+
+solution: |
+        int strike_with(int fury) {
+            return fury + 5;
+        }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_in_range, id: min_damage, min: 10, max: 15 }
+
+hints:
+  - trigger: "error:missing_return"
+    message: "Your function promises to return an int — don't leave it empty."
+  - trigger: "error:undeclared_identifier"
+    message: "The fury parameter isn't being used. Use it in your expression."
+  - trigger: "attempt:6"
+    message: 'Use: return fury + 5; where fury is the function parameter'
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true
+
+grants_spell:
+  name: "{{starter_spell}}_with"
+  signature: "int strike_with(int fury)"

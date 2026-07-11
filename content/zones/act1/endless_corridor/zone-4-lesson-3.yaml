@@ -1,0 +1,64 @@
+id: the-skipping-stones
+kind: program
+zone: endless_corridor
+act: 1
+title: "The Skipping Stones"
+concept: break_continue
+concepts_required: [main_function, if_else, for_loop, break_continue]
+
+narrative: |
+  The floor ahead is twenty numbered stones. Every third stone is cursed
+  — step past it without touching (continue). And stone 13 is no stone
+  at all but the far door itself: the moment you reach it, stop walking
+  entirely (break). The Corridor respects two words above all others:
+  the one that skips, and the one that ends.
+
+objective: |
+  A variable  int safe_steps = 0;  is already declared. Write a for
+  loop with a counter from 1 to 20. Inside it: if the counter is 13,
+  break out of the loop before counting it. Otherwise, if the counter
+  is divisible by 3 (counter % 3 == 0), continue to the next stone
+  without counting. Every other stone adds 1 to safe_steps. Done right,
+  you step on exactly 8 safe stones before the door.
+
+prelude: |
+  #include "gameapi.h"
+  int main() {
+      int safe_steps = 0;
+
+starter_code: |
+      // TODO: for counter 1 through 20:
+      //   if counter == 13 -> break
+      //   else if counter % 3 == 0 -> continue
+      //   otherwise add 1 to safe_steps
+
+epilogue: |
+      gameapi::report("safe_steps", safe_steps);
+      return 0;
+      }
+
+solution: |
+      for (int stone = 1; stone <= 20; ++stone) {
+          if (stone == 13) {
+              break;
+          }
+          if (stone % 3 == 0) {
+              continue;
+          }
+          safe_steps += 1;
+      }
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: safe_steps, expected: 8 }
+
+hints:
+  - trigger: "check_failed:safe_steps"
+    message: "Walk it by hand: stones 1,2,4,5,7,8,10,11 are safe before the door at 13 — that's 8. Is your break checked BEFORE the curse-skip?"
+  - trigger: "attempt:6"
+    message: "Order matters: check stone == 13 (break) first, then stone % 3 == 0 (continue), then count."
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

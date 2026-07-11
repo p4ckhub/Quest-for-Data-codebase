@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "classes": {
+    "warrior": {
+      "display_name": "Warrior",
+      "description": "A front-line Artificer who binds incantations into steel.",
+      "attack_style": "melee",
+      "weapon": "runeblade",
+      "base_stats": {
+        "hp": 120,
+        "mp": 20,
+        "str": 14,
+        "agi": 8,
+        "int": 6
+      },
+      "starter_spell": {
+        "name": "strike",
+        "signature": "int strike()"
+      },
+      "damage_formula": {
+        "dice_min": 5,
+        "dice_max": 10,
+        "scaling_stat": "str",
+        "scaling_div": 2,
+        "mp_cost": 0
+      },
+      "palette": "#c0392b",
+      "level_growth": {
+        "hp": 20,
+        "mp": 5,
+        "str": 3,
+        "agi": 1,
+        "int": 1
+      }
+    },
+    "archer": {
+      "display_name": "Archer",
+      "description": "A ranger whose arrows carry compiled sigils.",
+      "attack_style": "projectile_physical",
+      "weapon": "sigilbow",
+      "base_stats": {
+        "hp": 90,
+        "mp": 30,
+        "str": 8,
+        "agi": 14,
+        "int": 8
+      },
+      "starter_spell": {
+        "name": "loose_arrow",
+        "signature": "int loose_arrow()"
+      },
+      "damage_formula": {
+        "dice_min": 4,
+        "dice_max": 8,
+        "scaling_stat": "agi",
+        "scaling_div": 2,
+        "mp_cost": 0
+      },
+      "palette": "#27ae60",
+      "level_growth": {
+        "hp": 15,
+        "mp": 8,
+        "str": 1,
+        "agi": 3,
+        "int": 1
+      }
+    },
+    "mage": {
+      "display_name": "Mage",
+      "description": "A scholar who casts raw incantations as bolts of force.",
+      "attack_style": "projectile_magic",
+      "weapon": "focus-staff",
+      "base_stats": {
+        "hp": 80,
+        "mp": 60,
+        "str": 6,
+        "agi": 8,
+        "int": 14
+      },
+      "starter_spell": {
+        "name": "force_bolt",
+        "signature": "int force_bolt()"
+      },
+      "damage_formula": {
+        "dice_min": 6,
+        "dice_max": 12,
+        "scaling_stat": "int",
+        "scaling_div": 2,
+        "mp_cost": 5
+      },
+      "palette": "#8e44ad",
+      "level_growth": {
+        "hp": 10,
+        "mp": 12,
+        "str": 1,
+        "agi": 1,
+        "int": 4
+      }
+    }
+  }
+}

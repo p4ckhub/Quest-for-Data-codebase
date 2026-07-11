@@ -1,0 +1,88 @@
+id: sandpit-the-garment-rack
+kind: program
+zone: sandpit
+act: 1
+title: "The Garment Rack"
+concept: variables_and_types
+concepts_required: [cout, variables_and_types]
+
+teaching: |
+  **THE FORERUNNER:** "At the pool you learned to *hold* a thing. Now learn
+  the greater half of the secret: a held thing can be *changed*. This is
+  called assignment — the same name, given a new value:"
+
+  ```cpp
+  std::string banner = "faded";
+  std::cout << "The banner is " << banner << "." << std::endl;
+  banner = "mended";
+  std::cout << "The banner is " << banner << "." << std::endl;
+  ```
+
+  "Mark the third line well. No `std::string` this time — the name already
+  exists; saying its kind again would try to forge a *second* banner with
+  the same name, and the realm refuses twins. Just the name, `=`, the new
+  value. And see what follows: the last two casts are written *identically*,
+  yet they speak different words — because what `banner` held had changed
+  between them. Same incantation, new truth. Most of the power you will
+  ever wield is exactly this."
+
+examples:
+  - prompt: "The Forerunner turns its own cuff from one color to another:"
+    code: |
+      std::string cuff = "dust-brown";
+      cuff = "bone-white";
+      std::cout << "The cuff is " << cuff << " now." << std::endl;
+
+narrative: |
+  The rack leans in the wind, hung with training cloaks in colors no
+  army would march under. You are wearing the ash-grey one — you have
+  been since you woke. "Announce what you wear," the Forerunner says,
+  "then take the crimson and announce it again. Same words, same cast.
+  Let the realm hear the change, even if no eye here can see it."
+
+objective: |
+  The cloak variable already holds "ash-grey". Print: I wear ash-grey
+  using the variable, then assign "crimson" to cloak and print again
+  with the same cast, so the realm hears: I wear crimson
+
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    #include <string>
+    int main() {
+        std::string cloak = "ash-grey";
+        std::cout << "[The rack creaks. The crimson cloak waits on its peg.]" << std::endl;
+
+starter_code: |
+        // Speak the cloak, change the cloak, speak it again
+
+epilogue: |
+        std::cout << "[The Forerunner] Same cast, twice -- and it told two truths, because you changed what the name held between them. Nothing here will show the crimson. Wear it anyway." << std::endl;
+        return 0;
+        }
+
+solution: |
+        std::cout << "I wear " << cloak << "." << std::endl;
+        cloak = "crimson";
+        std::cout << "I wear " << cloak << "." << std::endl;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: before, text: "I wear ash-grey" }
+    - { type: stdout_contains, id: after, text: "I wear crimson" }
+
+hints:
+  - trigger: "error:redefinition"
+    message: "The realm refuses twins — cloak already exists. To change it, drop the std::string: just cloak = \"crimson\";"
+  - trigger: "error:missing_semicolon"
+    message: "Casts and assignments alike end with ';'"
+  - trigger: "check_failed:before"
+    message: "First, speak what you already wear — the variable holds it: std::cout << \"I wear \" << cloak << \".\" << std::endl;"
+  - trigger: "check_failed:after"
+    message: "The change comes between the casts: cloak = \"crimson\"; — then speak the very same cast again."
+  - trigger: "attempt:2"
+    message: "Three lines: speak the cloak, then cloak = \"crimson\";, then speak the cloak again — the identical cout line both times."
+
+rewards:
+  xp: 0

@@ -1,0 +1,65 @@
+id: the-unbreakable-binding
+kind: functions
+zone: cursed_crypt
+act: 1
+title: "The Unbreakable Binding"
+concept: smart_pointers
+concepts_required: [heap_allocation, memory_leaks, classes_encapsulation, smart_pointers]
+
+narrative: |
+  The old mages died forgetting their deletes. The Guild's answer was
+  not discipline — it was a better binding. A std::unique_ptr owns what
+  it holds: when the pointer's scope ends, its destructor speaks the
+  delete FOR you (you built destructors yourself, in the Guild — this
+  is that same rite, working on your behalf). Bind a companion the
+  unbreakable way: no delete anywhere, and nothing left alive.
+
+objective: |
+  Write a function  int bind_companion()  that:
+    1. creates  std::unique_ptr<int> bond = std::make_unique<int>(30);
+    2. returns the bond's value plus 12 (use *bond)
+  There must be NO delete in your code — the binding unmakes itself.
+  The ledger must still read: one binding made, nothing left alive.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+  #include <memory>
+
+starter_code: |
+  int bind_companion() {
+      // TODO: std::make_unique<int>(30), return *bond + 12 — no delete!
+      return 0;
+  }
+
+harness: crypt_smart_main.cpp
+extra_units: [leakcheck.cpp]
+
+solution: |
+  int bind_companion() {
+      std::unique_ptr<int> bond = std::make_unique<int>(30);
+      return *bond + 12;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: strength, expected: 42 }
+    - { type: check_equals, id: allocs, expected: 1 }
+    - { type: check_equals, id: live_bytes, expected: 0 }
+    - { type: event_emitted, event_type: alloc_report }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:strength"
+    message: "The companion's heart holds 30; with your 12 that's 42. Read it through the binding: *bond + 12."
+  - trigger: "check_failed:live_bytes"
+    message: "If aether leaked, the binding wasn't a unique_ptr — a raw new with no delete leaks even here. Use std::make_unique<int>(30)."
+  - trigger: "error:undeclared_identifier"
+    message: "make_unique lives in namespace std — write std::make_unique<int>(30). The <memory> scroll is already unrolled above."
+  - trigger: "attempt:6"
+    message: "Two lines: std::unique_ptr<int> bond = std::make_unique<int>(30);  return *bond + 12;"
+
+rewards:
+  xp: 200
+  unlocks_zone_progress: true

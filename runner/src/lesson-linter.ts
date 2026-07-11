@@ -17,5 +17,12 @@ export function lintLesson(lessonPath: string): string[] {
     errors.push(...(validate.errors || []).map(e => `Schema: ${e.schemaPath} ${e.message}`));
   }
 
+  // PHASE1.5 pillar: teaching must SHOW the concept, not just describe it —
+  // at least one fenced code block with a real worked example.
+  const teaching = (data as any)?.teaching;
+  if (typeof teaching === 'string' && !/```/.test(teaching)) {
+    errors.push('Teaching: must contain at least one fenced ``` code block (a worked example)');
+  }
+
   return errors;
 }

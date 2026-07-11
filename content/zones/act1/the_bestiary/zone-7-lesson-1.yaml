@@ -1,0 +1,75 @@
+id: first-entry-ash-wolf
+kind: functions
+zone: the_bestiary
+act: 1
+title: "First Entry: the Ash Wolf"
+concept: inheritance
+concepts_required: [character_class, inheritance]
+
+narrative: |
+  The Bestiary is not a book of drawings. Every beast in it is a class,
+  and every class inherits from one ancient form: Monster. The keepers'
+  summoning circle knows nothing of wolves or bats — it only knows
+  Monster, and any form that inherits from it will answer. Write your
+  first entry, and watch it fight for real.
+
+objective: |
+  Define a class AshWolf that inherits publicly from Monster and
+  overrides three of its virtual methods:
+    std::string species() const — returns exactly "Ash Wolf"
+    int attack()                — returns 7 (a wolf is steady, not wild)
+    int max_hp() const          — returns 26
+  Mark each with the word `override` — the Compiler will then guard
+  your spelling against the base form's.
+
+prelude: |
+  #include "gameapi.h"
+  #include "monsters.h"
+  #include <string>
+
+starter_code: |
+  // TODO: class AshWolf : public Monster { ... };
+  // Override species(), attack(), and max_hp() — each marked `override`.
+
+epilogue: |
+  REGISTER_MONSTER("ash_wolf", AshWolf)
+
+solution: |
+  class AshWolf : public Monster {
+  public:
+      std::string species() const override {
+          return "Ash Wolf";
+      }
+      int attack() override {
+          return 7;
+      }
+      int max_hp() const override {
+          return 26;
+      }
+  };
+
+harness: bestiary_main.cpp
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: registered, expected: 1 }
+    - { type: check_equals, id: species, expected: "Ash Wolf" }
+    - { type: check_equals, id: max_hp, expected: 26 }
+    - { type: check_equals, id: attack_min, expected: 7 }
+    - { type: check_equals, id: attack_max, expected: 7 }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:species"
+    message: "The circle heard a different name. species() must return exactly \"Ash Wolf\" — capital A, capital W, one space."
+  - trigger: "check_failed:attack_min"
+    message: "The wolf's bite is a steady 7 — attack() should return 7 every time."
+  - trigger: "error:unknown_type"
+    message: "The base form is spelled Monster, and inheritance reads: class AshWolf : public Monster { ... };"
+  - trigger: "attempt:6"
+    message: "Each override looks like the base's declaration with `override` at the end: std::string species() const override { return \"Ash Wolf\"; }"
+
+rewards:
+  xp: 150
+  unlocks_zone_progress: true

@@ -1,0 +1,83 @@
+id: sandpit-the-still-pool
+kind: program
+zone: sandpit
+act: 1
+title: "The Still Pool"
+concept: variables_and_types
+concepts_required: [cout, variables_and_types]
+
+teaching: |
+  **THE FORERUNNER:** "Kneel at the pool. That face looking back is yours —
+  and here is a secret worth more than any spell: *you can decide things
+  about yourself, and make the realm hold them for you.* A held thing is
+  called a variable. Watch me hold one:"
+
+  ```cpp
+  std::string eyes = "storm-grey";
+  std::cout << "My eyes are " << eyes << "." << std::endl;
+  ```
+
+  "Read the first line as a small ritual: `std::string` names the *kind*
+  of thing held — words. `eyes` is the name I chose for it. `=` places
+  the value into the name, and the value itself rides in quotes. From
+  that moment on, speaking `eyes` — bare, no quotes — pours out whatever
+  it holds. No glass in this realm will show your reflection change yet.
+  But the realm remembers what you set. That is enough. That is *everything*."
+
+examples:
+  - prompt: "The Forerunner holds another, then speaks it:"
+    code: |
+      std::string mood = "patient";
+      std::cout << "Today I am " << mood << "." << std::endl;
+  - prompt: "The name is yours to choose; the realm only cares that you choose it before you speak it:"
+    code: |
+      std::string scar = "old";
+      std::cout << "The scar is " << scar << ", and it does not ache." << std::endl;
+
+narrative: |
+  The pool does not ripple, even when the wind comes. "Decide something
+  true about yourself," the Forerunner says. "Your hair — what color is
+  it? Not what color it *was*. What color you say it is, here, now. Hold
+  it in a variable, then speak it to the realm."
+
+objective: |
+  Declare a std::string variable named hair holding a color of your
+  choosing, then use it in a cast to print: My hair is <your color>.
+  (For example: My hair is brown.)
+
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    #include <string>
+    int main() {
+        std::cout << "[The pool holds your reflection perfectly still, waiting.]" << std::endl;
+
+starter_code: |
+        // Hold your hair color in a variable, then speak it
+
+epilogue: |
+        std::cout << "[The Forerunner] So it is, and so the realm remembers -- even though no mirror here will show it yet. What you declare, you carry." << std::endl;
+        return 0;
+        }
+
+solution: |
+        std::string hair = "brown";
+        std::cout << "My hair is " << hair << "." << std::endl;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: declared, regex: "My hair is \\S+" }
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The realm doesn't know that name yet — declare it first: std::string hair = \"brown\";"
+  - trigger: "error:missing_semicolon"
+    message: "Both the holding and the speaking are casts — each ends with ';'"
+  - trigger: "check_failed:declared"
+    message: "The realm listens for the words: My hair is <something> — speak the variable bare in the chain: << hair <<"
+  - trigger: "attempt:2"
+    message: "Two lines: std::string hair = \"brown\"; then std::cout << \"My hair is \" << hair << \".\" << std::endl;"
+
+rewards:
+  xp: 0

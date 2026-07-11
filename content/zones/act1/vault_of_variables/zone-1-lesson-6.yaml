@@ -1,0 +1,79 @@
+id: sealed-with-const
+kind: program
+zone: vault_of_variables
+act: 1
+title: "Sealed With Const"
+concept: const_correctness
+concepts_required: [variables_and_types, const]
+
+teaching: |
+  You have lit crystals and relit them at will. The Vault's final teaching
+  is the opposite power: *sealing*. Set the word `const` before a crystal's
+  kind, and its first value becomes its only value, forever:
+
+  ```cpp
+  const int vault_doors = 12;
+  ```
+
+  Try to change the unchangeable and the Vault itself refuses. This
+  working is *wrong on purpose* — cast it nowhere, only read what follows:
+
+  ```cpp
+  const int vault_doors = 12;
+  vault_doors = 13;   // the Vault answers: "assignment of read-only variable"
+  ```
+
+  That refusal is not punishment; it is the entire point. Seal what must
+  never drift — the count of doors, the true names, the laws — and the
+  realm will guard them against everyone. Including you.
+
+examples:
+  - prompt: "The Keeper seals a law it has carried through nine collapses:"
+    code: |
+      const float patience = 1.0f;
+
+narrative: |
+  The Vault's locks require const-certainty. Once set, values must not
+  be altered. Master the const keyword to prove your discipline.
+
+objective: |
+  Declare three variables: an int named hp with value 100, a float named
+  mana with value 50.5f, and a double named speed with value 2.5.
+  All must be declared as const.
+
+prelude: |
+    #include "gameapi.h"
+    int main() {
+
+starter_code: |
+        // TODO: Declare hp as const int = 100
+        // TODO: Declare mana as const float = 50.5f
+        // TODO: Declare speed as const double = 2.5
+
+epilogue: |
+            static_assert(std::is_const_v<decltype(hp)>, "hp must be const");
+            gameapi::report("hp", hp);
+            return 0;
+            }
+
+solution: |
+            const int hp = 100;
+            const float mana = 50.5f;
+            const double speed = 2.5;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: hp, expected: 100 }
+
+hints:
+  - trigger: "error:assign_to_const"
+    message: "You cannot alter what the Vault has sealed. Remove the assignment attempt."
+  - trigger: "error:missing_semicolon"
+    message: "Each declaration must end with ';'"
+  - trigger: "attempt:6"
+    message: 'Use: const type name = value;  — for example: const int gold = 10;'
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

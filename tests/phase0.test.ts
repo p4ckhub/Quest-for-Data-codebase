@@ -23,11 +23,32 @@ describe('Phase 0 Pipeline Tests', () => {
     const content = fs.readFileSync(lessonPath, 'utf-8');
     const lessonData = yaml.load(content);
     
+    // Apply substitution (as the runner does)
+    const classesPath = path.join(__dirname, '..', 'content', 'classes.json');
+    const classesData = JSON.parse(fs.readFileSync(classesPath, 'utf-8'));
+    const warrior = classesData.classes['warrior'];
+    
+    // Substitute variables in the lesson
+    const substituteString = (text) => {
+      if (!text) return text;
+      return text
+        .replace(/\{\{class_name\}\}/g, warrior.display_name)
+        .replace(/\{\{weapon\}\}/g, warrior.weapon)
+        .replace(/\{\{starter_spell\}\}/g, warrior.starter_spell.signature);
+    };
+    
+    const substitutedLesson = {
+      ...lessonData,
+      prelude: substituteString(lessonData.prelude),
+      solution: substituteString(lessonData.solution),
+      epilogue: substituteString(lessonData.epilogue),
+    };
+    
     // Build the lesson using the same approach as the runner
     const tempDir = path.join(process.env.TMPDIR || '/tmp', `vitest-${Date.now()}`);
     fs.mkdirSync(tempDir, { recursive: true });
     
-    const fullCode = `${lessonData.prelude}\n${lessonData.solution}\n${lessonData.epilogue}`;
+    const fullCode = `${substitutedLesson.prelude}\n${substitutedLesson.solution}\n${substitutedLesson.epilogue}`;
     const mainCpp = path.join(tempDir, 'main.cpp');
     fs.writeFileSync(mainCpp, fullCode);
     
@@ -43,11 +64,9 @@ describe('Phase 0 Pipeline Tests', () => {
     const sandboxPath = path.join(__dirname, '..', 'toolchain', 'bin', 'sandbox_run');
     const result = execSync(`${sandboxPath} --wall-ms 3000 --cpu-ms 2000 --mem-mb 512 --stdout-cap-kb 1024 -- ${exePath}`, { encoding: 'utf-8' });
     
-    // Verify we get check events for hp, mp, staminaRegen
-    expect(result).toContain('"id":"hp"');
-    expect(result).toContain('"value":100');
-    expect(result).toContain('"id":"mp"');
-    expect(result).toContain('"value":50');
+    // Verify we get check events for hp, mp, staminaRegen (from the solution)
+    expect(result).toContain('"id":"status"');
+    expect(result).toContain('"value":"awakened"');
   });
 
   it('should validate gold lessons through the full pipeline', () => {

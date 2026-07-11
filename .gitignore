@@ -10,6 +10,21 @@ toolchain/llvm-mingw-*
 
 # Node modules
 node_modules/
+ui/node_modules/
+
+# Compiler byproducts (regenerated on build; never hand-edited)
+*.gch
+*.o
+a.out
+
+# Runtime/scratch output (not source)
+state.json
+combat.log
+scratch/
+
+# Stray compiled copy that sits next to the real app/preload.ts source;
+# the build produces the real one under dist/app/
+/app/preload.js
 
 # IDE
 .vscode/

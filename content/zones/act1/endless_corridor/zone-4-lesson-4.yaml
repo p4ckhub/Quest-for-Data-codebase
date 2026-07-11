@@ -1,0 +1,61 @@
+id: forging-the-flurry
+kind: functions
+zone: endless_corridor
+act: 1
+title: "Forging the Flurry"
+concept: loops_in_functions
+concepts_required: [functions_basics, while_loop, for_loop, loops_in_functions]
+
+narrative: |
+  At the Corridor's end waits not one foe but a swarm — and a single
+  strike will not answer a hundred wings. The masters of the Corridor
+  forged their signature spell here: the Flurry, one incantation that
+  strikes again and again inside a loop. Forge it, and it is yours to
+  cast in the battle ahead.
+
+objective: |
+  Write a function  int flurry()  that uses a loop to strike exactly 3
+  times for 4 damage each, accumulating the total in a variable, and
+  returns the total (12). The loop is the point — let it do the adding.
+
+starter_code: |
+  int flurry() {
+      int total = 0;
+      // TODO: loop 3 times, adding 4 to total each pass
+      return total;
+  }
+
+harness: corridor_flurry_main.cpp
+
+solution: |
+  int flurry() {
+      int total = 0;
+      for (int hit = 0; hit < 3; ++hit) {
+          total += 4;
+      }
+      return total;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: flurry_total, expected: 12 }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:exit_status"
+    message: "If your loop's condition never turns false, the Flurry never ends — and the Corridor claims you. Check your counter."
+  - trigger: "check_failed:flurry_total"
+    message: "3 strikes of 4 is 12. Loop exactly 3 times and add 4 each pass — don't just return 12 by hand, the swarm will know."
+  - trigger: "error:missing_return"
+    message: "The Flurry must answer with its total — return total; at the end."
+  - trigger: "attempt:6"
+    message: "The shape: for (int hit = 0; hit < 3; ++hit) { total += 4; }  then return total;"
+
+rewards:
+  xp: 125
+  unlocks_zone_progress: true
+
+grants_spell:
+  name: "flurry"
+  signature: "int flurry()"

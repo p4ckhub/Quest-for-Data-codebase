@@ -1,0 +1,40 @@
+# Zone 9 - Boss Encounter: The Leak Tyrant
+# The thing the old mages fed, one forgotten delete at a time. It carries
+# unreclaimed aether (leak_bytes) as content: while any remains, it GROWS
+# every turn (§11.6) — out-damage the growth or be buried.
+
+id: encounter-leak-tyrant
+name: "The Leak Tyrant"
+type: "boss"
+
+enemies:
+  - enemy_id: "tyrant-1"
+    type: "leak_tyrant"
+    hp: 70
+    max_hp: 70
+    sprite_id: "leak_tyrant"
+    # §11.6 growth seam: unreclaimed bytes make it swell each turn.
+    leak_bytes: 4096
+    grow_hp_per_turn: 4
+    damage_formula:
+      dice_min: 4
+      dice_max: 10
+      scaling_stat: "int"
+      scaling_div: 3
+    stats:
+      agi: 6
+      int: 14
+
+xp_reward: 300
+gold_reward: 120
+
+drops:
+  - item_id: "tyrant_core"
+    chance: 1.0
+  - item_id: "aether_sponge"
+    chance: 0.5
+
+description: |
+  It has no shape of its own — only the accumulated weight of every
+  binding never broken. Each turn you leave it standing, it drinks the
+  leaked aether and swells. Strike faster than it grows.

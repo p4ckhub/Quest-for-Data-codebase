@@ -1,0 +1,56 @@
+id: gate-of-doctrines
+kind: functions
+zone: crossroads_of_choices
+act: 1
+title: "Gate of Doctrines"
+concept: branching_choice
+concepts_required: [main_function, functions_basics, if_else, switch_statement, branching_choice]
+
+narrative: |
+  Two gates stand at the heart of the Crossroads, and for once no ledger
+  dictates the answer. The Gate of Valor (1) opens onto the war-road;
+  the Gate of Cunning (2) onto the shadow-road. The Crossroads will
+  remember what you choose — this decision is computed from YOUR code,
+  not from any script.
+
+objective: |
+  Write a function  int choose_gate(int omen)  that returns either 1
+  (Valor) or 2 (Cunning). The choice is genuinely yours — return a
+  fixed doctrine, or branch on the omen value the Crossroads passes
+  you. Any solution that always returns 1 or 2 passes.
+
+starter_code: |
+  int choose_gate(int omen) {
+      // TODO: return 1 for the Gate of Valor, or 2 for the Gate of Cunning.
+      // Branch on omen if you wish - the road remembers your doctrine.
+      return 0;
+  }
+
+harness: crossroads_gate_main.cpp
+
+solution: |
+  int choose_gate(int omen) {
+      if (omen > 5) {
+          return 1;
+      } else {
+          return 2;
+      }
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_in_range, id: gate_choice, min: 1, max: 2 }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "error:missing_return"
+    message: "The gates only answer an int — make sure every path through your function returns one."
+  - trigger: "check_failed:gate_choice"
+    message: "The gates are numbered 1 and 2 — any other number echoes off dead stone."
+  - trigger: "attempt:6"
+    message: "The simplest doctrine is loyalty: return 1;  — or branch: if (omen > 5) return 1; else return 2;"
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

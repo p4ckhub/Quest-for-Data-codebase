@@ -1,0 +1,61 @@
+id: scroll-of-binding
+kind: program
+zone: archive_armory
+act: 1
+title: "Scroll of Binding"
+concept: strings
+concepts_required: [main_function, variables_and_types, strings]
+
+narrative: |
+  Every named blade in the Archive was christened by a scroll of
+  binding: two word-fragments fused into one true name. std::string
+  bends like no stone rack can — glue pieces with +, and ask any
+  string how long it runs with .length().
+
+objective: |
+  Two fragments are already declared: prefix holds "iron" and suffix
+  holds "fang". Also declared: an empty std::string blade_name and
+  int name_length = 0. Set blade_name to prefix, a hyphen "-", and
+  suffix joined together (exactly "iron-fang"), then set name_length
+  to blade_name's length (9).
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+  int main() {
+      std::string prefix = "iron";
+      std::string suffix = "fang";
+      std::string blade_name = "";
+      int name_length = 0;
+
+starter_code: |
+      // TODO: join prefix + "-" + suffix into blade_name
+      // TODO: set name_length to blade_name.length()
+
+epilogue: |
+      gameapi::report("blade_name", blade_name);
+      gameapi::report("name_length", name_length);
+      return 0;
+      }
+
+solution: |
+      blade_name = prefix + "-" + suffix;
+      name_length = blade_name.length();
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: blade_name, expected: "iron-fang" }
+    - { type: check_equals, id: name_length, expected: 9 }
+
+hints:
+  - trigger: "check_failed:blade_name"
+    message: "The true name is exactly \"iron-fang\" — a single hyphen between the fragments, no spaces."
+  - trigger: "check_failed:name_length"
+    message: "Ask the string itself: blade_name.length() — iron-fang runs 9 characters."
+  - trigger: "attempt:6"
+    message: "The shape: blade_name = prefix + \"-\" + suffix; name_length = blade_name.length();"
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

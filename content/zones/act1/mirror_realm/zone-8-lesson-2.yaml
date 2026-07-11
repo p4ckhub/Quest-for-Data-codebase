@@ -1,0 +1,65 @@
+id: the-pointing-finger
+kind: program
+zone: mirror_realm
+act: 1
+title: "The Pointing Finger"
+concept: pointers
+concepts_required: [references, pointers]
+
+narrative: |
+  Deeper in, the mirrors detach from their walls. A pointer is not a
+  second name — it is a finger that holds a location, and can be aimed,
+  re-aimed, or aimed at nothing. To read through a pointer you
+  dereference it with *, and & takes a thing's address. Two chests
+  stand before you; one finger must open both.
+
+objective: |
+  Two chests exist: int copper = 5; and int silver = 12;. Declare a
+  pointer  int* finger = &copper;  and add 10 to the value it points at
+  (using *finger). Then re-aim the same finger at silver and add 10
+  there too. Both chests must grow — through the one pointer.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+  int main() {
+      int copper = 5;
+      int silver = 12;
+
+starter_code: |
+      // TODO: int* finger = &copper;   then  *finger += 10;
+      // TODO: re-aim: finger = &silver;  then  *finger += 10;
+
+epilogue: |
+      gameapi::report("copper", copper);
+      gameapi::report("silver", silver);
+      gameapi::log("One finger, two chests — the Realm nods.");
+      return 0;
+      }
+
+solution: |
+      int* finger = &copper;
+      *finger += 10;
+      finger = &silver;
+      *finger += 10;
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: copper, expected: 15 }
+    - { type: check_equals, id: silver, expected: 22 }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:copper"
+    message: "Aim first: int* finger = &copper; — the & takes copper's address. Then *finger += 10; changes what it points AT."
+  - trigger: "check_failed:silver"
+    message: "Re-aiming needs no new pointer and no & on finger: finger = &silver; — then dereference again to add."
+  - trigger: "error:invalid_init_conversion"
+    message: "A pointer to int is declared int* — and it must be given an ADDRESS (&copper), not a value."
+  - trigger: "attempt:6"
+    message: "Four lines: int* finger = &copper;  *finger += 10;  finger = &silver;  *finger += 10;"
+
+rewards:
+  xp: 140
+  unlocks_zone_progress: true

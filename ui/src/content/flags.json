@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "flags": {
+    "unlock_archer": false,
+    "unlock_mage": false
+  }
+}

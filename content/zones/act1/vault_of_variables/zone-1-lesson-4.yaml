@@ -1,0 +1,78 @@
+id: ledger-of-blows
+kind: program
+zone: vault_of_variables
+act: 1
+title: "The Ledger of Blows"
+concept: arithmetic
+concepts_required: [variables_and_types, arithmetic]
+
+teaching: |
+  Crystals do not merely sit and glow — they *combine*. The Vault's four
+  working-signs are `+`, `-`, `*` (multiply), and `/` (divide), and a new
+  crystal can be born straight from the arithmetic of others:
+
+  ```cpp
+  int swords = 6;
+  int shields = 4;
+  int armory = swords + shields * 2;
+  ```
+
+  Read the last line as the Vault reads it: `*` binds before `+`, so the
+  shields are doubled *first*, then joined to the swords — armory is born
+  holding 14, not 20. When you need the addition first, say so with
+  parentheses: `(swords + shields) * 2` makes 20. The signs keep their
+  ancient order unless you overrule them.
+
+examples:
+  - prompt: "The Keeper tallies a night watch — division splits evenly between int crystals, dropping any remainder:"
+    code: |
+      int guards = 9;
+      int gates = 2;
+      int per_gate = guards / gates;   // 4 -- the ninth guard sleeps
+
+narrative: |
+  The Keeper's ledger computes what a {{class_name}}'s blow is truly
+  worth. Your might and swiftness are already entered — str at 8, agi
+  at 5. The old formula is carved above the page: a blow is might
+  doubled, plus swiftness. Enter it, and let the ledger tally itself.
+
+objective: |
+  The variables str (8) and agi (5) already exist. Initialize an int
+  named blow with the value of str * 2 + agi — computed from the
+  variables themselves, not written as a bare number.
+
+prelude: |
+    #include "gameapi.h"
+    int main() {
+        int str = 8;
+        int agi = 5;
+
+starter_code: |
+        // The old formula: might doubled, plus swiftness
+
+epilogue: |
+        gameapi::report("blow", blow);
+        gameapi::report("str", str);
+        return 0;
+        }
+
+solution: |
+        int blow = str * 2 + agi;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: blow, expected: 21 }
+    - { type: check_equals, id: str, expected: 8 }
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "str and agi already burn on the stand — use those exact names in your formula."
+  - trigger: "check_failed:blow"
+    message: "The formula, in the ledger's own signs: str * 2 + agi — the doubling binds first, then the sum. It should tally to 21."
+  - trigger: "attempt:6"
+    message: "One line births the crystal from the others: int blow = str * 2 + agi;"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

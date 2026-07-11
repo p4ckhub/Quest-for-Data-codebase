@@ -1,0 +1,73 @@
+id: the-wrong-vessel
+kind: program
+zone: vault_of_variables
+act: 1
+title: "The Wrong Vessel"
+concept: type_safety
+concepts_required: [variables_and_types, type_safety]
+
+teaching: |
+  Every crystal has a kind, and the Vault enforces kinds without mercy.
+  Words cannot pour into an int; a number cannot fill a bool's single
+  truth. When you mismatch vessel and essence, the realm does not
+  break — it *speaks*. Read this deliberately flawed working:
+
+  ```cpp
+  int gold = "one hundred";   // the realm refuses this
+  ```
+
+  Cast something like it and the realm answers with a message naming
+  the exact line and the mismatch — an int cannot hold words. That
+  message is not a curse. It is the most honest ally you will ever
+  have here: it tells you *where* and it tells you *why*. Learn to
+  read the refusal, mend the line, and cast again.
+
+examples:
+  - prompt: "The mended form — a count belongs in an int as a bare number:"
+    code: |
+      int gold = 100;
+
+narrative: |
+  The Keeper has left a flawed working on the stand — deliberately.
+  "Every {{class_name}} who passes through this Vault must once cast
+  a broken thing and hear the realm refuse it. Cast it as it stands.
+  Read what the realm says back — the line it names, the reason it
+  gives. Then mend the vessel and cast again. This is not a test of
+  your hands. It is a test of your ears."
+
+objective: |
+  First CAST the working exactly as given and read the realm's
+  refusal. Then mend it: gold is a count, so it must be born from a
+  bare number — one hundred, written in digits — not from words.
+
+prelude: |
+    #include "gameapi.h"
+    int main() {
+
+starter_code: |
+        int gold = "one hundred";   // cast once as-is, and listen
+
+epilogue: |
+        gameapi::report("gold", gold);
+        return 0;
+        }
+
+solution: |
+        int gold = 100;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: gold, expected: 100 }
+
+hints:
+  - trigger: "error:type_mismatch"
+    message: "The realm has named the line and the reason: words cannot pour into an int. Replace \"one hundred\" with the digits 100 — no quotes."
+  - trigger: "check_failed:gold"
+    message: "The ledger demands gold hold exactly 100."
+  - trigger: "attempt:6"
+    message: "The mended line, whole: int gold = 100;"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

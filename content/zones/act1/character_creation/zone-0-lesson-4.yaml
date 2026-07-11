@@ -1,0 +1,77 @@
+id: speak-your-name
+kind: program
+zone: character_creation
+act: 1
+title: "Speak Your Name"
+concept: input_output
+concepts_required: [main_function, cin, cout, variables_and_types]
+
+teaching: |
+  Until now you have only spoken. To *listen*, turn the channel around:
+  where `std::cout <<` pours words out, `std::cin >>` draws them in —
+  mark how the arrows always point the way the words flow:
+
+  ```cpp
+  std::string offering;
+  std::cin >> offering;
+  std::cout << "The hall accepts your " << offering << "." << std::endl;
+  ```
+
+  Three movements. First, an empty vessel is declared — `std::string offering;`
+  — a named holder of words, holding nothing yet. Then `std::cin >> offering;`
+  waits, listens, and pours one spoken word into it. From then on the vessel
+  carries what was heard, and speaking its name pours it back out.
+
+examples:
+  - prompt: "Listening for a number works the same way — only the vessel's kind changes:"
+    code: |
+      int tribute;
+      std::cin >> tribute;
+      std::cout << "Counted: " << tribute << std::endl;
+
+narrative: |
+  The Echoing Halls demand your name. Speak it clearly, and let the
+  archives record your first steps as a {{class_name}}.
+
+objective: |
+  Read a name from stdin using std::cin, then echo it back via
+  gameapi::report with id "player_name".
+
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    #include <string>
+    int main() {
+        std::cout << "State your name: ";
+        std::string name;
+
+starter_code: |
+        // TODO: Read the player name with cin
+        // Then report it to gameapi
+
+epilogue: |
+            gameapi::report("player_name", name);
+            return 0;
+            }
+
+solution: |
+            std::cin >> name;
+            gameapi::report("player_name", name);
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: player_name, expected: "Player" }
+
+stdin_fixture: "Player"
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Declare the variable before using it: std::string name;"
+  - trigger: "error:missing_semicolon"
+    message: "Each incantation must end with ';'"
+  - trigger: "attempt:6"
+    message: 'Use std::cin >> name; to read input, then gameapi::report()'
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

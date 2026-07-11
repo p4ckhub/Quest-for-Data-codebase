@@ -1,0 +1,66 @@
+id: shape-of-a-potion
+kind: program
+zone: guild_of_artificers
+act: 1
+title: "The Shape of a Potion"
+concept: structs
+concepts_required: [main_function, cout, variables_and_types, structs]
+
+narrative: |
+  The Guild of Artificers does not brew potions — it defines them.
+  Before a single drop exists, the Guild presses a form into the world:
+  what a potion IS, what parts it has. Then a thousand potions can be
+  poured into that shape. The masters call these forms "structs".
+
+objective: |
+  Define a struct named Potion with exactly two members: a std::string
+  called name, and an int called heal. The Guild's seal (below your
+  incantation) will pour a real potion into your form and read it back.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+
+starter_code: |
+  // TODO: define a struct named Potion with:
+  //   - a std::string member called name
+  //   - an int member called heal
+  // Remember: a struct definition ends with };
+
+epilogue: |
+  int main() {
+      Potion p;
+      p.name = "Emberdew";
+      p.heal = 25;
+      gameapi::report("potion_name", p.name);
+      gameapi::report("potion_heal", p.heal);
+      gameapi::log("The Guild presses its seal: the form '" + p.name + "' is real.");
+      return 0;
+  }
+
+solution: |
+  struct Potion {
+      std::string name;
+      int heal;
+  };
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: potion_name, expected: "Emberdew" }
+    - { type: check_equals, id: potion_heal, expected: 25 }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "error:unknown_type"
+    message: "The seal expects a form named exactly Potion — struct Potion { ... }; — spelled with a capital P."
+  - trigger: "error:missing_semicolon"
+    message: "A struct definition is itself a statement: the closing brace needs a semicolon — };"
+  - trigger: "check_failed:potion_name"
+    message: "The name member must be a std::string called exactly 'name' — the seal writes \"Emberdew\" into it."
+  - trigger: "attempt:6"
+    message: "The shape of a form: struct Potion { std::string name; int heal; };"
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

@@ -1,0 +1,40 @@
+# Zone 2 - Boss Encounter: Forge Wraith
+# Encounter content for Zone 2 boss fight
+
+id: encounter-forge-wraith
+name: "Forge Wraith"
+type: "boss"
+
+enemies:
+  - enemy_id: "wraith-1"
+    type: "wraith"
+    hp: 80
+    max_hp: 80
+    # Damage formula (for counterattacks)
+    damage_formula:
+      dice_min: 5
+      dice_max: 12
+      scaling_stat: "agi"
+      scaling_div: 2
+    # Sprite reference from sprites.json
+    sprite_id: "wraith"
+    # Stats (for AI decisions, not combat math)
+    stats:
+      agi: 10
+      int: 12
+
+# Reward
+xp_reward: 150
+gold_reward: 50
+
+# Drop table (optional)
+drops:
+  - item_id: "rune_shard"
+    chance: 0.3
+  - item_id: "forge_ember"
+    chance: 0.5
+
+# Narrative flavor
+description: |
+  A ghostly figure flickers within the forge's heat,
+  its spectral form wreathed in volcanic flames.

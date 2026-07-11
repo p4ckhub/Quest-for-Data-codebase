@@ -1,0 +1,81 @@
+id: herald-proclamation
+kind: program
+zone: character_creation
+act: 1
+title: "The Herald's Proclamation"
+concept: cout
+concepts_required: [main_function, cout]
+
+teaching: |
+  A single cast is a word; a *sequence* of casts is a speech. Casts happen
+  in the order they are written — top to bottom, never skipped, never
+  shuffled. And one cast can carry many passengers, chained along the
+  channel — words in quotes, numbers bare:
+
+  ```cpp
+  std::cout << "The torches gutter." << std::endl;
+  std::cout << "There are " << 7 << " of them still burning." << std::endl;
+  ```
+
+  Two casts, spoken in order. The second carries three passengers — words,
+  a bare number, words again — each handed onward by its own `<<`.
+
+examples:
+  - prompt: "A proclamation of three casts, delivered as written:"
+    code: |
+      std::cout << "The hall is empty." << std::endl;
+      std::cout << "The hall was not always empty." << std::endl;
+      std::cout << "It remembers " << 1000 << " voices." << std::endl;
+
+narrative: |
+  The Echoing Halls carry every word to their farthest stone. A herald's
+  dais stands empty — yours now. A {{class_name}} does not mumble an
+  arrival; they proclaim it, line by measured line, and let the count of
+  the gates ring out as a true number.
+
+objective: |
+  Deliver a proclamation of three casts, printing these three lines in
+  this order:
+  Hear me, halls of stone
+  I have awakened
+  I count 3 gates before me
+  — and let the 3 travel bare (unquoted), chained into the final cast.
+
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    int main() {
+        std::cout << "[The dais takes your weight. The halls lean in to listen.]" << std::endl;
+
+starter_code: |
+        // Three casts, in order -- the last one carries a bare number
+
+epilogue: |
+        gameapi::report("proclaimed", 1);
+        return 0;
+        }
+
+solution: |
+        std::cout << "Hear me, halls of stone" << std::endl;
+        std::cout << "I have awakened" << std::endl;
+        std::cout << "I count " << 3 << " gates before me" << std::endl;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: hear, text: "Hear me, halls of stone" }
+    - { type: stdout_contains, id: awake, text: "I have awakened" }
+    - { type: stdout_contains, id: gates, text: "I count 3 gates before me" }
+    - { type: check_equals, id: proclaimed, expected: 1 }
+
+hints:
+  - trigger: "error:missing_semicolon"
+    message: "Each line of the proclamation is its own cast — sealed with ';'"
+  - trigger: "check_failed:gates"
+    message: "The count rides bare between the words: << \"I count \" << 3 << \" gates before me\" — mind the spaces beside the 3."
+  - trigger: "attempt:6"
+    message: "Three couts, one per line, in the exact order given — the last shaped like: std::cout << \"I count \" << 3 << \" gates before me\" << std::endl;"
+
+rewards:
+  xp: 50
+  unlocks_zone_progress: true

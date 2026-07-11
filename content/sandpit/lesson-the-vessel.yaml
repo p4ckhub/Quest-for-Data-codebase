@@ -1,0 +1,87 @@
+id: sandpit-the-vessel
+kind: program
+zone: sandpit
+act: 1
+title: "The Vessel"
+concept: main_function
+concepts_required: [cout, main_function]
+
+teaching: |
+  **THE FORERUNNER:** "A truth I kept from you, little flame: every word
+  you have spoken so far, you spoke inside a vessel I was quietly holding
+  open for you. Every working of will in this realm — every spell, every
+  spoken word, every deed — happens inside one. It is called `main`, and
+  now you learn to open it yourself."
+
+  "A complete vessel, the smallest that can exist:"
+
+  ```cpp
+  int main() {
+      std::cout << "The vessel holds." << std::endl;
+      return 0;
+  }
+  ```
+
+  "Mark each piece. `int main()` is the mouth of the vessel — every working
+  begins here, and nowhere else. The `{` opens it and the `}` closes it;
+  between them lies everything you intend to do. And `return 0;` is the
+  clean handing-back — the vessel telling the realm *my work is done, and
+  it went well*. A vessel that never returns leaves the realm waiting.
+  I have seen what becomes of realms left waiting."
+
+examples:
+  - prompt: "The Forerunner shapes another vessel, this one carrying two deeds instead of one:"
+    code: |
+      int main() {
+          std::cout << "First deed." << std::endl;
+          std::cout << "Second deed." << std::endl;
+          return 0;
+      }
+
+narrative: |
+  The Forerunner steps back, and you feel it the moment it happens — the
+  invisible thing that has been holding your words is gone. The sand
+  swallows sound again. "No more borrowed vessels," it says. "Open your
+  own. Speak *The vessel holds* from inside it, and seal it clean. Do this,
+  and you are ready for what waits beyond the sandpit."
+
+objective: |
+  Write a complete main function yourself: open it with int main() { },
+  print exactly: The vessel holds
+  and close it cleanly with return 0;
+
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+
+starter_code: |
+    // Open your vessel here -- yours alone, borrowed from no one
+
+epilogue: ""
+
+solution: |
+    int main() {
+        std::cout << "The vessel holds" << std::endl;
+        return 0;
+    }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: held, text: "The vessel holds" }
+
+hints:
+  - trigger: "error:missing_main"
+    message: "The realm searched for a vessel and found none — every working begins at int main() { ... }"
+  - trigger: "error:missing_semicolon"
+    message: "A cast inside the vessel still needs its seal — ';'"
+  - trigger: "check_failed:held"
+    message: "The realm listens for the exact words: The vessel holds"
+  - trigger: "attempt:2"
+    message: "The full shape: int main() { your casts; return 0; } — the Forerunner's example above holds every piece you need."
+
+rewards:
+  xp: 0
+  items:
+    - { item_id: smooth_river_stone, count: 1 }
+  unlocks_zone_progress: true

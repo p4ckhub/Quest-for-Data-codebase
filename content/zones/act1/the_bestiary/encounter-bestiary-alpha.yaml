@@ -1,0 +1,35 @@
+# Zone 7 - Boss Encounter: The Bestiary Alpha
+# The pack-lord of every form catalogued in the Bestiary.
+
+id: encounter-bestiary-alpha
+name: "The Bestiary Alpha"
+type: "boss"
+
+enemies:
+  - enemy_id: "alpha-1"
+    type: "bestiary_alpha"
+    hp: 90
+    max_hp: 90
+    sprite_id: "alpha_wolf"
+    damage_formula:
+      dice_min: 5
+      dice_max: 11
+      scaling_stat: "agi"
+      scaling_div: 3
+    stats:
+      agi: 14
+      int: 8
+
+xp_reward: 250
+gold_reward: 100
+
+drops:
+  - item_id: "alpha_fang"
+    chance: 0.5
+  - item_id: "bestiary_seal"
+    chance: 1.0
+
+description: |
+  Every entry in the Bestiary bows to one form. The Alpha carries the
+  strengths of all the classes beneath it — and it has read your
+  entries too.

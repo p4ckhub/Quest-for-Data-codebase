@@ -35,7 +35,7 @@ async function runLessonWithSolution(filePath) {
 async function validateGoldLessons() {
   const baseDir = path.join(__dirname, '..');
   const lesson1Path = path.join(baseDir, 'content/zones/act1/character_creation/zone-0-lesson-1.yaml');
-  const lesson2Path = path.join(baseDir, 'content/zones/act1/function_forge/zone-2-lesson-1.yaml');
+  const lesson2Path = path.join(baseDir, 'content/zones/act1/function_forge/zone-2-lesson-2.yaml');
 
   let exitCode = 0;
   let lessonsValidated = 0;

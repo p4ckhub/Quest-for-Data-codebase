@@ -1,0 +1,103 @@
+id: sandpit-the-rope-dummy
+kind: program
+zone: sandpit
+act: 1
+title: "The Rope Dummy"
+concept: variables_and_types
+concepts_required: [cout, variables_and_types]
+
+teaching: |
+  **THE FORERUNNER:** "Every fight in this realm — every one, from a rope
+  dummy to the things I will not name yet — is the same act underneath:
+  *changing a number something else is carrying.* The dummy carries its
+  toughness in a variable. Striking is arithmetic:"
+
+  ```cpp
+  int knots = 3;
+  knots = knots - 1;
+  std::cout << "One knot gives. " << knots << " remain." << std::endl;
+  ```
+
+  "Read the second line right to left, the way a smith reads a blow:
+  take what `knots` holds, subtract one, and place the result back into
+  `knots`. The name appears on both sides because the new value is built
+  from the old. Whole numbers ride in an `int` — no quotes, no decimals,
+  just count. Strike enough times and the count reaches zero. That is
+  all victory has ever been: patience, applied repeatedly."
+
+examples:
+  - prompt: "The Forerunner taps the dummy once, almost gently:"
+    code: |
+      int braces = 2;
+      braces = braces - 1;
+      std::cout << braces << " brace still holds." << std::endl;
+  - prompt: "Arithmetic swings the other way too — a thing can be built up as easily as worn down:"
+    code: |
+      int resolve = 10;
+      resolve = resolve + 5;
+      std::cout << "Resolve stands at " << resolve << "." << std::endl;
+
+narrative: |
+  The Forerunner snaps its fingers and the rope dummy shudders upright
+  on its post — a pathetic thing, sagging, stuffed with sand, held
+  together by exactly three stitches of old cord. "Your first foe," the
+  Forerunner says, deadpan. "Try not to be intimidated. It endures three
+  blows and not one more. Announce each strike, and take one from its
+  stitching each time, until nothing holds it up."
+
+objective: |
+  The dummy stands at dummy_hp = 3. Strike it three times: each strike
+  prints: I strike the dummy
+  and then lowers dummy_hp by 1 (dummy_hp = dummy_hp - 1;).
+  Leave it at exactly 0.
+
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    int main() {
+        int dummy_hp = 3;
+        std::cout << "[The rope dummy sways on its post. Three stitches hold it. It has no idea what is coming, because it is a dummy.]" << std::endl;
+
+starter_code: |
+        // Strike, and unstitch: print the blow, then dummy_hp = dummy_hp - 1;
+        // Three times, until nothing holds
+
+epilogue: |
+        gameapi::report("dummy_hp", dummy_hp);
+        if (dummy_hp <= 0) {
+            std::cout << "[The last stitch parts. The dummy folds into the sand with what dignity it can manage.]" << std::endl;
+            std::cout << "[The Forerunner] Your first victory. It will not be sung of. But mark what won it: the same small blow, repeated until done. Water and stone, little flame." << std::endl;
+        } else {
+            std::cout << "[The dummy sways, insolent. " << dummy_hp << " stitch(es) still hold it up.]" << std::endl;
+        }
+        return 0;
+        }
+
+solution: |
+        std::cout << "I strike the dummy" << std::endl;
+        dummy_hp = dummy_hp - 1;
+        std::cout << "I strike the dummy" << std::endl;
+        dummy_hp = dummy_hp - 1;
+        std::cout << "I strike the dummy" << std::endl;
+        dummy_hp = dummy_hp - 1;
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: struck, text: "I strike the dummy" }
+    - { type: check_equals, id: dummy_hp, expected: 0 }
+
+hints:
+  - trigger: "error:missing_semicolon"
+    message: "Blows and casts alike end with ';'"
+  - trigger: "error:undeclared_identifier"
+    message: "The dummy's stitching already exists — the realm named it dummy_hp. Use that name exactly."
+  - trigger: "check_failed:struck"
+    message: "Announce each blow with the exact words: I strike the dummy"
+  - trigger: "check_failed:dummy_hp"
+    message: "The stitching must reach exactly 0 — take 1 from it after each strike: dummy_hp = dummy_hp - 1;"
+  - trigger: "attempt:2"
+    message: "One strike is two lines — std::cout << \"I strike the dummy\" << std::endl; then dummy_hp = dummy_hp - 1; — and the dummy takes three."
+
+rewards:
+  xp: 0

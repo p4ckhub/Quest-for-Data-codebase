@@ -1,0 +1,99 @@
+id: the-adventurers-form
+kind: program
+zone: guild_of_artificers
+act: 1
+title: "The Adventurer's Form"
+concept: character_class
+concepts_required: [classes_encapsulation, constructors_destructors, character_class]
+
+narrative: |
+  You have worn a class since the day you awoke — Warrior, Archer, or
+  Mage. The Guild's final teaching: those were never menu choices. They
+  are forms, like the ones you have been defining all along. Today you
+  write the form beneath all three — Character — with your own hands.
+  In the Bestiary beyond, you will learn how one form can answer for
+  many.
+
+objective: |
+  Define a class named Character with private members: std::string name,
+  int hp, and int str. Give it:
+    Character(std::string n, int h, int s) — constructor setting all three
+    std::string who()      — returns the name
+    int attack()           — returns str * 2
+    void take_damage(int amount) — reduces hp by amount, never below 0
+    int health()           — returns hp
+  The seal will forge the hero "Aster" (30 hp, 7 str) and put the form
+  through its paces.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+
+starter_code: |
+  class Character {
+  // TODO: private name, hp, str
+  // TODO: public constructor, who(), attack(), take_damage(), health()
+  };
+
+epilogue: |
+  int main() {
+      Character hero("Aster", 30, 7);
+      gameapi::report("who", hero.who());
+      gameapi::report("attack", hero.attack());
+      hero.take_damage(12);
+      gameapi::report("after_wound", hero.health());
+      hero.take_damage(99);
+      gameapi::report("after_overkill", hero.health());
+      gameapi::log(hero.who() + " stands — a Character, defined by your own hand.");
+      return 0;
+  }
+
+solution: |
+  class Character {
+  private:
+      std::string name;
+      int hp;
+      int str;
+  public:
+      Character(std::string n, int h, int s) : name(n), hp(h), str(s) {}
+      std::string who() {
+          return name;
+      }
+      int attack() {
+          return str * 2;
+      }
+      void take_damage(int amount) {
+          hp -= amount;
+          if (hp < 0) {
+              hp = 0;
+          }
+      }
+      int health() {
+          return hp;
+      }
+  };
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: who, expected: "Aster" }
+    - { type: check_equals, id: attack, expected: 14 }
+    - { type: check_equals, id: after_wound, expected: 18 }
+    - { type: check_equals, id: after_overkill, expected: 0 }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:attack"
+    message: "Aster has 7 strength; attack() returns str * 2 — the seal expects 14."
+  - trigger: "check_failed:after_wound"
+    message: "30 hp minus a 12-point wound is 18. take_damage must subtract from hp, not return a value."
+  - trigger: "check_failed:after_overkill"
+    message: "A Character's hp never goes below 0 — clamp it: if (hp < 0) hp = 0;"
+  - trigger: "error:undeclared_identifier"
+    message: "The seal calls who(), attack(), take_damage(), and health() — all four must be public and spelled exactly so."
+  - trigger: "attempt:6"
+    message: "Constructor shape: Character(std::string n, int h, int s) : name(n), hp(h), str(s) {}"
+
+rewards:
+  xp: 150
+  unlocks_zone_progress: true

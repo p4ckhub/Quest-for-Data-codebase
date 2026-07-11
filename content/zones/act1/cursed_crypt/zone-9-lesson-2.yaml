@@ -1,0 +1,74 @@
+id: seal-the-rift
+kind: functions
+zone: cursed_crypt
+act: 1
+title: "Seal the Rift"
+concept: memory_leaks
+concepts_required: [heap_allocation, for_loop, memory_leaks]
+
+narrative: |
+  A rift in the Crypt wall summons shard after shard — and the mage who
+  carved it never once said `delete`. Look at the incantation you were
+  handed: it WORKS. It returns the right number. And it bleeds memory
+  with every pass of the loop. This is the most dangerous kind of wrong
+  — the kind that runs. Unreclaimed aether is what the Leak Tyrant
+  feeds on. Seal the rift.
+
+objective: |
+  The function below already computes the right total (1+2+3 = 6) but
+  leaks every shard it summons. Fix it WITHOUT changing what it
+  returns: each  new  must meet its  delete  inside the loop. The
+  ledger must read three bindings made, three broken, nothing alive.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+
+starter_code: |
+  int seal_the_rift() {
+      int total = 0;
+      for (int i = 0; i < 3; ++i) {
+          int* shard = new int(i + 1);
+          total += *shard;
+          // the shard is never released — the rift weeps
+      }
+      return total;
+  }
+
+harness: crypt_rift_main.cpp
+extra_units: [leakcheck.cpp]
+
+solution: |
+  int seal_the_rift() {
+      int total = 0;
+      for (int i = 0; i < 3; ++i) {
+          int* shard = new int(i + 1);
+          total += *shard;
+          delete shard;
+      }
+      return total;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: total, expected: 6 }
+    - { type: check_equals, id: allocs, expected: 3 }
+    - { type: check_equals, id: frees, expected: 3 }
+    - { type: check_equals, id: live_bytes, expected: 0 }
+    - { type: event_emitted, event_type: alloc_report }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:live_bytes"
+    message: "The rift still weeps: shards summoned in the loop are never released. Add  delete shard;  after the total takes its value."
+  - trigger: "check_failed:frees"
+    message: "Three shards summoned means three released — the delete must live INSIDE the loop, once per shard."
+  - trigger: "check_failed:total"
+    message: "Don't fix the leak by summoning less — the total must still be 6. Take the value first, then delete."
+  - trigger: "attempt:6"
+    message: "One line seals it: delete shard;  placed after  total += *shard;  inside the loop body."
+
+rewards:
+  xp: 180
+  unlocks_zone_progress: true

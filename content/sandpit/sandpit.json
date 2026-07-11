@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "id": "sandpit",
+  "title": "the sandpit",
+  "lessons": [
+    { "file": "lesson-the-first-words.yaml", "mandatory": true },
+    { "file": "lesson-the-vessel.yaml", "mandatory": true },
+    { "file": "lesson-the-slow-circle.yaml", "mandatory": false },
+    { "file": "lesson-the-bell.yaml", "mandatory": false },
+    { "file": "lesson-the-still-pool.yaml", "mandatory": false },
+    { "file": "lesson-the-garment-rack.yaml", "mandatory": false },
+    { "file": "lesson-the-rope-dummy.yaml", "mandatory": false }
+  ]
+}

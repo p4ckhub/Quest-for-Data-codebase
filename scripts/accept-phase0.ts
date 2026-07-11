@@ -93,8 +93,8 @@ function runGoldLessons(): CheckResult {
 function runNegativeCheck(): CheckResult {
   const yaml = require('js-yaml');
   
-  // Read the variables-101 lesson
-  const lessonPath = path.join(BASE_DIR, 'content/zones/act1/character_creation/zone-0-lesson-1.yaml');
+  // Read the variables-101 lesson (zone-1-lesson-1) which has hp/mp checks
+  const lessonPath = path.join(BASE_DIR, 'content/zones/act1/vault_of_variables/zone-1-lesson-1.yaml');
   const content = fs.readFileSync(lessonPath, 'utf-8');
   const lessonData = yaml.load(content);
   

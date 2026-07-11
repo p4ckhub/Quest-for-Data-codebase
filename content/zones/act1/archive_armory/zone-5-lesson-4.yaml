@@ -1,0 +1,62 @@
+id: voice-of-the-quartermaster
+kind: program
+zone: archive_armory
+act: 1
+title: "Voice of the Quartermaster"
+concept: cin_input
+concepts_required: [main_function, variables_and_types, strings, cin_input]
+
+narrative: |
+  Until now, every number in your incantations was carved in advance.
+  But the Quartermaster speaks — and a real spell listens. std::cin is
+  the ear of your program: it waits at the standard input stream and
+  pours what arrives into your variables. Today the Quartermaster will
+  call out a requisition order: a word, then a count.
+
+objective: |
+  Already declared: std::string item and int count = 0. The
+  Quartermaster's voice arrives on standard input as a word and a
+  number (for this trial: "arrows 17"). Use std::cin with >> to read
+  the word into item, then the number into count.
+
+prelude: |
+  #include "gameapi.h"
+  #include <iostream>
+  #include <string>
+  int main() {
+      std::string item;
+      int count = 0;
+
+starter_code: |
+      // TODO: read the item word from std::cin into item
+      // TODO: read the number from std::cin into count
+
+epilogue: |
+      gameapi::report("item", item);
+      gameapi::report("count", count);
+      return 0;
+      }
+
+stdin_fixture: "arrows 17\n"
+
+solution: |
+      std::cin >> item;
+      std::cin >> count;
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: item, expected: "arrows" }
+    - { type: check_equals, id: count, expected: 17 }
+
+hints:
+  - trigger: "check_failed:item"
+    message: "std::cin >> item; takes one whitespace-separated word — the Quartermaster said \"arrows\" first."
+  - trigger: "check_failed:count"
+    message: "Chain a second read for the number: std::cin >> count; — >> knows an int when it hears one."
+  - trigger: "attempt:6"
+    message: "The shape: std::cin >> item >> count;  (or two separate >> reads — same ear, same order)."
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

@@ -1,0 +1,52 @@
+# Zone 4 - Boss Encounter: The Corridor Swarm
+# Wave-survival fight: three foes, loop your attacks until none remain.
+
+id: encounter-corridor-swarm
+name: "The Corridor Swarm"
+type: "boss"
+
+enemies:
+  - enemy_id: "swarmling-1"
+    type: "swarmling"
+    hp: 25
+    max_hp: 25
+    sprite_id: "swarmling"
+    damage_formula:
+      dice_min: 2
+      dice_max: 5
+      scaling_stat: "agi"
+      scaling_div: 4
+  - enemy_id: "swarmling-2"
+    type: "swarmling"
+    hp: 25
+    max_hp: 25
+    sprite_id: "swarmling"
+    damage_formula:
+      dice_min: 2
+      dice_max: 5
+      scaling_stat: "agi"
+      scaling_div: 4
+  - enemy_id: "swarm-mother"
+    type: "swarm_mother"
+    hp: 45
+    max_hp: 45
+    sprite_id: "swarm_mother"
+    damage_formula:
+      dice_min: 4
+      dice_max: 9
+      scaling_stat: "agi"
+      scaling_div: 3
+
+xp_reward: 200
+gold_reward: 75
+
+drops:
+  - item_id: "chitin_plate"
+    chance: 0.5
+  - item_id: "corridor_key"
+    chance: 1.0
+
+description: |
+  The far door opens onto wings — hundreds of them, wearing three
+  bodies. The swarm does not tire. Neither can you: strike, and strike,
+  and strike again, until the condition breaks.

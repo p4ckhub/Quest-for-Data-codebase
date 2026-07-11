@@ -1,0 +1,59 @@
+id: the-mirrored-name
+kind: program
+zone: mirror_realm
+act: 1
+title: "The Mirrored Name"
+concept: references
+concepts_required: [variables_and_types, references]
+
+narrative: |
+  The Mirror Realm holds no copies — only reflections. A reference is a
+  second name for a thing that already exists: polish the reflection,
+  and the original gleams. The Realm's first test: a lantern burns low
+  at 20 brightness. Reach it through its mirror.
+
+objective: |
+  A variable  int lantern = 20;  already burns. Declare a reference to
+  it named mirror (int& mirror = lantern;), then set mirror to 100.
+  If the reference is true, the lantern itself will read 100 — you
+  never touched it directly.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+  int main() {
+      int lantern = 20;
+
+starter_code: |
+      // TODO: declare  int& mirror = lantern;
+      // then assign 100 to mirror
+
+epilogue: |
+      gameapi::report("lantern", lantern);
+      gameapi::report("mirror", mirror);
+      gameapi::log("You brightened the mirror — and the lantern answered.");
+      return 0;
+      }
+
+solution: |
+      int& mirror = lantern;
+      mirror = 100;
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: lantern, expected: 100 }
+    - { type: check_equals, id: mirror, expected: 100 }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:lantern"
+    message: "If the lantern still reads 20, your mirror was a copy (int mirror), not a reflection (int& mirror). The & makes it the same lantern."
+  - trigger: "error:undeclared_identifier"
+    message: "The Realm expects the reflection to be named exactly mirror — the seal reads it after your incantation."
+  - trigger: "attempt:6"
+    message: "Two lines: int& mirror = lantern;  then  mirror = 100;"
+
+rewards:
+  xp: 130
+  unlocks_zone_progress: true

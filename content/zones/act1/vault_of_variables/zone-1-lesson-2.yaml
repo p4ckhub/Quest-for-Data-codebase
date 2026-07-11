@@ -1,0 +1,74 @@
+id: essences-of-type
+kind: program
+zone: vault_of_variables
+act: 1
+title: "Essences of Type"
+concept: type_safety
+concepts_required: [bool, char, type_safety]
+
+teaching: |
+  Two more essences complete the Vault's first shelf. A `bool` crystal
+  holds a single truth — it is `true` or it is `false`, with no third
+  state and no bargaining. A `char` crystal holds exactly one character,
+  carried in *single* quotes:
+
+  ```cpp
+  bool gate_sealed = false;
+  char sigil = 'V';
+  ```
+
+  Mark the quotes with care, for the Vault does not forgive mixing them:
+  `'V'` in single quotes is one char — a single carved mark. `"V"` in
+  double quotes is a *string of words* that merely happens to be short,
+  and it will not pour into a char crystal. One mark, single quotes;
+  many marks, double quotes. Always.
+
+examples:
+  - prompt: "The Keeper sets a watch-pair — one truth, one mark:"
+    code: |
+      bool torch_lit = true;
+      char rank = 'A';
+
+narrative: |
+  The Vault holds the purest essences: truth (bool), character (char),
+  and their proper domains. Use types correctly, or risk corruption.
+
+objective: |
+  Declare and initialize: a bool named isAwake with value true, and
+  a char named symbol with value 'X'. Then report both via gameapi.
+
+prelude: |
+    #include "gameapi.h"
+    int main() {
+
+starter_code: |
+        // TODO: Declare isAwake as bool = true
+        // TODO: Declare symbol as char = 'X'
+
+epilogue: |
+            gameapi::report("is_awake", isAwake);
+            gameapi::report("symbol", symbol);
+            return 0;
+            }
+
+solution: |
+            bool isAwake = true;
+            char symbol = 'X';
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: is_awake, expected: 1 }
+    - { type: check_equals, id: symbol, expected: 88 }
+
+hints:
+  - trigger: "error:type_mismatch"
+    message: "You cannot assign a word to a single character. Use single quotes."
+  - trigger: "error:missing_semicolon"
+    message: "Each declaration must end with ';'"
+  - trigger: "attempt:6"
+    message: "bool name = true;  char symbol = 'X';"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

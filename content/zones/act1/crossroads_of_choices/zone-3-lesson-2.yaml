@@ -1,0 +1,72 @@
+id: switch-of-sigils
+kind: program
+zone: crossroads_of_choices
+act: 1
+title: "The Sigil Switch"
+concept: switch_statement
+concepts_required: [main_function, variables_and_types, if_else, switch_statement]
+
+narrative: |
+  Four doors, four sigils. The Keeper hands you a single carved rune —
+  the variable sigil holds it — and the doors only listen to a switch.
+  'F' burns, 'W' flows, 'E' stands. Anything else is a trick of the
+  Crossroads.
+
+objective: |
+  A variable  char sigil = 'W';  is already declared. Write a switch on
+  sigil that sets the already-declared std::string named element to
+  exactly "fire" for 'F', "water" for 'W', "earth" for 'E', and
+  "unknown" for anything else (the default case). Remember break after
+  each case.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+  int main() {
+      char sigil = 'W';
+      std::string element = "";
+
+starter_code: |
+      // TODO: switch on sigil:
+      //   'F' -> element = "fire"
+      //   'W' -> element = "water"
+      //   'E' -> element = "earth"
+      //   default -> element = "unknown"
+
+epilogue: |
+      gameapi::report("element", element);
+      return 0;
+      }
+
+solution: |
+      switch (sigil) {
+          case 'F':
+              element = "fire";
+              break;
+          case 'W':
+              element = "water";
+              break;
+          case 'E':
+              element = "earth";
+              break;
+          default:
+              element = "unknown";
+              break;
+      }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: element, expected: "water" }
+
+hints:
+  - trigger: "error:missing_semicolon"
+    message: "Each case's statements end with ';' — and don't forget the colon after case 'W':"
+  - trigger: "check_failed:element"
+    message: "The rune in your hand is 'W' — the water door should answer. Did a missing break let one case fall into the next?"
+  - trigger: "attempt:6"
+    message: "The shape: switch (sigil) { case 'F': element = \"fire\"; break; ... default: element = \"unknown\"; }"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["version", "classes"],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "classes": {
+      "type": "object",
+      "required": ["warrior", "archer", "mage"],
+      "properties": {
+        "warrior": {
+          "type": "object",
+          "required": ["display_name", "description", "attack_style", "weapon", "base_stats", "starter_spell", "damage_formula", "palette"],
+          "properties": {
+            "display_name": { "type": "string" },
+            "description": { "type": "string" },
+            "attack_style": { "const": "melee" },
+            "weapon": { "type": "string" },
+            "base_stats": {
+              "type": "object",
+              "required": ["hp", "mp", "str", "agi", "int"],
+              "properties": {
+                "hp": { "type": "integer", "minimum": 0 },
+                "mp": { "type": "integer", "minimum": 0 },
+                "str": { "type": "integer", "minimum": 0 },
+                "agi": { "type": "integer", "minimum": 0 },
+                "int": { "type": "integer", "minimum": 0 }
+              }
+            },
+            "starter_spell": {
+              "type": "object",
+              "required": ["name", "signature"],
+              "properties": {
+                "name": { "type": "string" },
+                "signature": { "type": "string" }
+              }
+            },
+            "damage_formula": {
+              "type": "object",
+              "required": ["dice_min", "dice_max", "scaling_stat", "scaling_div", "mp_cost"],
+              "properties": {
+                "dice_min": { "type": "integer", "minimum": 1 },
+                "dice_max": { "type": "integer", "minimum": 1 },
+                "scaling_stat": { "const": "str" },
+                "scaling_div": { "type": "integer", "minimum": 1 },
+                "mp_cost": { "type": "integer", "minimum": 0 }
+              },
+              "additionalProperties": false
+            },
+            "palette": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+            "level_growth": {
+              "type": "object",
+              "properties": {
+                "hp": { "type": "integer", "minimum": 0 },
+                "mp": { "type": "integer", "minimum": 0 },
+                "str": { "type": "integer", "minimum": 0 },
+                "agi": { "type": "integer", "minimum": 0 },
+                "int": { "type": "integer", "minimum": 0 }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "archer": {
+          "type": "object",
+          "required": ["display_name", "description", "attack_style", "weapon", "base_stats", "starter_spell", "damage_formula", "palette"],
+          "properties": {
+            "display_name": { "type": "string" },
+            "description": { "type": "string" },
+            "attack_style": { "const": "projectile_physical" },
+            "weapon": { "type": "string" },
+            "base_stats": {
+              "type": "object",
+              "required": ["hp", "mp", "str", "agi", "int"],
+              "properties": {
+                "hp": { "type": "integer", "minimum": 0 },
+                "mp": { "type": "integer", "minimum": 0 },
+                "str": { "type": "integer", "minimum": 0 },
+                "agi": { "type": "integer", "minimum": 0 },
+                "int": { "type": "integer", "minimum": 0 }
+              }
+            },
+            "starter_spell": {
+              "type": "object",
+              "required": ["name", "signature"],
+              "properties": {
+                "name": { "type": "string" },
+                "signature": { "type": "string" }
+              }
+            },
+            "damage_formula": {
+              "type": "object",
+              "required": ["dice_min", "dice_max", "scaling_stat", "scaling_div", "mp_cost"],
+              "properties": {
+                "dice_min": { "type": "integer", "minimum": 1 },
+                "dice_max": { "type": "integer", "minimum": 1 },
+                "scaling_stat": { "const": "agi" },
+                "scaling_div": { "type": "integer", "minimum": 1 },
+                "mp_cost": { "type": "integer", "minimum": 0 }
+              },
+              "additionalProperties": false
+            },
+            "palette": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+            "level_growth": {
+              "type": "object",
+              "properties": {
+                "hp": { "type": "integer", "minimum": 0 },
+                "mp": { "type": "integer", "minimum": 0 },
+                "str": { "type": "integer", "minimum": 0 },
+                "agi": { "type": "integer", "minimum": 0 },
+                "int": { "type": "integer", "minimum": 0 }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "mage": {
+          "type": "object",
+          "required": ["display_name", "description", "attack_style", "weapon", "base_stats", "starter_spell", "damage_formula", "palette"],
+          "properties": {
+            "display_name": { "type": "string" },
+            "description": { "type": "string" },
+            "attack_style": { "const": "projectile_magic" },
+            "weapon": { "type": "string" },
+            "base_stats": {
+              "type": "object",
+              "required": ["hp", "mp", "str", "agi", "int"],
+              "properties": {
+                "hp": { "type": "integer", "minimum": 0 },
+                "mp": { "type": "integer", "minimum": 0 },
+                "str": { "type": "integer", "minimum": 0 },
+                "agi": { "type": "integer", "minimum": 0 },
+                "int": { "type": "integer", "minimum": 0 }
+              }
+            },
+            "starter_spell": {
+              "type": "object",
+              "required": ["name", "signature"],
+              "properties": {
+                "name": { "type": "string" },
+                "signature": { "type": "string" }
+              }
+            },
+            "damage_formula": {
+              "type": "object",
+              "required": ["dice_min", "dice_max", "scaling_stat", "scaling_div", "mp_cost"],
+              "properties": {
+                "dice_min": { "type": "integer", "minimum": 1 },
+                "dice_max": { "type": "integer", "minimum": 1 },
+                "scaling_stat": { "const": "int" },
+                "scaling_div": { "type": "integer", "minimum": 1 },
+                "mp_cost": { "type": "integer", "minimum": 0 }
+              },
+              "additionalProperties": false
+            },
+            "palette": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+            "level_growth": {
+              "type": "object",
+              "properties": {
+                "hp": { "type": "integer", "minimum": 0 },
+                "mp": { "type": "integer", "minimum": 0 },
+                "str": { "type": "integer", "minimum": 0 },
+                "agi": { "type": "integer", "minimum": 0 },
+                "int": { "type": "integer", "minimum": 0 }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

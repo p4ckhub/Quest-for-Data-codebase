@@ -1,6 +1,9 @@
 import { spawnSync } from 'child_process';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
 
-const sandboxRun = '/home/serenity/.hermes/coding/quest-for-data/Quest-for-Data-codebase/toolchain/bin/sandbox_run';
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const sandboxRun = join(__dirname, '..', 'toolchain', 'bin', 'sandbox_run');
 const runCmd = `${sandboxRun} --wall-ms 5000 --mem-mb 256 /tmp/test_gameapi`;
 
 console.log('Running:', runCmd);

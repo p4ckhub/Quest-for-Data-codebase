@@ -1,0 +1,85 @@
+id: rites-of-making
+kind: program
+zone: guild_of_artificers
+act: 1
+title: "Rites of Making and Unmaking"
+concept: constructors_destructors
+concepts_required: [classes_encapsulation, constructors_destructors]
+
+narrative: |
+  Every working the Guild raises must also be unmade. A constructor is
+  the rite of making — it runs the instant an object comes into being,
+  and shapes it whole. A destructor is the rite of unmaking — it runs,
+  unbidden, the instant the object's scope ends, and returns what was
+  borrowed. The Artificers keep a tally called `reclaimed`: aether owed
+  back to the world when a ward dissolves.
+
+objective: |
+  Define a class named Ward with a private int member strength. Give it:
+    Ward(int s)      — a constructor that sets strength to s
+    int power()      — returns strength
+    ~Ward()          — a destructor that ADDS strength to the global
+                       int named reclaimed (already declared for you)
+  The seal raises a Ward of 40 inside a scope, then lets the scope end —
+  your destructor must fire on its own.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+
+  int reclaimed = 0;
+
+starter_code: |
+  class Ward {
+  // TODO: private int strength
+  // TODO: public constructor Ward(int s), method int power(),
+  //       and destructor ~Ward() that does  reclaimed += strength;
+  };
+
+epilogue: |
+  int main() {
+      {
+          Ward w(40);
+          gameapi::report("ward_power", w.power());
+          gameapi::report("reclaimed_before", reclaimed);
+      }  // <- the scope ends here; the rite of unmaking runs by itself
+      gameapi::report("reclaimed_after", reclaimed);
+      gameapi::log("The ward dissolves; its aether flows back to the Guild.");
+      return 0;
+  }
+
+solution: |
+  class Ward {
+  private:
+      int strength;
+  public:
+      Ward(int s) : strength(s) {}
+      int power() {
+          return strength;
+      }
+      ~Ward() {
+          reclaimed += strength;
+      }
+  };
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: ward_power, expected: 40 }
+    - { type: check_equals, id: reclaimed_before, expected: 0 }
+    - { type: check_equals, id: reclaimed_after, expected: 40 }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:ward_power"
+    message: "The constructor receives 40 as s — store it in strength so power() can return it."
+  - trigger: "check_failed:reclaimed_before"
+    message: "Only the DESTRUCTOR touches reclaimed. If reclaimed changes while the ward still stands, you added to it too early — likely in the constructor."
+  - trigger: "check_failed:reclaimed_after"
+    message: "The destructor is spelled ~Ward() — no return type, a tilde before the name — and inside it: reclaimed += strength;"
+  - trigger: "attempt:6"
+    message: "The rites: Ward(int s) : strength(s) {}  to make;  ~Ward() { reclaimed += strength; }  to unmake."
+
+rewards:
+  xp: 120
+  unlocks_zone_progress: true

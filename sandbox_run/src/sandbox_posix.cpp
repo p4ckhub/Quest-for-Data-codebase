@@ -102,7 +102,9 @@ RunResult run_sandboxed(const RunConfig& config) {
         if (config.cpu_ms > 0) {
             rlimit rl;
             rl.rlim_cur = config.cpu_ms / 1000 + (config.cpu_ms % 1000 > 0 ? 1 : 0);
-            rl.rlim_max = rl.rlim_cur;
+            // Soft limit raises SIGXCPU (classifiable as cpu_timeout); hard limit
+            // one second later SIGKILLs as a backstop if the handler is ignored.
+            rl.rlim_max = rl.rlim_cur + 1;
             setrlimit(RLIMIT_CPU, &rl);
         }
         
@@ -253,12 +255,26 @@ RunResult run_sandboxed(const RunConfig& config) {
                 case SIGXCPU:
                     result.killed_by = "cpu_timeout";
                     break;
-                case SIGKILL:
-                    result.killed_by = "memory";
+                case SIGKILL: {
+                    // SIGKILL is ambiguous: the RLIMIT_CPU hard limit and the OOM
+                    // killer both use it. Consult consumed CPU time to tell them apart.
+                    struct rusage kru;
+                    getrusage(RUSAGE_CHILDREN, &kru);
+                    uint64_t used_cpu_ms =
+                        kru.ru_utime.tv_sec * 1000 + kru.ru_utime.tv_usec / 1000 +
+                        kru.ru_stime.tv_sec * 1000 + kru.ru_stime.tv_usec / 1000;
+                    // 100ms slack: rusage ticks can land just under the whole-second
+                    // granularity the kernel enforces (e.g. 998ms vs a 1000ms config).
+                    if (config.cpu_ms > 0 && used_cpu_ms + 100 >= config.cpu_ms) {
+                        result.killed_by = "cpu_timeout";
+                    } else {
+                        result.killed_by = "memory";
+                    }
                     break;
+                }
                 default:
                     if (sig == SIGSEGV) {
-                        result.killed_by = "memory";
+                        result.killed_by = "sigsegv";
                     }
                     break;
             }

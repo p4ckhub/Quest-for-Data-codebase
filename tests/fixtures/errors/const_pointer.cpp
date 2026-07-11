@@ -1,0 +1,1 @@
+int* const p = nullptr; p = (int*)1;

@@ -1,0 +1,66 @@
+id: bind-the-spirit
+kind: functions
+zone: cursed_crypt
+act: 1
+title: "Bind the Spirit"
+concept: heap_allocation
+concepts_required: [pointers, pass_by_reference, heap_allocation]
+
+narrative: |
+  Everything you have made so far lived on the stack — born in a scope,
+  unmade when the scope closed. The Crypt trades in older magic: `new`
+  claims memory from the heap, and that memory answers to no scope. It
+  is yours until you speak `delete` — and the Crypt COUNTS. Every
+  binding left unbroken feeds what sleeps below.
+
+objective: |
+  Write a function  int bind_spirit()  that:
+    1. allocates an int on the heap holding 21:  int* vessel = new int(21);
+    2. computes double the vessel's value (use *vessel)
+    3. releases the binding:  delete vessel;
+    4. returns the doubled value (42)
+  The Crypt's ledger must read: one binding made, none left alive.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+
+starter_code: |
+  int bind_spirit() {
+      // TODO: new int(21), double it, delete, return the double
+      return 0;
+  }
+
+harness: crypt_bind_main.cpp
+extra_units: [leakcheck.cpp]
+
+solution: |
+  int bind_spirit() {
+      int* vessel = new int(21);
+      int power = *vessel * 2;
+      delete vessel;
+      return power;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: power, expected: 42 }
+    - { type: check_equals, id: allocs, expected: 1 }
+    - { type: check_equals, id: live_bytes, expected: 0 }
+    - { type: event_emitted, event_type: alloc_report }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:power"
+    message: "The spirit holds 21; doubled is 42. Read through the pointer — *vessel — before you delete it, never after."
+  - trigger: "check_failed:allocs"
+    message: "The ledger expects exactly ONE binding: a single  new int(21)  — no more, no less."
+  - trigger: "check_failed:live_bytes"
+    message: "The binding was never broken — the Crypt still holds your vessel. Every new must meet its delete."
+  - trigger: "attempt:6"
+    message: "Four lines: int* vessel = new int(21);  int power = *vessel * 2;  delete vessel;  return power;"
+
+rewards:
+  xp: 160
+  unlocks_zone_progress: true

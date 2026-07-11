@@ -1,0 +1,66 @@
+id: the-living-rack
+kind: program
+zone: archive_armory
+act: 1
+title: "The Living Rack"
+concept: vectors
+concepts_required: [main_function, arrays, for_loop, vectors]
+
+narrative: |
+  Deeper in the Armory stands a rack that grows: a std::vector. Where
+  stone racks are carved once, the living rack takes as many arrows as
+  you feed it — push_back, and it makes room. The Quartermaster wants
+  three arrows shelved and tallied.
+
+objective: |
+  A vector  std::vector<int> quiver;  and two ints, arrow_count and
+  arrow_sum (both 0), are already declared. push_back the values 5, 10,
+  and 15 into quiver (in that order). Then set arrow_count to the
+  quiver's size, and loop over the quiver adding every element to
+  arrow_sum. Done right: arrow_count is 3 and arrow_sum is 30.
+
+prelude: |
+  #include "gameapi.h"
+  #include <vector>
+  int main() {
+      std::vector<int> quiver;
+      int arrow_count = 0;
+      int arrow_sum = 0;
+
+starter_code: |
+      // TODO: push_back 5, 10, 15 into quiver
+      // TODO: set arrow_count to quiver.size()
+      // TODO: loop over quiver, adding each element to arrow_sum
+
+epilogue: |
+      gameapi::report("arrow_count", arrow_count);
+      gameapi::report("arrow_sum", arrow_sum);
+      return 0;
+      }
+
+solution: |
+      quiver.push_back(5);
+      quiver.push_back(10);
+      quiver.push_back(15);
+      arrow_count = quiver.size();
+      for (int i = 0; i < (int)quiver.size(); ++i) {
+          arrow_sum += quiver[i];
+      }
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: arrow_count, expected: 3 }
+    - { type: check_equals, id: arrow_sum, expected: 30 }
+
+hints:
+  - trigger: "check_failed:arrow_count"
+    message: "The living rack knows its own size — arrow_count = quiver.size();"
+  - trigger: "check_failed:arrow_sum"
+    message: "5+10+15 = 30. Loop from index 0 while i < quiver.size(), adding quiver[i]."
+  - trigger: "attempt:6"
+    message: "The shape: quiver.push_back(5); ... then for (int i = 0; i < (int)quiver.size(); ++i) arrow_sum += quiver[i];"
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

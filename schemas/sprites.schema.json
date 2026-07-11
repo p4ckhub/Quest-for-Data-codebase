@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["version", "sprites"],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "sprites": {
+      "type": "object",
+      "required": [
+        "player_warrior",
+        "player_archer",
+        "player_mage",
+        "enemy_training_dummy",
+        "enemy_forge_wraith",
+        "projectile_arrow",
+        "projectile_bolt",
+        "backdrop_zone_0",
+        "backdrop_zone_1",
+        "backdrop_zone_2"
+      ],
+      "properties": {
+        "player_warrior": { "$ref": "#/definitions/spritePlaceholder" },
+        "player_archer": { "$ref": "#/definitions/spritePlaceholder" },
+        "player_mage": { "$ref": "#/definitions/spritePlaceholder" },
+        "enemy_training_dummy": { "$ref": "#/definitions/spritePlaceholder" },
+        "enemy_forge_wraith": { "$ref": "#/definitions/spritePlaceholder" },
+        "projectile_arrow": { "$ref": "#/definitions/spritePlaceholder" },
+        "projectile_bolt": { "$ref": "#/definitions/spritePlaceholder" },
+        "backdrop_zone_0": { "$ref": "#/definitions/spritePlaceholder" },
+        "backdrop_zone_1": { "$ref": "#/definitions/spritePlaceholder" },
+        "backdrop_zone_2": { "$ref": "#/definitions/spritePlaceholder" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "spritePlaceholder": {
+      "type": "object",
+      "required": ["shape", "color", "label"],
+      "properties": {
+        "shape": {
+          "type": "string",
+          "enum": ["circle", "square", "diamond", "rectangle", "triangle", "hexagon", "line"]
+        },
+        "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "label": { "type": "string", "pattern": "^\\u[0-9a-fA-F]{4}$|^.*$" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

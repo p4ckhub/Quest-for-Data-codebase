@@ -4,11 +4,11 @@ import { writeFileSync, rmSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 
-const SANDBOX_PATH = '/home/serenity/.hermes/coding/quest-for-data/Quest-for-Data-codebase/toolchain/bin/sandbox_run';
+const SANDBOX_PATH = join(__dirname, '..', 'toolchain', 'bin', 'sandbox_run');
 
 describe('Sandbox Tests', () => {
   function compileFixture(name: string, source: string): string {
-    const path = join('/home/serenity/.hermes/coding/quest-for-data/Quest-for-Data-codebase/tests/fixtures', `${name}_fixture`);
+    const path = join(__dirname, 'fixtures', `${name}_fixture`);
     writeFileSync(path + '.cpp', source);
     spawnSync('g++', ['-std=c++17', '-O0', '-g0', path + '.cpp', '-o', path], { stdio: 'inherit' });
     return path;
@@ -39,15 +39,13 @@ int main() {
   });
 
   it('should kill process on memory limit', () => {
+    // Allocations must ACCUMULATE to hit RLIMIT_AS; new[] throws bad_alloc at
+    // the limit, which the sandbox classifies as killed_by=memory.
     const source = `#include <cstdio>
-#include <cstdlib>
-#include <unistd.h>
 int main() {
     while (1) {
-        void* ptr = malloc(1024 * 1024);
-        if (!ptr) break;
-        *(char*)ptr = 1;
-        free(ptr);
+        volatile char* ptr = new char[1024 * 1024];
+        ptr[0] = 1;
     }
     return 0;
 }`;
@@ -80,7 +78,9 @@ int main() {
     try {
       const res = spawnSync(SANDBOX_PATH, ['--wall-ms', '10000', '--cpu-ms', '2000', '--mem-mb', '64', '--stdout-cap-kb', '128', '--', path], { encoding: 'utf-8' });
       const output = res.stdout || '';
-      expect(output).toContain('"killed_by":"memory"');
+      // Stack overflow arrives as SIGSEGV; the validator's stack_overflow row
+      // matches killed_by=sigsegv (see EXIT_STATUS_ROWS in runner/src/validator.ts)
+      expect(output).toContain('"killed_by":"sigsegv"');
     } finally {
       rmSync(path + '.cpp', { force: true });
       try { rmSync(path, { force: true }); } catch {}

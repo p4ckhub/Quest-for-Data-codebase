@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "zones": [
+    {
+      "id": "character_creation",
+      "number": 0,
+      "title": "Character Creation — The Awakening",
+      "concept": "What a program is, main(), cout, cin, comments"
+    },
+    {
+      "id": "vault_of_variables",
+      "number": 1,
+      "title": "Vault of Variables",
+      "concept": "Variables, int/float/bool/char, type safety, const"
+    },
+    {
+      "id": "function_forge",
+      "number": 2,
+      "title": "The Function Forge",
+      "concept": "Functions: declaration, parameters, return types, overloading",
+      "boss": "encounter-forge-wraith"
+    },
+    {
+      "id": "crossroads_of_choices",
+      "number": 3,
+      "title": "Crossroads of Choices",
+      "concept": "if/else, switch, boolean & comparison operators"
+    },
+    {
+      "id": "endless_corridor",
+      "number": 4,
+      "title": "The Endless Corridor",
+      "concept": "while, for, do-while, break/continue",
+      "boss": "encounter-corridor-swarm"
+    },
+    {
+      "id": "archive_armory",
+      "number": 5,
+      "title": "The Archive Armory",
+      "concept": "Arrays, std::vector, std::string"
+    },
+    {
+      "id": "guild_of_artificers",
+      "number": 6,
+      "title": "Guild of Artificers",
+      "concept": "struct, class, encapsulation, constructors/destructors"
+    },
+    {
+      "id": "the_bestiary",
+      "number": 7,
+      "title": "The Bestiary",
+      "concept": "Inheritance, polymorphism, virtual",
+      "boss": "encounter-bestiary-alpha"
+    },
+    {
+      "id": "mirror_realm",
+      "number": 8,
+      "title": "The Mirror Realm",
+      "concept": "Pointers, references, pass-by-value vs. by-reference"
+    },
+    {
+      "id": "cursed_crypt",
+      "number": 9,
+      "title": "The Cursed Crypt",
+      "concept": "Stack vs. heap, new/delete, ownership, smart pointers",
+      "boss": "encounter-leak-tyrant"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+id: spells-within-spells
+kind: functions
+zone: function_forge
+act: 1
+title: "Spells Within Spells"
+concept: function_composition
+concepts_required: [main_function, functions_basics, composition]
+
+teaching: |
+  Here is the Forge's deepest secret, and it is quiet: a spell may
+  *cast another spell*. Speak a forged name inside a working, and
+  its yield flows in like any other value:
+
+  ```cpp
+  int spark() {
+      return 2;
+  }
+
+  int blaze() {
+      return spark() * 3;   // casts spark, then triples its yield
+  }
+  ```
+
+  When blaze is cast, it casts spark in turn, receives 2, and yields
+  6. This is how every great working in the realm is truly built —
+  not as one enormous forging, but as small spells, each honest and
+  simple, composed into greater ones. Forge small. Compose upward.
+
+examples:
+  - prompt: "A yield may also be caught in a crystal first, then worked:"
+    code: |
+      int rally() {
+          int base = spark();
+          return base + base;
+      }
+
+narrative: |
+  The Forge-master lays two empty molds before you. "One small, one
+  great. The small spell knows one thing: the base force of a
+  {{class_name}}'s arm. The great spell knows nothing of forces — it
+  only knows to cast the small one and add the Forge's blessing of
+  six. Change the small spell someday, and the great one follows
+  without being touched. That is the whole art."
+
+objective: |
+  Forge two spells: base_force, taking nothing and returning 4; and
+  empowered, taking nothing and returning base_force() + 6. The great
+  spell must CAST the small one — the Forge will know if you merely
+  wrote 10.
+
+starter_code: |
+      int base_force() {
+          // TODO: return the base force: 4
+      }
+
+      int empowered() {
+          // TODO: cast base_force() and add the blessing of 6
+      }
+
+harness: forge_composition_main.cpp
+
+solution: |
+      int base_force() {
+          return 4;
+      }
+
+      int empowered() {
+          return base_force() + 6;
+      }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: check_equals, id: base, expected: 4 }
+    - { type: check_equals, id: empowered, expected: 10 }
+
+hints:
+  - trigger: "error:missing_return"
+    message: "Both spells promise an int — each must return one."
+  - trigger: "error:undeclared_identifier"
+    message: "To cast a spell, speak its name with the mouth attached: base_force() — parentheses and all."
+  - trigger: "check_failed:empowered"
+    message: "empowered must yield exactly 10: the small spell's 4, plus the blessing of 6. Cast it: return base_force() + 6;"
+  - trigger: "attempt:6"
+    message: "The two forgings: int base_force() { return 4; }  and  int empowered() { return base_force() + 6; }"
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

@@ -1,0 +1,72 @@
+id: by-value-by-reference
+kind: program
+zone: mirror_realm
+act: 1
+title: "By Value, By Reference"
+concept: pass_by_reference
+concepts_required: [functions_basics, references, pointers, pass_by_reference]
+
+narrative: |
+  The Realm's final riddle: hand a blade to the polisher's COPY-room
+  and your blade comes back untouched — they polished a duplicate and
+  discarded it. Hand it through the MIRROR-door, and the strokes land
+  on your own steel. Every function you write chooses one of these
+  doors for each parameter.
+
+objective: |
+  Write two functions:
+    void polish_copy(int gleam)   — takes its parameter BY VALUE and
+                                    adds 50 to it (futile, and that is
+                                    the point)
+    void polish_true(int& gleam)  — takes its parameter BY REFERENCE
+                                    and adds 50 to it
+  The seal sends the same blade (gleam 10) through both doors and
+  reports what each door left behind.
+
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+
+starter_code: |
+  // TODO: void polish_copy(int gleam)  — add 50 to gleam (a copy)
+  // TODO: void polish_true(int& gleam) — add 50 to gleam (the real one)
+
+epilogue: |
+  int main() {
+      int blade = 10;
+      polish_copy(blade);
+      gameapi::report("after_copy", blade);
+      polish_true(blade);
+      gameapi::report("after_true", blade);
+      gameapi::log("The copy-room shrugs; the mirror-door gleams.");
+      return 0;
+  }
+
+solution: |
+  void polish_copy(int gleam) {
+      gleam += 50;
+  }
+  void polish_true(int& gleam) {
+      gleam += 50;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, id: exit_status, expect: clean }
+    - { type: check_equals, id: after_copy, expected: 10 }
+    - { type: check_equals, id: after_true, expected: 60 }
+    - { type: event_emitted, event_type: log }
+
+hints:
+  - trigger: "check_failed:after_copy"
+    message: "polish_copy must take plain int — by value. If the blade changed after it, you took int& there. The futility is the lesson."
+  - trigger: "check_failed:after_true"
+    message: "polish_true needs int& gleam — the & in the parameter is the mirror-door. Without it you polished another copy."
+  - trigger: "error:undeclared_identifier"
+    message: "The seal calls polish_copy(blade) and polish_true(blade) — both functions must exist with exactly those names."
+  - trigger: "attempt:6"
+    message: "Identical bodies, one differing character: void polish_copy(int gleam) { gleam += 50; }  void polish_true(int& gleam) { gleam += 50; }"
+
+rewards:
+  xp: 150
+  unlocks_zone_progress: true
