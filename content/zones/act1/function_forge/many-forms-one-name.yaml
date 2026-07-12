@@ -1,5 +1,5 @@
 id: many-forms-one-name
-kind: functions
+kind: program
 zone: function_forge
 act: 1
 title: "Many Forms, One Name"
@@ -40,41 +40,62 @@ examples:
       }
 
 narrative: |
-  The Forge masters many forms. A single name — strike — can manifest
+  The Forge masters many forms. A single name — attack — can manifest
   in different ways. Learn to overload: same name, different signatures.
+  The carved lines in main will cast both forms.
 
 objective: |
-  Write two overloaded functions named attack:
+  Forge two overloaded functions named attack, above main:
   1. attack() with no parameters, returns 7
   2. attack(int fury) with one int parameter, returns fury + 3
+  The carved casts offer nothing, then 9 — and expect 7, then 12.
 
 starter_code: |
-        // TODO: Overloaded function 1: attack() -> int
-        // TODO: Overloaded function 2: attack(int fury) -> int
+  #include <iostream>
 
-harness: forge_overload_main.cpp
+  // TODO: Overloaded form 1: attack() -> int, returns 7
+  // TODO: Overloaded form 2: attack(int fury) -> int, returns fury + 3
+
+  int main() {
+      // [carved by the realm] The Forge casts both forms:
+      std::cout << "bare " << attack() << "\n";
+      std::cout << "with 9: " << attack(9) << "\n";
+      return 0;
+  }
 
 solution: |
-        int attack() {
-            return 7;
-        }
+  #include <iostream>
 
-        int attack(int fury) {
-            return fury + 3;
-        }
+  int attack() {
+      return 7;
+  }
+
+  int attack(int fury) {
+      return fury + 3;
+  }
+
+  int main() {
+      // [carved by the realm] The Forge casts both forms:
+      std::cout << "bare " << attack() << "\n";
+      std::cout << "with 9: " << attack(9) << "\n";
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_in_range, id: min_damage, min: 7, max: 12 }
+    - { type: stdout_contains, id: bare_form, text: "bare 7" }
+    - { type: stdout_contains, id: offered_form, text: "with 9: 12" }
 
 hints:
   - trigger: "error:redefinition"
     message: "You must use different signatures (different parameters) for overloading."
   - trigger: "error:missing_return"
     message: "Each function promising an int must return one."
+  - trigger: "check_failed:offered_form"
+    message: "The offered form takes int fury and yields fury + 3 — an offering of 9 must come back 12."
   - trigger: "attempt:6"
-    message: 'Write two functions with the same name but different parameter lists'
+    message: 'Write two functions named attack with different parameter lists, both above main'
 
 rewards:
   xp: 125
@@ -83,4 +104,3 @@ rewards:
 grants_spell:
   name: "attack"
   signature: "int attack()"
-

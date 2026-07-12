@@ -1,0 +1,128 @@
+id: the-forgemasters-trial
+kind: program
+zone: function_forge
+act: 1
+title: "The Forgemaster's Trial"
+concept: program_design
+concepts_required: [functions_basics, parameters, composition, cin_input]
+
+teaching: |
+  The last art of the Forge is not forged at all. It is planned.
+  Before the fire is lit, a master names the goal, breaks the quest
+  into deeds, and orders them. Then, and only then, the forging
+  begins: one spell at a time, and the scroll is cast after each, so
+  every fault is caught while it is still small.
+
+  When the plan is honest, the deed-list becomes main, and the deeds
+  become spells. A stranger should be able to read your main aloud
+  and hear the plan itself:
+
+  ```cpp
+  int main() {
+      proclaim(temper(summon_offering()));
+      return 0;
+  }
+  ```
+
+  Catch the offering, temper it, proclaim the result: the summons
+  chain reads inside out, exactly as the deeds were ordered. Every
+  art of this Forge is in that one line: promises kept, offerings
+  poured, spells feeding spells.
+
+narrative: |
+  The Forge-master carves three deeds into the lintel above the fire
+  and steps aside. "This is the trial every smith faces before the
+  Wraith. I have given you the plan. Forge one spell at a time, cast
+  the scroll after each, and when the last deed speaks, you are done
+  here."
+
+objective: |
+  Follow the carved plan. Forge int summon_offering(), taking
+  nothing, catching one int from the wind and handing it back. Forge
+  int temper(int offering), yielding offering * 3 + 1. Forge void
+  proclaim(int result), speaking one line: The trial yields N. Then
+  make main a single deed: the three summons, chained inside out.
+
+starter_code: |
+  #include <iostream>
+
+  // [carved by the realm] The Forgemaster's plan:
+  //   1. summon_offering()   catch one int from the wind, hand it back
+  //   2. temper(int)         work the demanded formula: offering * 3 + 1
+  //   3. proclaim(int)       speak one line:  The trial yields N.
+
+  // TODO: forge the three spells here, one at a time; cast the scroll after each
+
+  int main() {
+      // TODO: one deed: the three summons, chained inside out
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  // [carved by the realm] The Forgemaster's plan:
+  //   1. summon_offering()   catch one int from the wind, hand it back
+  //   2. temper(int)         work the demanded formula: offering * 3 + 1
+  //   3. proclaim(int)       speak one line:  The trial yields N.
+
+  int summon_offering() {
+      int offering{};
+      std::cin >> offering;
+      return offering;
+  }
+
+  int temper(int offering) {
+      return offering * 3 + 1;
+  }
+
+  void proclaim(int result) {
+      std::cout << "The trial yields " << result << ".\n";
+  }
+
+  int main() {
+      proclaim(temper(summon_offering()));
+      return 0;
+  }
+
+stdin_fixture: "5"
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: trial, regex: "The trial yields 16\\." }
+    - type: source_matches
+      id: first_deed
+      regex: "int\\s+summon_offering\\s*\\(\\s*\\)"
+      message: "The first deed of the plan: int summon_offering(), taking nothing, catching one int from the wind."
+    - type: source_matches
+      id: second_deed
+      regex: "int\\s+temper\\s*\\(\\s*int"
+      message: "The second deed of the plan: int temper(int offering), yielding offering * 3 + 1."
+    - type: source_matches
+      id: third_deed
+      regex: "void\\s+proclaim\\s*\\(\\s*int"
+      message: "The third deed of the plan: void proclaim(int result), speaking the trial line."
+    - type: source_matches
+      id: chained
+      regex: "proclaim\\s*\\([^;]*temper\\s*\\([^;]*summon_offering\\s*\\("
+      message: "main is one deed: the three summons chained inside out, proclaim(temper(summon_offering()));"
+    - type: source_matches
+      id: no_carved_answer
+      regex: "16"
+      expect_match: false
+      message: "The trial forges its own 16. Do not carve it into the scroll."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The realm must meet every spell before main speaks it. Forge all three above main, in the plan's order."
+  - trigger: "check_failed:chained"
+    message: "Read the plan inside out: the offering is caught, then tempered, then proclaimed. One line: proclaim(temper(summon_offering()));"
+  - trigger: "check_failed:trial"
+    message: "The wind carries 5. Tempered, that is 5 * 3 + 1, which is 16, and proclaim speaks: The trial yields 16."
+  - trigger: "attempt:6"
+    message: "Three forgings: summon_offering catches with std::cin, temper returns offering * 3 + 1, proclaim prints the line. Then main is proclaim(temper(summon_offering()));"
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

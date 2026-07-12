@@ -1,5 +1,5 @@
 id: the-war-cry
-kind: functions
+kind: program
 zone: function_forge
 act: 1
 title: "The War Cry"
@@ -21,9 +21,10 @@ teaching: |
   Read the forging marks: `void` is the promise of nothing — this
   working *acts* instead of yielding. `herald_call` is its name. The
   `()` is the mouth of the spell, empty for now. Between `{` and `}`
-  lies the deed itself. You forge the working; the Forge itself will
-  speak its name and cast it. No `return` is needed — when the deed
-  is done, the working simply ends.
+  lies the deed itself. Forgings live OUTSIDE main, above it; then
+  main summons them by name — `herald_call();` — and the deed is
+  done. No `return` is needed inside a void working — when the deed
+  ends, the working simply ends.
 
 examples:
   - prompt: "A void working may hold many deeds — each cast performs them all, in order:"
@@ -36,33 +37,49 @@ examples:
 narrative: |
   The Forge-master bars the door behind you. "Every {{class_name}}
   who works this Forge begins the same way: not with steel, but with
-  voice. Forge me a war cry — a working the Forge can cast to hear
+  voice. Forge me a war cry — a working your main can cast to hear
   who you are. It need yield nothing. It need only *ring*."
 
 objective: |
-  Forge a function named war_cry — promising void, taking nothing —
+  Forge the function war_cry — promising void, taking nothing —
   whose deed is to print your war cry. The cry is yours to choose,
-  but a true war cry ends with an exclamation mark.
-
-prelude: |
-    #include <iostream>
+  but a true war cry ends with an exclamation mark. The summons in
+  main is already carved; leave it be.
 
 starter_code: |
-      void war_cry() {
-          // TODO: let the Forge hear you
-      }
+  #include <iostream>
 
-harness: forge_warcry_main.cpp
+  void war_cry() {
+      // TODO: let the Forge hear you
+  }
+
+  int main() {
+      // [carved by the realm] The Forge casts your forging:
+      war_cry();
+      return 0;
+  }
 
 solution: |
-      void war_cry() {
-          std::cout << "For the Forge!" << std::endl;
-      }
+  #include <iostream>
+
+  void war_cry() {
+      std::cout << "For the Forge!" << std::endl;
+  }
+
+  int main() {
+      // [carved by the realm] The Forge casts your forging:
+      war_cry();
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
     - { type: stdout_matches, id: cry, regex: "\\S.*!" }
+    - type: source_matches
+      id: forged
+      regex: "void\\s+war_cry\\s*\\("
+      message: "The Forge expects a forging named war_cry, promising void."
 
 hints:
   - trigger: "error:missing_semicolon"

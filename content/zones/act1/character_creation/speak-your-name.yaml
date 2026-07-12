@@ -34,43 +34,51 @@ narrative: |
   archives record your first steps as a {{class_name}}.
 
 objective: |
-  Read a name from stdin using std::cin, then echo it back via
-  gameapi::report with id "player_name".
-
-prelude: |
-    #include "gameapi.h"
-    #include <iostream>
-    #include <string>
-    int main() {
-        std::cout << "State your name: ";
-        std::string name;
+  Read a name with std::cin into the waiting vessel, then proclaim it back
+  in one cast, exactly so:
+  The halls record you, NAME.
 
 starter_code: |
-        // TODO: Read the player name with cin
-        // Then report it to gameapi
+  #include <iostream>
+  #include <string>
 
-epilogue: |
-            gameapi::report("player_name", name);
-            return 0;
-            }
+  int main() {
+      std::cout << "State your name: ";
+      std::string name;
+
+      // TODO: Read the name with cin, then proclaim it back:
+      // The halls record you, NAME.
+
+      return 0;
+  }
 
 solution: |
-            std::cin >> name;
-            gameapi::report("player_name", name);
+  #include <iostream>
+  #include <string>
+
+  int main() {
+      std::cout << "State your name: ";
+      std::string name;
+      std::cin >> name;
+      std::cout << "The halls record you, " << name << "." << std::endl;
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_equals, id: player_name, expected: "Player" }
+    - { type: stdout_contains, id: recorded, text: "The halls record you, Player." }
 
 stdin_fixture: "Player"
 hints:
   - trigger: "error:undeclared_identifier"
-    message: "Declare the variable before using it: std::string name;"
+    message: "The vessel is already declared for you: std::string name;"
   - trigger: "error:missing_semicolon"
     message: "Each incantation must end with ';'"
+  - trigger: "check_failed:recorded"
+    message: "The proclamation carries the vessel between the words: << \"The halls record you, \" << name << \".\""
   - trigger: "attempt:6"
-    message: 'Use std::cin >> name; to read input, then gameapi::report()'
+    message: 'Two casts: std::cin >> name; then std::cout << "The halls record you, " << name << "." << std::endl;'
 
 rewards:
   xp: 75

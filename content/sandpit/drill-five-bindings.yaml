@@ -1,0 +1,77 @@
+id: drill-five-bindings
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Five Bindings"
+concept: initialization
+concepts_required: [variables_and_types, initialization]
+
+teaching: |
+  The bindings, once more. Braces refuse a value that would lose part
+  of itself, and empty braces bind an honest 0:
+
+  ```cpp
+  int coals{ 2 };   // list binding: whole values only
+  int soot{};       // value binding: holds 0
+  ```
+
+narrative: |
+  The Forerunner tips a cracked crucible toward you. "The braces
+  refused this spill once already. Mend it, then bind an empty one."
+
+objective: |
+  Cast the scroll and read the narrowing refusal. Mend coals to hold
+  the whole number 2 with braces, then bind an int named soot with
+  empty braces. The carved reading speaks both.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      int coals{ 2.5 };
+      // TODO: bind an int named soot with empty braces
+
+      // [carved by the realm] The reading speaks both crystals:
+      std::cout << "coals " << coals << "\n";
+      std::cout << "soot " << soot << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      int coals{ 2 };
+      int soot{};
+
+      // [carved by the realm] The reading speaks both crystals:
+      std::cout << "coals " << coals << "\n";
+      std::cout << "soot " << soot << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: coals, text: "coals 2" }
+    - { type: stdout_contains, id: soot, text: "soot 0" }
+    - type: source_matches
+      id: coals_braced
+      regex: "int\\s+coals\\s*\\{\\s*2\\s*\\}"
+      message: "Keep the braces and mend the value: int coals{ 2 };"
+    - type: source_matches
+      id: soot_empty
+      regex: "int\\s+soot\\s*\\{\\s*\\}"
+      message: "Value binding is empty braces: int soot{};"
+
+hints:
+  - trigger: "error:unknown_error"
+    message: "Read the refusal: a narrowing. Braces will not let 2.5 pour into an int and lose its .5. Give coals a whole number."
+  - trigger: "check_failed:soot_empty"
+    message: "Empty braces bind a crystal to 0: int soot{};"
+  - trigger: "attempt:6"
+    message: "Two lines: int coals{ 2 };  and  int soot{};"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

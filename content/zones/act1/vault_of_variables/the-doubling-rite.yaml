@@ -1,0 +1,104 @@
+id: the-doubling-rite
+kind: program
+zone: vault_of_variables
+act: 1
+title: "The Doubling Rite"
+concept: program_composition
+concepts_required: [variables_and_types, arithmetic, cin_input]
+
+teaching: |
+  Everything the Vault has taught you now folds into one working, and
+  the craft of building it is a rhythm, not a leap. Scaffold first: an
+  empty main that casts clean. Then output. Then input. Then the
+  computation. Cast between every step, so each refusal has only one
+  possible home.
+
+  When the computation comes, resist the urge to scribble over your
+  offering:
+
+  ```cpp
+  tribute = tribute * 2;              // works, but the offering is destroyed
+  int doubled{ tribute * 2 };         // works, but births a scratch crystal
+  std::cout << tribute * 2 << '\n';   // compute at the point of use
+  ```
+
+  All three speak the same number. The third is the Vault's way: the
+  offering survives untouched, no scratch crystal clutters the scroll,
+  and the formula lives exactly where its answer is needed.
+
+examples:
+  - prompt: "The Keeper computes in the cast itself, and the crystal keeps its truth:"
+    code: |
+      int stones{ 5 };
+      std::cout << "half " << stones / 2 << '\n';
+
+narrative: |
+  The Vault's last door has no lock, only a rite. Build the whole
+  working yourself, from the first proclamation to the final number:
+  ask the wind for a number, catch it, and speak its double back.
+  The Keeper watches for one thing above all: the doubling must
+  happen inside the cast itself, and the offering must leave the
+  Vault unharmed.
+
+objective: |
+  Build the full rite: proclaim the prompt Speak a number: then catch
+  an int offering named tribute from the wind, then proclaim one line
+  reading Twice N is 2N, where N is the offering. Do the doubling
+  inside the final cast, and never overwrite tribute.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // TODO: proclaim the prompt:  Speak a number:
+      // TODO: bind an int crystal named tribute and catch the offering
+      // TODO: proclaim:  Twice N is 2N   with the doubling done inside the cast
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      std::cout << "Speak a number: ";
+      int tribute{};
+      std::cin >> tribute;
+      std::cout << "Twice " << tribute << " is " << tribute * 2 << '\n';
+      return 0;
+  }
+
+stdin_fixture: "9"
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: prompt, text: "Speak a number" }
+    - { type: stdout_matches, id: doubled, regex: "Twice 9 is 18" }
+    - type: source_matches
+      id: inline_doubling
+      regex: "<<[^;]*(tribute\\s*\\*\\s*2|2\\s*\\*\\s*tribute)"
+      message: "Do the doubling inside the cast itself: << tribute * 2"
+    - type: source_matches
+      id: offering_unharmed
+      regex: "tribute\\s*=\\s*tribute"
+      expect_match: false
+      message: "The offering must leave unharmed. Do not scribble over tribute; compute at the point of use."
+    - type: source_matches
+      id: no_carved_answer
+      regex: "18"
+      expect_match: false
+      message: "Let the rite do the doubling. Do not carve 18 into the scroll yourself."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Bind the crystal before the wind can fill it: int tribute{}; then std::cin >> tribute;"
+  - trigger: "check_failed:doubled"
+    message: "The wind offers 9, so the rite must speak Twice 9 is 18, with the 18 computed, not carved. Check the exact words and spaces."
+  - trigger: "check_failed:inline_doubling"
+    message: "No scratch crystals and no overwriting. Put the formula in the cast: << tribute * 2"
+  - trigger: "attempt:6"
+    message: "Four deeds: prompt cast, int tribute{};, std::cin >> tribute;, then std::cout << \"Twice \" << tribute << \" is \" << tribute * 2 << '\\n';"
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

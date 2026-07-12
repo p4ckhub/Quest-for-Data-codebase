@@ -1,0 +1,89 @@
+id: drill-the-silent-script
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Silent Script"
+concept: comments_advanced
+concepts_required: [comments]
+
+teaching: |
+  Silencing, once more: `//` at the head of a line, or `/* */` around
+  it, and the realm passes over it. The line stays for whoever mends
+  it later:
+
+  ```cpp
+  // wake the old ward   (broken; silenced, not struck)
+  std::cout << "The watch holds." << std::endl;
+  ```
+
+  And a mark of your own says *why*, not *what*.
+
+narrative: |
+  A broken line lies half-buried in the sand, older than the
+  Forerunner cares to admit. "Silence it, and leave a mark of your own
+  above the working cast."
+
+objective: |
+  Silence the broken line with comment syntax; it must remain on the
+  scroll. Then replace the TODO with a why-mark above the working
+  cast.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] This line is broken. Silence it; do not destroy it.
+      strike the practice bell
+
+      // TODO: replace this with a why-mark for the cast below
+      std::cout << "The dummy stands ready." << std::endl;
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] This line is broken. Silence it; do not destroy it.
+      // strike the practice bell
+
+      // This cast readies the drill while the broken line rests
+      std::cout << "The dummy stands ready." << std::endl;
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: still_runs, text: "The dummy stands ready." }
+    - type: source_matches
+      id: still_present
+      regex: "strike the practice bell"
+      message: "The broken line must remain on the scroll. Silence it; do not strike it out."
+    - type: source_matches
+      id: silenced
+      regex: "(//|/\\*)\\s*strike the practice bell"
+      message: "Put // at the head of the broken line, or wrap it in /* */."
+    - type: source_matches
+      id: todo_gone
+      regex: "TODO"
+      expect_match: false
+      message: "The TODO still stands. Replace it with a mark that says why the cast exists."
+    - type: source_matches
+      id: why_mark
+      regex: "//(?![^\\n]*strike)[^\\n]*[A-Za-z][^\\n]*\\n[ \\t]*std::cout"
+      message: "Leave a // mark of your own on the line directly above the cast."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The realm cannot read the broken line, and never will. Silence it: put // at its head."
+  - trigger: "check_failed:still_present"
+    message: "Deletion is forever. Restore the broken line, then silence it with // instead."
+  - trigger: "check_failed:why_mark"
+    message: "A why-mark says what the cast is for, not what it does. Put it on the line directly above the std::cout."
+  - trigger: "attempt:6"
+    message: "Two moves: '// strike the practice bell' to silence the broken line, and a // mark of your own directly above the std::cout line."
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

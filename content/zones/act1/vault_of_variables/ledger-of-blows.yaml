@@ -33,43 +33,65 @@ examples:
 narrative: |
   The Keeper's ledger computes what a {{class_name}}'s blow is truly
   worth. Your might and swiftness are already entered — str at 8, agi
-  at 5. The old formula is carved above the page: a blow is might
-  doubled, plus swiftness. Enter it, and let the ledger tally itself.
+  at 5, carved into the page. The old formula is carved above them:
+  a blow is might doubled, plus swiftness. Enter it, and let the
+  ledger tally itself.
 
 objective: |
-  The variables str (8) and agi (5) already exist. Initialize an int
+  The carved lines give you str (8) and agi (5). Initialize an int
   named blow with the value of str * 2 + agi — computed from the
   variables themselves, not written as a bare number.
 
-prelude: |
-    #include "gameapi.h"
-    int main() {
-        int str = 8;
-        int agi = 5;
-
 starter_code: |
-        // The old formula: might doubled, plus swiftness
+  #include <iostream>
 
-epilogue: |
-        gameapi::report("blow", blow);
-        gameapi::report("str", str);
-        return 0;
-        }
+  int main() {
+      // [carved by the realm] The ledger's standing entries:
+      int str = 8;
+      int agi = 5;
+
+      // The old formula: might doubled, plus swiftness
+
+      // [carved by the realm] The ledger tallies aloud:
+      std::cout << "blow " << blow << "\n";
+      return 0;
+  }
 
 solution: |
-        int blow = str * 2 + agi;
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] The ledger's standing entries:
+      int str = 8;
+      int agi = 5;
+
+      int blow = str * 2 + agi;
+
+      // [carved by the realm] The ledger tallies aloud:
+      std::cout << "blow " << blow << "\n";
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_equals, id: blow, expected: 21 }
-    - { type: check_equals, id: str, expected: 8 }
+    - { type: stdout_contains, id: blow, text: "blow 21" }
+    - type: source_matches
+      id: entries_untouched
+      regex: "int\\s+str\\s*=\\s*8"
+      message: "The standing entries are carved by the realm. str stays at 8."
+    - type: source_matches
+      id: true_formula
+      regex: "blow\\s*=[^;]*str"
+      message: "The ledger computes from the crystals themselves. Build blow from str and agi, not a bare number."
 
 hints:
   - trigger: "error:undeclared_identifier"
     message: "str and agi already burn on the stand — use those exact names in your formula."
   - trigger: "check_failed:blow"
     message: "The formula, in the ledger's own signs: str * 2 + agi — the doubling binds first, then the sum. It should tally to 21."
+  - trigger: "check_failed:true_formula"
+    message: "Writing 21 by hand teaches the ledger nothing. Compute it: str * 2 + agi"
   - trigger: "attempt:6"
     message: "One line births the crystal from the others: int blow = str * 2 + agi;"
 

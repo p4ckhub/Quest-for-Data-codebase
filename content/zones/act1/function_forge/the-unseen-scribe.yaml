@@ -1,0 +1,116 @@
+id: the-unseen-scribe
+kind: program
+zone: function_forge
+act: 1
+title: "The Unseen Scribe"
+concept: preprocessor
+concepts_required: [main_function]
+
+teaching: |
+  Before the realm ever reads your scroll, an unseen scribe rewrites
+  it. Every line that begins with `#` is an order to the scribe, not
+  a spell, and it ends where the line ends: no seal, no semicolon.
+  You have been giving the scribe orders since your first scroll.
+  `#include <iostream>` tells him to paste an entire other scroll
+  into yours, in place, word for word. That is all include has ever
+  done.
+
+  ```cpp
+  #define EMBER_LIT            // raise a banner named EMBER_LIT
+
+  #ifdef EMBER_LIT
+      std::cout << "lit\n";    // kept only while the banner flies
+  #endif
+
+  #if 0
+      std::cout << "never\n";  // entombed: the realm never reads it
+  #endif
+  ```
+
+  `#define EMBER_LIT` raises a banner. It holds no value; it merely
+  flies. `#ifdef EMBER_LIT` down to `#endif` marks a passage the
+  scribe keeps if the banner flies and strikes out entirely if it
+  does not. The realm never sees a struck passage; to the compiler it
+  was never written. And `#if 0` entombs a passage outright, banner
+  or no banner.
+
+narrative: |
+  The Forge-master holds your scroll up to the light, and half its
+  lines are pale. "The scribe struck these before the realm read a
+  word. One passage waits on a banner nobody raised. The other is a
+  tomb, and tombs stay shut. Raise the banner. Only the banner."
+
+objective: |
+  Cast the scroll: only the first line speaks, because the passage
+  under #ifdef EMBER_LIT waits on a banner that does not fly. Raise
+  it with one directive above main: #define EMBER_LIT. Exactly two
+  lines must ring out, and the entombed passage must stay entombed.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: raise the banner here, one directive, no seal:  #define EMBER_LIT
+
+  int main() {
+      std::cout << "The scribe reads.\n";
+
+  #ifdef EMBER_LIT
+      std::cout << "The ember is lit.\n";
+  #endif
+
+  #if 0
+      std::cout << "The entombed passage stirs.\n";
+  #endif
+
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  #define EMBER_LIT
+
+  int main() {
+      std::cout << "The scribe reads.\n";
+
+  #ifdef EMBER_LIT
+      std::cout << "The ember is lit.\n";
+  #endif
+
+  #if 0
+      std::cout << "The entombed passage stirs.\n";
+  #endif
+
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: banner_flies, regex: "^The scribe reads\\.\\nThe ember is lit\\.\\n?$" }
+    - type: source_matches
+      id: banner_raised
+      regex: "#define\\s+EMBER_LIT"
+      message: "Raise the banner above main: #define EMBER_LIT"
+    - type: source_matches
+      id: passage_guarded
+      regex: "#ifdef\\s+EMBER_LIT"
+      message: "The lit passage must stay under its banner. Do not strip away #ifdef EMBER_LIT."
+    - type: source_matches
+      id: tomb_sealed
+      regex: "#if\\s+0[\\s\\S]*#endif"
+      message: "The tomb stays shut. Leave #if 0 and its #endif exactly where they stand."
+
+hints:
+  - trigger: "check_failed:banner_flies"
+    message: "The passage under #ifdef EMBER_LIT stays dark until the banner flies. One directive above main, no semicolon: #define EMBER_LIT"
+  - trigger: "check_failed:tomb_sealed"
+    message: "You were told to raise a banner, not open a tomb. Restore #if 0 and #endif around the entombed cast."
+  - trigger: "error:missing_semicolon"
+    message: "The scribe's orders end at the line, not at a seal. No semicolon after a # directive; every cout still keeps its own."
+  - trigger: "attempt:6"
+    message: "One line, above main and below the include: #define EMBER_LIT"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

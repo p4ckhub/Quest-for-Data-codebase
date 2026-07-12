@@ -32,38 +32,46 @@ narrative: |
   who follow.
 
 objective: |
-  Write a program that includes a comment explaining its purpose.
-  The code itself can be simple (e.g., print a message), but the
-  comment must clearly describe what it does.
-
-prelude: |
-    #include "gameapi.h"
-    #include <iostream>
-    int main() {
+  Replace the TODO with a maker's mark of your own: a // comment above the
+  cast that says what this working is for. The Keeper reads your scroll and
+  will not accept a TODO left standing.
 
 starter_code: |
-        // TODO: Add a descriptive comment above
-        std::cout << "The world advances one tick!" << std::endl;
+  #include <iostream>
 
-epilogue: |
-            gameapi::report("tick", 1);
-            return 0;
-            }
+  int main() {
+      // TODO: Replace this with a descriptive maker's mark
+      std::cout << "The world advances one tick!" << std::endl;
+      return 0;
+  }
 
 solution: |
-            // This program declares the moment the world advances
-            std::cout << "The world advances one tick!" << std::endl;
+  #include <iostream>
+
+  int main() {
+      // This working declares the moment the world advances
+      std::cout << "The world advances one tick!" << std::endl;
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_equals, id: tick, expected: 1 }
+    - { type: stdout_contains, id: tick, text: "The world advances one tick!" }
+    - { type: source_matches, id: has_mark, regex: "//[^\\n]*[A-Za-z]" }
+    - type: source_matches
+      id: todo_gone
+      regex: "TODO"
+      expect_match: false
+      message: "The TODO still stands. Replace it with your own maker's mark."
 
 hints:
-  - trigger: "error:missing_comment"
-    message: "A true {{class_name}} leaves marks on the code. Add a comment!"
+  - trigger: "check_failed:has_mark"
+    message: "A true {{class_name}} leaves marks on the code. Add a // comment!"
+  - trigger: "check_failed:todo_gone"
+    message: "Strike the word TODO and write what the working is for instead."
   - trigger: "attempt:6"
-    message: "Add // followed by your explanation above the cout line"
+    message: "Replace the TODO line with // followed by your own explanation"
 
 rewards:
   xp: 50

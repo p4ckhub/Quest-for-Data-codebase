@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "lessons": [
+    { "file": "rites-of-order.yaml" },
+    { "file": "awakening-101.yaml" },
+    { "file": "herald-proclamation.yaml" },
+    { "file": "shape-of-the-breath.yaml" },
+    { "file": "marks-of-the-maker.yaml" },
+    { "file": "the-silent-script.yaml" },
+    { "file": "speak-your-name.yaml" },
+    { "file": "first-vessels.yaml" }
+  ]
+}

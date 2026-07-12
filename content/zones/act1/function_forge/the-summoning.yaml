@@ -1,0 +1,121 @@
+id: the-summoning
+kind: program
+zone: function_forge
+act: 1
+title: "The Summoning"
+concept: functions_basics
+concepts_required: [main_function, functions_basics]
+
+teaching: |
+  You have forged a working and heard it ring. Now learn what a
+  summons truly is. When main speaks a spell's name, the realm sets
+  a bookmark on that very line, walks into the forging, performs the
+  deed, and returns to the bookmark. Not near it. To it.
+
+  ```cpp
+  void hammer_falls() {
+      std::cout << "The hammer falls.\n";
+  }
+
+  int main() {
+      hammer_falls();   // bookmark set, deed done, return here
+      hammer_falls();   // the whole deed, performed again
+      return 0;
+  }
+  ```
+
+  Three laws govern the Forge. A spell may be summoned as many times
+  as you please, and each summons performs the whole deed again. A
+  spell may summon other spells, and the realm keeps a bookmark for
+  every step of the way down. But a forging may never be placed
+  inside another forging: spells are forged side by side in the open
+  scroll, never nested one within another.
+
+examples:
+  - prompt: "The parentheses ARE the summons. A name spoken bare does nothing at all:"
+    code: |
+      hammer_falls;     // a name without its mouth: no deed, no sound
+      hammer_falls();   // the summons: the deed is done
+
+narrative: |
+  The Forge-master sets four deeds before you and demands them in
+  strict order. "The realm keeps its finger on your line while the
+  spell works, and comes back to the very spot. Prove you command
+  the order of deeds, and the Forge will trust you with greater
+  workings."
+
+objective: |
+  Forge two void spells above main: hammer_falls, whose deed prints
+  The hammer falls. and bellows_roar, whose deed prints The bellows
+  roar. Then, between the carved opening and closing casts, summon
+  hammer_falls once and bellows_roar twice. Five lines must ring out,
+  in exactly that order.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: forge void hammer_falls() here; its deed prints:  The hammer falls.
+
+  // TODO: forge void bellows_roar() here; its deed prints:  The bellows roar.
+
+  int main() {
+      // [carved by the realm] The Forge wakes:
+      std::cout << "The Forge wakes.\n";
+
+      // TODO: summon hammer_falls once, then bellows_roar twice
+
+      // [carved by the realm] The Forge rests:
+      std::cout << "The Forge rests.\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  void hammer_falls() {
+      std::cout << "The hammer falls.\n";
+  }
+
+  void bellows_roar() {
+      std::cout << "The bellows roar.\n";
+  }
+
+  int main() {
+      // [carved by the realm] The Forge wakes:
+      std::cout << "The Forge wakes.\n";
+
+      hammer_falls();
+      bellows_roar();
+      bellows_roar();
+
+      // [carved by the realm] The Forge rests:
+      std::cout << "The Forge rests.\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: five_lines, regex: "The Forge wakes\\.\\nThe hammer falls\\.\\nThe bellows roar\\.\\nThe bellows roar\\.\\nThe Forge rests\\." }
+    - type: source_matches
+      id: forged_both
+      regex: "void\\s+hammer_falls\\s*\\([\\s\\S]*void\\s+bellows_roar\\s*\\("
+      message: "Forge both spells above main: void hammer_falls() and void bellows_roar(), side by side, never nested."
+    - type: source_matches
+      id: roared_twice
+      regex: "bellows_roar\\s*\\(\\s*\\)\\s*;[\\s\\S]*bellows_roar\\s*\\(\\s*\\)\\s*;"
+      message: "The bellows must roar twice. Write the summons bellows_roar(); on two separate lines."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "A summons needs a forging to answer it. Forge both spells above main, then let main speak their names."
+  - trigger: "check_failed:five_lines"
+    message: "Order is the whole trial: wake, hammer once, roar twice, rest. Place your three summons between the carved casts, and remember that a bare name without () does nothing."
+  - trigger: "check_failed:roared_twice"
+    message: "One summons performs the deed once. To hear the bellows twice, summon it twice: bellows_roar(); on two lines."
+  - trigger: "attempt:6"
+    message: "Two forgings above main, each holding one cout. Then inside main: hammer_falls();  bellows_roar();  bellows_roar();"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

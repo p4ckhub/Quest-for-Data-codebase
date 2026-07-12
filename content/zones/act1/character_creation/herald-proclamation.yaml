@@ -41,24 +41,27 @@ objective: |
   I count 3 gates before me
   — and let the 3 travel bare (unquoted), chained into the final cast.
 
-prelude: |
-    #include "gameapi.h"
-    #include <iostream>
-    int main() {
-        std::cout << "[The dais takes your weight. The halls lean in to listen.]" << std::endl;
-
 starter_code: |
-        // Three casts, in order -- the last one carries a bare number
+  #include <iostream>
 
-epilogue: |
-        gameapi::report("proclaimed", 1);
-        return 0;
-        }
+  int main() {
+      std::cout << "[The dais takes your weight. The halls lean in to listen.]" << std::endl;
+
+      // Three casts, in order -- the last one carries a bare number
+
+      return 0;
+  }
 
 solution: |
-        std::cout << "Hear me, halls of stone" << std::endl;
-        std::cout << "I have awakened" << std::endl;
-        std::cout << "I count " << 3 << " gates before me" << std::endl;
+  #include <iostream>
+
+  int main() {
+      std::cout << "[The dais takes your weight. The halls lean in to listen.]" << std::endl;
+      std::cout << "Hear me, halls of stone" << std::endl;
+      std::cout << "I have awakened" << std::endl;
+      std::cout << "I count " << 3 << " gates before me" << std::endl;
+      return 0;
+  }
 
 validation:
   checks:
@@ -66,7 +69,6 @@ validation:
     - { type: stdout_contains, id: hear, text: "Hear me, halls of stone" }
     - { type: stdout_contains, id: awake, text: "I have awakened" }
     - { type: stdout_contains, id: gates, text: "I count 3 gates before me" }
-    - { type: check_equals, id: proclaimed, expected: 1 }
 
 hints:
   - trigger: "error:missing_semicolon"

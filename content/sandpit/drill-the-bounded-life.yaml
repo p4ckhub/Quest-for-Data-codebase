@@ -1,0 +1,89 @@
+id: drill-the-bounded-life
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Bounded Life"
+concept: local_scope
+concepts_required: [functions_basics, parameters, variables_and_types]
+
+teaching: |
+  Once more: a spell sees only its own crystals and vessels. If it
+  needs the caller's value, pass it through the mouth:
+
+  ```cpp
+  int stride(int paces) {
+      return paces * 3;
+  }
+
+  stride(paces);   // the offering carries a copy across the wall
+  ```
+
+narrative: |
+  The Forerunner taps a spell reaching over its wall for a crystal in
+  main. "Walls are walls. Through the mouth."
+
+objective: |
+  Cast the scroll and read the refusal: stride cannot see main's
+  paces. Give stride a vessel, int paces, and pass main's crystal as
+  the offering: stride(paces). The drill expects strides 12.
+
+starter_code: |
+  #include <iostream>
+
+  // This spell reaches for a crystal that lives in main. Mend it through the mouth.
+  int stride() {
+      return paces * 3;
+  }
+
+  int main() {
+      // [carved by the realm] The drill's paces, main's alone:
+      int paces = 4;
+
+      std::cout << "strides " << stride() << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int stride(int paces) {
+      return paces * 3;
+  }
+
+  int main() {
+      // [carved by the realm] The drill's paces, main's alone:
+      int paces = 4;
+
+      std::cout << "strides " << stride(paces) << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: strides, regex: "strides 12" }
+    - type: source_matches
+      id: mouth_opened
+      regex: "int\\s+stride\\s*\\(\\s*int\\s+\\w+\\s*\\)"
+      message: "Give stride a vessel in its mouth: int stride(int paces)."
+    - type: source_matches
+      id: offering_passed
+      regex: "stride\\s*\\(\\s*paces\\s*\\)"
+      message: "Pass main's crystal as the offering: stride(paces)."
+    - type: source_matches
+      id: no_carved_answer
+      regex: "12"
+      expect_match: false
+      message: "Let the spell do the striding. Do not carve 12 yourself."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "stride cannot see main's paces. Carve a vessel into its mouth, then pass paces as the offering."
+  - trigger: "check_failed:offering_passed"
+    message: "The vessel waits empty. Fill it at the summons: stride(paces)."
+  - trigger: "attempt:6"
+    message: "int stride(int paces) { return paces * 3; }  and in main:  stride(paces)"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

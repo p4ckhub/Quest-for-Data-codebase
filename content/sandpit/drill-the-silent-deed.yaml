@@ -1,0 +1,77 @@
+id: drill-the-silent-deed
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Silent Deed"
+concept: void_functions
+concepts_required: [main_function, functions_basics, return_values]
+
+teaching: |
+  Once more: a void spell acts and answers nothing, so it cannot feed
+  a cout. Its summons stands alone:
+
+  ```cpp
+  call_out();               // right: the deed on its own line
+  std::cout << call_out();  // refused: no answer to speak
+  ```
+
+narrative: |
+  The Forerunner points at a scroll that will not cast. "Someone
+  asked a silent spell for an answer. Fewer words, better placed."
+
+objective: |
+  Cast the scroll and read the refusal. Then restructure: print The
+  drill asks. with its own cast, and summon call_out() on its own
+  line after. Two lines must ring out.
+
+starter_code: |
+  #include <iostream>
+
+  void call_out() {
+      std::cout << "The call rings out.\n";
+  }
+
+  int main() {
+      // The cast below demands an answer from a spell that gives none.
+      std::cout << "The drill asks.\n" << call_out();
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  void call_out() {
+      std::cout << "The call rings out.\n";
+  }
+
+  int main() {
+      std::cout << "The drill asks.\n";
+      call_out();
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: two_lines, regex: "The drill asks\\.\\nThe call rings out\\." }
+    - type: source_matches
+      id: own_line
+      regex: "^\\s*call_out\\s*\\(\\s*\\)\\s*;"
+      message: "Summon the silent deed on its own line: call_out();"
+    - type: source_matches
+      id: not_in_cast
+      regex: "<<\\s*call_out"
+      expect_match: false
+      message: "A void spell has no answer to feed a cast. Keep call_out() out of the cout chain."
+
+hints:
+  - trigger: "error:unknown_error"
+    message: "No match for operator<<: call_out answers nothing, so cout has nothing to speak. Give the summons its own line."
+  - trigger: "check_failed:two_lines"
+    message: "Two lines, in order: The drill asks. then The call rings out."
+  - trigger: "attempt:6"
+    message: "std::cout << \"The drill asks.\\n\";  then  call_out();  on the next line."
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

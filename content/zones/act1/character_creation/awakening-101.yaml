@@ -20,41 +20,49 @@ teaching: |
   is the breath that ends the utterance. And every cast is sealed with `;` —
   an unsealed cast is no cast at all.
 
+  Every quest begins at `main()`. The realm finds it, steps inside its braces,
+  and performs each deed in order. Your scroll shows the whole rite: the
+  summons of the voice at the top, `main` itself, and its final `return 0;`,
+  the quiet sign that all went well.
+
 narrative: |
   The Chamber of Awakening awaits your first words. As {{class_name}},
   your opening greeting sets the tone for all who hear it. Use std::cout
   to make your mark.
 
 objective: |
-  In main(), use std::cout to print a personalized greeting that includes
+  Inside main(), use std::cout to print a personalized greeting that includes
   the class name. Example output: "As a {{class_name}}, I enter the fray!"
 
-prelude: |
-    #include "gameapi.h"
-    #include <iostream>
-    int main() {
-
 starter_code: |
-        // TODO: Use std::cout to greet the world
+  #include <iostream>
 
-epilogue: |
-            gameapi::report("status", "awakened");
-            return 0;
-            }
+  int main() {
+      // TODO: Use std::cout to greet the world
+
+      return 0;
+  }
 
 solution: |
-            std::cout << "As a {{class_name}}, I enter the fray!" << std::endl;
+  #include <iostream>
+
+  int main() {
+      std::cout << "As a {{class_name}}, I enter the fray!" << std::endl;
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_equals, id: status, expected: "awakened" }
+    - { type: stdout_contains, id: greeting, text: "{{class_name}}" }
 
 hints:
   - trigger: "error:undeclared_identifier"
-    message: "{{class_name}} is not a valid identifier here — use class data from classes.json"
+    message: "{{class_name}} is not a valid identifier here. Write it inside quotes."
   - trigger: "error:missing_semicolon"
     message: "Each incantation must end with ';'"
+  - trigger: "check_failed:greeting"
+    message: "The greeting must speak your calling by name: {{class_name}}"
   - trigger: "attempt:6"
     message: 'Use std::cout << "text" << std::endl; to speak your first words'
 

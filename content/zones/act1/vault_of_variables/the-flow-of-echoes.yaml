@@ -1,0 +1,103 @@
+id: the-flow-of-echoes
+kind: program
+zone: vault_of_variables
+act: 1
+title: "The Flow of Echoes"
+concept: cin_input
+concepts_required: [variables_and_types, cin_input]
+
+teaching: |
+  You know the voice, `std::cout`, and its arrow `<<` pointing out
+  into the world. It chains: one cast can carry many pieces, each
+  joined by another arrow. And lines can end two ways:
+
+  ```cpp
+  std::cout << "torch " << 3 << '\n';        // '\n' ends the line
+  std::cout << "torch " << 3 << std::endl;   // ends it AND forces the ledger to flush
+  ```
+
+  Prefer `'\n'`. The flush that `std::endl` forces is a slow ceremony
+  the realm rarely needs, and the backslash matters: `\n` is the
+  newline mark, `/n` is two meaningless characters.
+
+  The ear, `std::cin`, points the other way, `>>`, and it chains the
+  same. One draw can pull two offerings from a single line of the
+  wind, splitting them at the whitespace:
+
+  ```cpp
+  int a{};
+  int b{};
+  std::cin >> a >> b;   // "7 12" fills both in one draw
+  ```
+
+examples:
+  - prompt: "The Keeper listens once and speaks twice:"
+    code: |
+      int depth{};
+      std::cin >> depth;
+      std::cout << "depth " << depth << '\n';
+
+narrative: |
+  Two numbers ride one line of the wind, 7 and then 12, and the Keeper
+  will not let you listen twice. One chained draw to catch them both,
+  then two proclamations, each line ended with the quiet mark. The
+  ledger has no patience for endl ceremonies today.
+
+objective: |
+  Bind two int crystals, pull both echoes from the wind in a single
+  chained draw, then proclaim two lines: first followed by the first
+  echo, and second followed by the second. End every line with '\n'
+  and use no endl anywhere.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] Two echoes wait on one line of the wind: 7 12
+      // TODO: bind two int crystals and catch both echoes in ONE chained draw
+      // TODO: proclaim "first " then the first echo, "second " then the second, each ended with '\n'
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] Two echoes wait on one line of the wind: 7 12
+      int first{};
+      int second{};
+      std::cin >> first >> second;
+      std::cout << "first " << first << '\n';
+      std::cout << "second " << second << '\n';
+      return 0;
+  }
+
+stdin_fixture: "7 12"
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: both_echoes, regex: "first 7\\nsecond 12" }
+    - type: source_matches
+      id: one_draw
+      regex: "std::cin\\s*>>[^;]*>>[^;]*;"
+      message: "Catch both echoes in one chained draw: std::cin >> first >> second;"
+    - type: source_matches
+      id: no_endl
+      regex: "endl"
+      expect_match: false
+      message: "No endl ceremonies. End your lines with '\\n' and let the ledger rest."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Bind the crystals before the draw: int first{}; and int second{}; then std::cin can fill them."
+  - trigger: "check_failed:both_echoes"
+    message: "The wind speaks 7 then 12, split at the space. Your first line must read first 7 and your second line second 12."
+  - trigger: "check_failed:one_draw"
+    message: "One statement, two arrows: std::cin >> first >> second;"
+  - trigger: "attempt:6"
+    message: "std::cin >> first >> second;  then  std::cout << \"first \" << first << '\\n';  and the same for second."
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

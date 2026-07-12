@@ -1,0 +1,92 @@
+id: drill-the-unseen-scribe
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Unseen Scribe"
+concept: preprocessor
+concepts_required: [main_function]
+
+teaching: |
+  Once more: lines beginning with # are orders to the scribe, ending
+  at the line with no seal. A banner keeps its passage; #if 0 entombs
+  one outright:
+
+  ```cpp
+  #define SAND_RAKED
+
+  #ifdef SAND_RAKED
+      std::cout << "raked\n";   // kept while the banner flies
+  #endif
+  ```
+
+narrative: |
+  The Forerunner holds your scroll to the light, half its lines pale.
+  "One passage waits on a banner. Raise it. The tomb stays shut."
+
+objective: |
+  Cast the scroll: only the first line speaks. Raise the banner with
+  one directive above main: #define SAND_RAKED. Exactly two lines
+  must ring out, and the entombed passage must stay entombed.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: raise the banner here, one directive, no seal:  #define SAND_RAKED
+
+  int main() {
+      std::cout << "The scribe reads the sand.\n";
+
+  #ifdef SAND_RAKED
+      std::cout << "The sand is raked.\n";
+  #endif
+
+  #if 0
+      std::cout << "The buried passage stirs.\n";
+  #endif
+
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  #define SAND_RAKED
+
+  int main() {
+      std::cout << "The scribe reads the sand.\n";
+
+  #ifdef SAND_RAKED
+      std::cout << "The sand is raked.\n";
+  #endif
+
+  #if 0
+      std::cout << "The buried passage stirs.\n";
+  #endif
+
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: banner_flies, regex: "^The scribe reads the sand\\.\\nThe sand is raked\\.\\n?$" }
+    - type: source_matches
+      id: banner_raised
+      regex: "#define\\s+SAND_RAKED"
+      message: "Raise the banner above main: #define SAND_RAKED"
+    - type: source_matches
+      id: tomb_sealed
+      regex: "#if\\s+0[\\s\\S]*#endif"
+      message: "The tomb stays shut. Leave #if 0 and its #endif exactly where they stand."
+
+hints:
+  - trigger: "check_failed:banner_flies"
+    message: "The passage under #ifdef SAND_RAKED stays dark until the banner flies. One directive above main: #define SAND_RAKED"
+  - trigger: "error:missing_semicolon"
+    message: "The scribe's orders end at the line, not at a seal. No semicolon after a # directive."
+  - trigger: "attempt:6"
+    message: "One line, above main and below the include: #define SAND_RAKED"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

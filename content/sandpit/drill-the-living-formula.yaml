@@ -1,0 +1,79 @@
+id: drill-the-living-formula
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Living Formula"
+concept: expressions
+concepts_required: [variables_and_types, arithmetic, initialization]
+
+teaching: |
+  Once more: a crystal can be born straight from a formula, one
+  statement, no scratch work:
+
+  ```cpp
+  int strike{ grit * 3 + edge };
+  ```
+
+narrative: |
+  Two numbers wait in the sand, grit 5 and edge 2. "One breath," says
+  the Forerunner, "one statement, a crystal named strike."
+
+objective: |
+  In one statement, bind an int named strike to the value of
+  grit * 3 + edge. The carved reading below speaks it once it exists.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] The drill's crystals, already lit:
+      int grit = 5;
+      int edge = 2;
+
+      // TODO: bind int strike to grit * 3 + edge, in ONE statement
+
+      // [carved by the realm] The reading speaks the newborn:
+      std::cout << "strike " << strike << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] The drill's crystals, already lit:
+      int grit = 5;
+      int edge = 2;
+
+      int strike{ grit * 3 + edge };
+
+      // [carved by the realm] The reading speaks the newborn:
+      std::cout << "strike " << strike << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: strike, text: "strike 17" }
+    - type: source_matches
+      id: one_breath
+      regex: "int\\s+strike\\s*[{=](?=[^;]*grit)(?=[^;]*edge)[^;]*;"
+      message: "Birth strike in one statement, straight from the formula: int strike{ grit * 3 + edge };"
+    - type: source_matches
+      id: no_carved_answer
+      regex: "17"
+      expect_match: false
+      message: "Let the formula do the work. Do not carve 17 into the scroll yourself."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The reading speaks a crystal named strike that does not yet exist. Bind it above the reading."
+  - trigger: "check_failed:one_breath"
+    message: "One statement, no scratch crystals: int strike{ grit * 3 + edge };"
+  - trigger: "attempt:6"
+    message: "int strike{ grit * 3 + edge };"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

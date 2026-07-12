@@ -1,5 +1,5 @@
 id: forge-strike-warrior
-kind: functions
+kind: program
 zone: function_forge
 act: 1
 title: "Forge Your First Spell"
@@ -25,35 +25,52 @@ teaching: |
 narrative: |
   The Forge awaits your first true spell. A {{class_name}}'s strike
   must strike with force between 5 and 10 — steady enough to trust,
-  wild enough to fear.
+  wild enough to fear. The testing lines in main are carved by the
+  realm; they will weigh your forging.
 
 objective: |
-  Write a function that returns a value between 5 and 10 (inclusive).
-  It may vary between calls or not — but it must never leave that range.
+  Complete the function strike so it returns a value between 5 and 10
+  (inclusive). The carved lines in main will cast it and read its force
+  aloud.
 
 starter_code: |
-      int strike() {
-          // TODO: return your strike's force (5–10)
-      }
+  #include <iostream>
 
-harness: forge_attack_main.cpp
+  int strike() {
+      // TODO: return your strike's force (5-10)
+  }
+
+  int main() {
+      // [carved by the realm] The Forge weighs your strike:
+      int force = strike();
+      std::cout << "force " << force << "\n";
+      return 0;
+  }
 
 solution: |
-      int strike() {
-          return 7;
-      }
+  #include <iostream>
+
+  int strike() {
+      return 7;
+  }
+
+  int main() {
+      // [carved by the realm] The Forge weighs your strike:
+      int force = strike();
+      std::cout << "force " << force << "\n";
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_in_range, id: min_damage, min: 5, max: 10 }
-    - { type: check_in_range, id: max_damage, min: 5, max: 10 }
+    - { type: stdout_matches, id: force_in_range, regex: "force ([5-9]|10)(\\n|$)" }
 
 hints:
   - trigger: "error:missing_return"
     message: "The spell fizzles — a function promising an int must 'return' one."
-  - trigger: "check_failed:max_damage"
-    message: "The Forge-master frowns: a strike above force 10 would shatter your {{weapon}}."
+  - trigger: "check_failed:force_in_range"
+    message: "The Forge-master frowns: the strike must land between 5 and 10 — a force above 10 would shatter your {{weapon}}."
   - trigger: "attempt:6"
     message: "Simplest honest spell: return 7;  — a fixed force is a fine first forging."
 

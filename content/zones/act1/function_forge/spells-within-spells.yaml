@@ -1,5 +1,5 @@
 id: spells-within-spells
-kind: functions
+kind: program
 zone: function_forge
 act: 1
 title: "Spells Within Spells"
@@ -45,34 +45,54 @@ narrative: |
 objective: |
   Forge two spells: base_force, taking nothing and returning 4; and
   empowered, taking nothing and returning base_force() + 6. The great
-  spell must CAST the small one — the Forge will know if you merely
-  wrote 10.
+  spell must CAST the small one — the Keeper reads your scroll and
+  will know if you merely wrote 10.
 
 starter_code: |
-      int base_force() {
-          // TODO: return the base force: 4
-      }
+  #include <iostream>
 
-      int empowered() {
-          // TODO: cast base_force() and add the blessing of 6
-      }
+  int base_force() {
+      // TODO: return the base force: 4
+  }
 
-harness: forge_composition_main.cpp
+  int empowered() {
+      // TODO: cast base_force() and add the blessing of 6
+  }
+
+  int main() {
+      // [carved by the realm] The Forge weighs both moulds:
+      std::cout << "base " << base_force() << "\n";
+      std::cout << "empowered " << empowered() << "\n";
+      return 0;
+  }
 
 solution: |
-      int base_force() {
-          return 4;
-      }
+  #include <iostream>
 
-      int empowered() {
-          return base_force() + 6;
-      }
+  int base_force() {
+      return 4;
+  }
+
+  int empowered() {
+      return base_force() + 6;
+  }
+
+  int main() {
+      // [carved by the realm] The Forge weighs both moulds:
+      std::cout << "base " << base_force() << "\n";
+      std::cout << "empowered " << empowered() << "\n";
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_equals, id: base, expected: 4 }
-    - { type: check_equals, id: empowered, expected: 10 }
+    - { type: stdout_contains, id: base, text: "base 4" }
+    - { type: stdout_contains, id: empowered, text: "empowered 10" }
+    - type: source_matches
+      id: composed
+      regex: "empowered\\s*\\(\\s*\\)\\s*\\{[^}]*base_force\\s*\\("
+      message: "The great spell must cast the small one. Inside empowered, speak base_force() by name."
 
 hints:
   - trigger: "error:missing_return"
@@ -81,6 +101,8 @@ hints:
     message: "To cast a spell, speak its name with the mouth attached: base_force() — parentheses and all."
   - trigger: "check_failed:empowered"
     message: "empowered must yield exactly 10: the small spell's 4, plus the blessing of 6. Cast it: return base_force() + 6;"
+  - trigger: "check_failed:composed"
+    message: "The Keeper sees a bare number where a casting should be. Inside empowered: return base_force() + 6;"
   - trigger: "attempt:6"
     message: "The two forgings: int base_force() { return 4; }  and  int empowered() { return base_force() + 6; }"
 

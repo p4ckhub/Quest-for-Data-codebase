@@ -30,7 +30,7 @@ for (const entry of sandpitManifest.lessons) {
   lessonsToValidate.push({ path: `content/sandpit/${entry.file}`, class: 'warrior' });
 }
 
-// Test substitution with different classes for zone-2-lesson-1
+// Test substitution with different classes for forge-strike-warrior
 const substitutionTestClasses = ['warrior', 'archer', 'mage'];
 
 // Validate a single lesson file
@@ -103,8 +103,11 @@ async function validateAllLessons() {
     if (v.valid) {
       try {
         const r = await runLessonWithSolutionAndSubstitution(fullPath, classKey);
-        if (r.success) {
-          console.log(`✓ ${lessonName} solution ran successfully`);
+        // The reference solution must not only run: it must PASS the lesson's
+        // own validation checks (r.passed). A lesson whose solution can't pass
+        // its checks is shipping broken.
+        if (r.success && r.passed !== false) {
+          console.log(`✓ ${lessonName} solution ran and passed validation`);
           lessonsValidated++;
           totalChecks++;
         } else {
@@ -112,6 +115,11 @@ async function validateAllLessons() {
           console.error('  compileError:', r.compileError || 'none');
           console.error('  error:', r.error || 'none');
           console.error('  output:', r.output || 'none');
+          if (r.checks) {
+            for (const c of r.checks.filter((c) => !c.passed)) {
+              console.error(`  failed check [${c.type}${c.id ? ':' + c.id : ''}]: ${c.message}`);
+            }
+          }
           exitCode = 1;
         }
       } catch (e) {
@@ -123,10 +131,10 @@ async function validateAllLessons() {
     console.log();
   }
 
-  // Test substitution with different classes for forge-strike (zone-2-lesson-2
-  // after the P1.5-5 renumbering) — its narrative and hints carry template vars
-  console.log('=== Testing Substitution (zone-2-lesson-2) ===');
-  const zone2Lesson1Path = path.join(baseDir, 'content/zones/act1/function_forge/zone-2-lesson-2.yaml');
+  // Test substitution with different classes for forge-strike-warrior — its
+  // narrative and hints carry template vars
+  console.log('=== Testing Substitution (forge-strike-warrior) ===');
+  const zone2Lesson1Path = path.join(baseDir, 'content/zones/act1/function_forge/forge-strike-warrior.yaml');
   
   for (const classKey of substitutionTestClasses) {
     console.log(`\n--- Testing with ${classKey} ---`);

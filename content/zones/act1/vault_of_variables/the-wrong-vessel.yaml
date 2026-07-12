@@ -40,25 +40,32 @@ objective: |
   refusal. Then mend it: gold is a count, so it must be born from a
   bare number — one hundred, written in digits — not from words.
 
-prelude: |
-    #include "gameapi.h"
-    int main() {
-
 starter_code: |
-        int gold = "one hundred";   // cast once as-is, and listen
+  #include <iostream>
 
-epilogue: |
-        gameapi::report("gold", gold);
-        return 0;
-        }
+  int main() {
+      int gold = "one hundred";   // cast once as-is, and listen
+
+      // [carved by the realm] The Keeper weighs the pouch:
+      std::cout << "gold " << gold << "\n";
+      return 0;
+  }
 
 solution: |
-        int gold = 100;
+  #include <iostream>
+
+  int main() {
+      int gold = 100;
+
+      // [carved by the realm] The Keeper weighs the pouch:
+      std::cout << "gold " << gold << "\n";
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_equals, id: gold, expected: 100 }
+    - { type: stdout_contains, id: gold, text: "gold 100" }
 
 hints:
   - trigger: "error:type_mismatch"

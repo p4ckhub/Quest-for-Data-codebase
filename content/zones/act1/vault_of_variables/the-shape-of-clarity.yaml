@@ -1,0 +1,81 @@
+id: the-shape-of-clarity
+kind: program
+zone: vault_of_variables
+act: 1
+title: "The Shape of Clarity"
+concept: code_formatting
+concepts_required: [cout, statements_and_structure]
+
+teaching: |
+  The realm reads your scroll strangely. Between deeds, it ignores
+  whitespace entirely: newlines, indents, and blank lines are for
+  human eyes alone. A scroll crushed onto one line casts exactly the
+  same as a scroll shaped with care.
+
+  But *inside quotes*, the realm takes every space literally. One
+  space is one space. Two is two. And a stranger law besides: two
+  quoted texts separated by nothing but whitespace fuse into one:
+
+  ```cpp
+  std::cout << "The vault " "breathes." << "\n";
+  // speaks: The vault breathes.
+  ```
+
+  So the craft splits in two. Shape the scroll for humans: one deed
+  per line, indent what lives inside braces. And guard the insides of
+  quotes for the realm: the spaces there are not style, they are the
+  message itself.
+
+examples:
+  - prompt: "The Keeper reshapes an apprentice's crushed scroll, changing nothing the realm can hear:"
+    code: |
+      int wards = 3;
+      std::cout << wards << "\n";
+
+narrative: |
+  This scroll was found crushed flat, every deed crammed onto one
+  line, and worse: the spaces inside its quotes have drifted. The
+  realm accepts it happily, which is exactly the problem. The Keeper
+  demands two things. Shape it so a human can read it. And mend the
+  quoted spaces so the proclamation comes out true.
+
+objective: |
+  Reshape the scroll: one deed per line, indented inside main. Then
+  mend the spacing inside the quotes so it speaks exactly two lines:
+  The vault breathes. and then Its shape is law.
+
+starter_code: |
+  #include <iostream>
+  int main(){std::cout<<"The vault"<<"breathes."<<"\n";std::cout<<"Its shape  is"" law."<<"\n";return 0;}
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      std::cout << "The vault " << "breathes." << "\n";
+      std::cout << "Its shape is" " law." << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: exact_speech, regex: "The vault breathes\\.\\nIts shape is law\\." }
+    - type: source_matches
+      id: one_deed_per_line
+      regex: ";[ \\t]*\\n[ \\t]*\\S"
+      message: "Shape the scroll for human eyes: end a deed, start a new line."
+
+hints:
+  - trigger: "check_failed:exact_speech"
+    message: "The realm hears every space inside quotes. Count them: one space between vault and breathes, one space in shape is, and the fused texts must join cleanly."
+  - trigger: "check_failed:one_deed_per_line"
+    message: "The realm does not care about the crush, but the Keeper does. One deed per line, indented inside the braces."
+  - trigger: "error:missing_semicolon"
+    message: "Reshaping must not drop a seal. Every deed still ends with ';' wherever its line breaks."
+  - trigger: "attempt:6"
+    message: 'Give each std::cout its own line, then fix the quotes: "The vault " with a trailing space, and "Its shape is" with a single space.'
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

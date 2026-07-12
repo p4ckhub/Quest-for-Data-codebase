@@ -10,6 +10,27 @@
     { "file": "lesson-the-still-pool.yaml", "mandatory": false },
     { "file": "lesson-the-garment-rack.yaml", "mandatory": false },
     { "file": "lesson-the-rope-dummy.yaml", "mandatory": false },
-    { "file": "essence-of-type-sp.yaml", "mandatory": false }
+    { "file": "essence-of-type-sp.yaml", "mandatory": false },
+    { "file": "drill-rites-of-order.yaml", "mandatory": false },
+    { "file": "drill-the-silent-script.yaml", "mandatory": false },
+    { "file": "drill-first-vessels.yaml", "mandatory": false },
+    { "file": "drill-five-bindings.yaml", "mandatory": false },
+    { "file": "drill-the-unbound-spirit.yaml", "mandatory": false },
+    { "file": "drill-the-law-of-names.yaml", "mandatory": false },
+    { "file": "drill-signs-of-power.yaml", "mandatory": false },
+    { "file": "drill-the-living-formula.yaml", "mandatory": false },
+    { "file": "drill-the-shape-of-clarity.yaml", "mandatory": false },
+    { "file": "drill-the-flow-of-echoes.yaml", "mandatory": false },
+    { "file": "drill-the-doubling-rite.yaml", "mandatory": false },
+    { "file": "drill-the-summoning.yaml", "mandatory": false },
+    { "file": "drill-the-returned-gift.yaml", "mandatory": false },
+    { "file": "drill-the-silent-deed.yaml", "mandatory": false },
+    { "file": "drill-offerings-and-vessels.yaml", "mandatory": false },
+    { "file": "drill-the-bounded-life.yaml", "mandatory": false },
+    { "file": "drill-one-deed-one-spell.yaml", "mandatory": false },
+    { "file": "drill-the-herald-of-forms.yaml", "mandatory": false },
+    { "file": "drill-the-city-of-names.yaml", "mandatory": false },
+    { "file": "drill-the-unseen-scribe.yaml", "mandatory": false },
+    { "file": "drill-the-forgemasters-trial.yaml", "mandatory": false }
   ]
 }

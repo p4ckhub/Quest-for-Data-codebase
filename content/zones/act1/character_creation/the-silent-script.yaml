@@ -1,0 +1,105 @@
+id: the-silent-script
+kind: program
+zone: character_creation
+act: 1
+title: "The Silent Script"
+concept: comments_advanced
+concepts_required: [comments]
+
+teaching: |
+  The maker's mark you learned has a second form. Between `/*` and `*/`
+  the realm ignores everything, even across many lines:
+
+  ```cpp
+  /* The old wardsong, kept for the record:
+     three verses, sung at dusk.
+     The realm reads none of this. */
+  ```
+
+  And silence has a second use beyond leaving marks. When a statement
+  is broken and you are not ready to destroy it, *comment it out*:
+  place `//` at its head, or wrap it in `/* */`, and the realm passes
+  over it as if it were never written. The line stays on the scroll
+  for whoever mends it later. Makers do this constantly. Deleting is
+  forever; silencing is a held breath.
+
+  One caution from the elder scribes, worth repeating: a mark should
+  say *why*, not *what*. The realm can always see what a line does.
+  Only your mark can say what it is for.
+
+examples:
+  - prompt: "A working cast, with a broken neighbor resting in silence above it:"
+    code: |
+      // ring the bell thrice   (broken since the third age; do not wake it)
+      std::cout << "The hall stays quiet." << std::endl;
+
+narrative: |
+  In the archive beneath the Chamber of Awakening, a scroll still runs
+  after a thousand years, but one line on it was broken by an older
+  hand. The archivist forbids deletion: what is struck from the record
+  is lost, but what is silenced can still be studied.
+
+objective: |
+  Silence the broken line with comment syntax so the scroll compiles;
+  the line itself must remain on the scroll. Then replace the TODO
+  with a why-mark of your own above the working cast.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] An older hand left this line. Silence it; do not destroy it.
+      summon the elder scribes
+
+      // TODO: replace this with a why-mark for the cast below
+      std::cout << "The script keeps what the voice cannot." << std::endl;
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] An older hand left this line. Silence it; do not destroy it.
+      // summon the elder scribes
+
+      // This cast proves the scroll still runs while the broken line rests
+      std::cout << "The script keeps what the voice cannot." << std::endl;
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: still_runs, text: "The script keeps what the voice cannot." }
+    - type: source_matches
+      id: still_present
+      regex: "summon the elder scribes"
+      message: "The broken line must remain on the scroll. Silence it; do not strike it out."
+    - type: source_matches
+      id: silenced
+      regex: "(//|/\\*)\\s*summon the elder scribes"
+      message: "Put // at the head of the broken line, or wrap it in /* */. Silenced, it stays without stopping the rite."
+    - type: source_matches
+      id: todo_gone
+      regex: "TODO"
+      expect_match: false
+      message: "The TODO still stands. Replace it with a mark that says why the cast exists."
+    - type: source_matches
+      id: why_mark
+      regex: "//(?![^\\n]*summon)[^\\n]*[A-Za-z][^\\n]*\\n[ \\t]*std::cout"
+      message: "Leave a // mark of your own on the line directly above the cast."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The realm cannot read the broken line, and never will. Silence it: put // at its head."
+  - trigger: "check_failed:still_present"
+    message: "Deletion is forever. Restore the broken line, then silence it with // instead."
+  - trigger: "check_failed:why_mark"
+    message: "A why-mark says what the cast is for, not what it does. Put it on the line directly above the std::cout."
+  - trigger: "attempt:6"
+    message: "Two moves: '// summon the elder scribes' to silence the broken line, and a // mark of your own directly above the std::cout line."
+
+rewards:
+  xp: 50
+  unlocks_zone_progress: true

@@ -19,7 +19,7 @@ describe('Phase 0 Pipeline Tests', () => {
     const fs = require('fs');
     const path = require('path');
     
-    const lessonPath = path.join(__dirname, '..', 'content', 'zones', 'act1', 'character_creation', 'zone-0-lesson-1.yaml');
+    const lessonPath = path.join(__dirname, '..', 'content', 'zones', 'act1', 'character_creation', 'awakening-101.yaml');
     const content = fs.readFileSync(lessonPath, 'utf-8');
     const lessonData = yaml.load(content);
     
@@ -39,16 +39,15 @@ describe('Phase 0 Pipeline Tests', () => {
     
     const substitutedLesson = {
       ...lessonData,
-      prelude: substituteString(lessonData.prelude),
       solution: substituteString(lessonData.solution),
-      epilogue: substituteString(lessonData.epilogue),
     };
-    
-    // Build the lesson using the same approach as the runner
+
+    // Build the lesson using the same approach as the runner: since P2-0.5
+    // the solution is a complete program (visible main), no prelude/epilogue
     const tempDir = path.join(process.env.TMPDIR || '/tmp', `vitest-${Date.now()}`);
     fs.mkdirSync(tempDir, { recursive: true });
-    
-    const fullCode = `${substitutedLesson.prelude}\n${substitutedLesson.solution}\n${substitutedLesson.epilogue}`;
+
+    const fullCode = substitutedLesson.solution;
     const mainCpp = path.join(tempDir, 'main.cpp');
     fs.writeFileSync(mainCpp, fullCode);
     
@@ -64,9 +63,9 @@ describe('Phase 0 Pipeline Tests', () => {
     const sandboxPath = path.join(__dirname, '..', 'toolchain', 'bin', 'sandbox_run');
     const result = execSync(`${sandboxPath} --wall-ms 3000 --cpu-ms 2000 --mem-mb 512 --stdout-cap-kb 1024 -- ${exePath}`, { encoding: 'utf-8' });
     
-    // Verify we get check events for hp, mp, staminaRegen (from the solution)
-    expect(result).toContain('"id":"status"');
-    expect(result).toContain('"value":"awakened"');
+    // Verify the greeting reaches stdout (validation is output-based post P2-0.5)
+    expect(result).toContain('Warrior');
+    expect(result).toContain('I enter the fray');
   });
 
   it('should validate gold lessons through the full pipeline', () => {

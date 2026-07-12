@@ -1,0 +1,107 @@
+id: sealed-with-const
+kind: program
+zone: vault_of_variables
+act: 1
+title: "Sealed With Const"
+concept: const_correctness
+concepts_required: [variables_and_types, const]
+
+teaching: |
+  You have lit crystals and relit them at will. The Vault's final teaching
+  is the opposite power: *sealing*. Set the word `const` before a crystal's
+  kind, and its first value becomes its only value, forever:
+
+  ```cpp
+  const int vault_doors = 12;
+  ```
+
+  Try to change the unchangeable and the Vault itself refuses. This
+  working is *wrong on purpose* — cast it nowhere, only read what follows:
+
+  ```cpp
+  const int vault_doors = 12;
+  vault_doors = 13;   // the Vault answers: "assignment of read-only variable"
+  ```
+
+  That refusal is not punishment; it is the entire point. Seal what must
+  never drift — the count of doors, the true names, the laws — and the
+  realm will guard them against everyone. Including you.
+
+examples:
+  - prompt: "The Keeper seals a law it has carried through nine collapses:"
+    code: |
+      const float patience = 1.0f;
+
+narrative: |
+  The Vault's locks require const-certainty. Once set, values must not
+  be altered. Master the const keyword to prove your discipline. The
+  Keeper's reading at the bottom of the scroll will speak the sealed
+  crystals once they exist.
+
+objective: |
+  Above the Keeper's reading, declare three variables: an int named hp
+  with value 100, a float named mana with value 50.5f, and a double
+  named speed with value 2.5. All must be declared as const.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // TODO: Declare hp as const int = 100
+      // TODO: Declare mana as const float = 50.5f
+      // TODO: Declare speed as const double = 2.5
+
+      // [carved by the realm] The Keeper reads the sealed shelf:
+      std::cout << "hp " << hp << "\n";
+      std::cout << "mana " << mana << "\n";
+      std::cout << "speed " << speed << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      const int hp = 100;
+      const float mana = 50.5f;
+      const double speed = 2.5;
+
+      // [carved by the realm] The Keeper reads the sealed shelf:
+      std::cout << "hp " << hp << "\n";
+      std::cout << "mana " << mana << "\n";
+      std::cout << "speed " << speed << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: hp, text: "hp 100" }
+    - { type: stdout_contains, id: mana, text: "mana 50.5" }
+    - { type: stdout_contains, id: speed, text: "speed 2.5" }
+    - type: source_matches
+      id: hp_sealed
+      regex: "const\\s+int\\s+hp"
+      message: "hp must be sealed: const int hp = 100;"
+    - type: source_matches
+      id: mana_sealed
+      regex: "const\\s+float\\s+mana"
+      message: "mana must be sealed: const float mana = 50.5f;"
+    - type: source_matches
+      id: speed_sealed
+      regex: "const\\s+double\\s+speed"
+      message: "speed must be sealed: const double speed = 2.5;"
+
+hints:
+  - trigger: "error:assign_to_const"
+    message: "You cannot alter what the Vault has sealed. Remove the assignment attempt."
+  - trigger: "error:missing_semicolon"
+    message: "Each declaration must end with ';'"
+  - trigger: "check_failed:hp_sealed"
+    message: "The seal goes before the kind: const int hp = 100;"
+  - trigger: "attempt:6"
+    message: 'Use: const type name = value;  — for example: const int gold = 10;'
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true
