@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "lessons": [
+    { "file": "the-war-cry.yaml" },
+    { "file": "the-summoning.yaml" },
+    { "file": "forge-strike-warrior.yaml" },
+    { "file": "the-returned-gift.yaml" },
+    { "file": "the-silent-deed.yaml" },
+    { "file": "parameters-of-power.yaml" },
+    { "file": "offerings-and-vessels.yaml" },
+    { "file": "the-bounded-life.yaml" },
+    { "file": "spells-within-spells.yaml" },
+    { "file": "one-deed-one-spell.yaml" },
+    { "file": "many-forms-one-name.yaml" },
+    { "file": "the-herald-of-forms.yaml" },
+    { "file": "the-city-of-names.yaml" },
+    { "file": "the-unseen-scribe.yaml" },
+    { "file": "the-forgemasters-trial.yaml" }
+  ]
+}

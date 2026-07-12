@@ -1,0 +1,114 @@
+id: the-city-of-names
+kind: program
+zone: function_forge
+act: 1
+title: "The City of Names"
+concept: namespaces
+concepts_required: [functions_basics, return_values]
+
+teaching: |
+  Two forgings with the same name and the same mouth cannot share one
+  scope. The realm cannot choose between them, so it refuses: in one
+  scroll the refusal comes at compile, across scrolls it comes at the
+  link. But the realm is a city, and a city solves this the way
+  cities always have: districts. A *namespace* is a district. The
+  same street name may exist in two districts, and no one is
+  confused, because you name the district first.
+
+  ```cpp
+  namespace forge {
+      int strike() { return 12; }
+  }
+
+  int strike() { return 7; }
+
+  strike();          // the free strike
+  forge::strike();   // the strike of the forge district
+  ```
+
+  The `::` is the district marker, and you have been reading it since
+  your first scroll: `std::cout` is the cout of the standard
+  district. One warning before you go. There is a working,
+  `using namespace`, that tears down a district's walls and spills
+  every name into the open. Flatten the city that way and the
+  collisions the districts were built to prevent come walking back.
+
+narrative: |
+  The Forge-master lays two forgings side by side, both named strike.
+  "Two smiths, one name, one street. The realm will not guess which
+  you meant. Give one of them a district and the quarrel ends."
+
+objective: |
+  Cast the scroll and read the refusal: two forgings named strike in
+  one scope. Wrap the second forging in namespace forge { } and mend
+  the second summons to call it by district: forge::strike(). The
+  Forge expects street 7, then district 12.
+
+starter_code: |
+  #include <iostream>
+
+  int strike() {
+      return 7;
+  }
+
+  // TODO: wrap this second forging in a district:  namespace forge { ... }
+  int strike() {
+      return 12;
+  }
+
+  int main() {
+      // TODO: after wrapping, mend the second summons: forge::strike()
+      std::cout << "street " << strike() << "\n";
+      std::cout << "district " << strike() << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int strike() {
+      return 7;
+  }
+
+  namespace forge {
+      int strike() {
+          return 12;
+      }
+  }
+
+  int main() {
+      std::cout << "street " << strike() << "\n";
+      std::cout << "district " << forge::strike() << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: two_districts, regex: "street 7\\ndistrict 12" }
+    - type: source_matches
+      id: district_walled
+      regex: "namespace\\s+forge\\s*\\{"
+      message: "Raise the district walls: namespace forge { } around the second forging."
+    - type: source_matches
+      id: qualified_summons
+      regex: "forge::strike\\s*\\("
+      message: "Summon the district's spell with its marker: forge::strike()."
+    - type: source_matches
+      id: both_stand
+      regex: "int\\s+strike[\\s\\S]*int\\s+strike"
+      message: "Both forgings must stand. Wrap one in its district; delete neither."
+
+hints:
+  - trigger: "error:unknown_error"
+    message: "Two spells, one name, one district: the realm cannot choose. Wrap the second forging in namespace forge { } and the collision ends."
+  - trigger: "check_failed:qualified_summons"
+    message: "The wrapped spell now lives in the forge district. Its summons carries the marker: forge::strike()."
+  - trigger: "error:undeclared_identifier"
+    message: "Keep the free strike in the open scroll and the second one inside the district walls. Then the bare summons finds the first, and forge::strike() finds the second."
+  - trigger: "attempt:6"
+    message: "namespace forge { int strike() { return 12; } }  above main, then  std::cout << \"district \" << forge::strike() << \"\\n\";"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

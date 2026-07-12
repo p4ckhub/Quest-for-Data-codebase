@@ -37,34 +37,56 @@ narrative: |
   you will swear before you leave this Vault.
 
 objective: |
-  The variable lanterns already exists holding 2 — assign it 9 (no int,
-  no redeclaring). Then initialize your own int named oaths with value 1,
-  and assign it 3.
-
-prelude: |
-    #include "gameapi.h"
-    int main() {
-        int lanterns = 2;
+  The line lighting lanterns at 2 is carved by the realm; leave it be.
+  Below it, assign lanterns 9 (no int, no redeclaring). Then initialize
+  your own int named oaths with value 1, and assign it 3.
 
 starter_code: |
-        // Rekindle lanterns to 9, then birth oaths at 1 and rekindle it to 3
+  #include <iostream>
 
-epilogue: |
-        gameapi::report("lanterns", lanterns);
-        gameapi::report("oaths", oaths);
-        return 0;
-        }
+  int main() {
+      // [carved by the realm] The Keeper lit this at dawn:
+      int lanterns = 2;
+
+      // Rekindle lanterns to 9, then birth oaths at 1 and rekindle it to 3
+
+      // [carved by the realm] The Keeper reads the stand at nightfall:
+      std::cout << "lanterns " << lanterns << "\n";
+      std::cout << "oaths " << oaths << "\n";
+      return 0;
+  }
 
 solution: |
-        lanterns = 9;
-        int oaths = 1;
-        oaths = 3;
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] The Keeper lit this at dawn:
+      int lanterns = 2;
+
+      lanterns = 9;
+      int oaths = 1;
+      oaths = 3;
+
+      // [carved by the realm] The Keeper reads the stand at nightfall:
+      std::cout << "lanterns " << lanterns << "\n";
+      std::cout << "oaths " << oaths << "\n";
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_equals, id: lanterns, expected: 9 }
-    - { type: check_equals, id: oaths, expected: 3 }
+    - { type: stdout_contains, id: lanterns, text: "lanterns 9" }
+    - { type: stdout_contains, id: oaths, text: "oaths 3" }
+    - type: source_matches
+      id: dawn_untouched
+      regex: "int\\s+lanterns\\s*=\\s*2"
+      message: "The dawn lighting is carved by the realm. Leave int lanterns = 2; as it stands."
+    - type: source_matches
+      id: no_twin
+      regex: "int\\s+lanterns\\s*=\\s*9"
+      expect_match: false
+      message: "That births a twin. Rekindle the crystal that already burns: lanterns = 9;"
 
 hints:
   - trigger: "error:redefinition"

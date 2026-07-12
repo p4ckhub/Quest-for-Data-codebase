@@ -1,0 +1,100 @@
+id: signs-of-power
+kind: program
+zone: vault_of_variables
+act: 1
+title: "Signs of Power"
+concept: arithmetic
+concepts_required: [variables_and_types, arithmetic]
+
+teaching: |
+  The sigils `+ - * /` are workings in miniature: operands go in, one
+  value comes out. A lone `-` before a value flips its sign. The realm
+  resolves sigils in the arithmetic order you have known since
+  childhood: parentheses first, then `*` and `/`, then `+` and `-`.
+
+  ```cpp
+  int str = 7;
+  int agi = 5;
+  std::cout << str + agi * 2 << "\n";     // 7 + 10 = 17
+  std::cout << (str + agi) * 2 << "\n";   // 12 * 2 = 24
+  ```
+
+  Same crystals, same sigils, two different truths. Parentheses do not
+  merely group. They *bend the order*, and bending the order changes
+  the answer. When a formula reads ambiguously to your eye, add the
+  parentheses even where the realm does not demand them. You are
+  writing for the next reader as much as for the realm.
+
+examples:
+  - prompt: "The Keeper resolves a working from the inside out:"
+    code: |
+      int wards = 3;
+      std::cout << -wards + 10 << "\n";   // -3 + 10 = 7
+
+narrative: |
+  The Keeper lays two crystals before you, strength 7 and agility 5,
+  carved into the scroll by the realm itself. The ledger demands two
+  readings from the same sigils: one as the arithmetic order wills it,
+  and one with the order bent by parentheses. Two numbers from one
+  formula. That is the whole lesson.
+
+objective: |
+  Below the carved crystals, proclaim two lines. First: unbent followed
+  by the value of str + agi * 2. Second: bent followed by the value of
+  (str + agi) * 2. Let the sigils do the work; do not carve the answers
+  yourself.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] The Keeper's crystals, already lit:
+      int str = 7;
+      int agi = 5;
+
+      // TODO: proclaim "unbent " followed by str + agi * 2
+      // TODO: proclaim "bent " followed by (str + agi) * 2
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] The Keeper's crystals, already lit:
+      int str = 7;
+      int agi = 5;
+
+      std::cout << "unbent " << str + agi * 2 << "\n";
+      std::cout << "bent " << (str + agi) * 2 << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: unbent, text: "unbent 17" }
+    - { type: stdout_contains, id: bent, text: "bent 24" }
+    - type: source_matches
+      id: parens_bend
+      regex: "\\(\\s*str\\s*\\+\\s*agi\\s*\\)\\s*\\*\\s*2"
+      message: "The second reading must bend the order with parentheses: (str + agi) * 2"
+    - type: source_matches
+      id: no_carved_answers
+      regex: "17|24"
+      expect_match: false
+      message: "Let the sigils do the work. Do not carve 17 or 24 into the scroll yourself."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The crystals are already carved above: str and agi. Speak their names exactly."
+  - trigger: "check_failed:unbent"
+    message: "Unbent means the arithmetic order rules: * before +. The realm resolves str + agi * 2 as str + (agi * 2)."
+  - trigger: "check_failed:parens_bend"
+    message: "Bend the order with parentheses so the sum happens first: (str + agi) * 2"
+  - trigger: "attempt:6"
+    message: 'Two casts: std::cout << "unbent " << str + agi * 2 << "\n"; and std::cout << "bent " << (str + agi) * 2 << "\n";'
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

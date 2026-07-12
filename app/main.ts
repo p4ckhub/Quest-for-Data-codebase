@@ -62,8 +62,10 @@ function loadSandpit() {
 
 function loadZoneGraph() {
   // Build the world-map graph from content: the zones manifest gives order and
-  // titles; each zone's lesson list comes from its YAML files (sorted by
-  // filename, which encodes lesson order). Nothing here is hardcoded content.
+  // titles. Lesson order within a zone comes from the zone's own zone.json
+  // manifest (ordered file list, same shape as sandpit.json) when present;
+  // zones without one fall back to filename sort. Nothing here is hardcoded
+  // content.
   const yaml = require('js-yaml');
   const act1Dir = path.join(__dirname, '../../content/zones/act1');
   try {
@@ -72,9 +74,17 @@ function loadZoneGraph() {
       const zoneDir = path.join(act1Dir, zone.id);
       let lessons: any[] = [];
       if (fs.existsSync(zoneDir)) {
-        lessons = fs.readdirSync(zoneDir)
-          .filter((f) => f.endsWith('.yaml') && !f.startsWith('encounter-'))
-          .sort()
+        let files: string[];
+        const zoneManifestPath = path.join(zoneDir, 'zone.json');
+        if (fs.existsSync(zoneManifestPath)) {
+          const zoneManifest = JSON.parse(fs.readFileSync(zoneManifestPath, 'utf-8'));
+          files = zoneManifest.lessons.map((entry: any) => entry.file);
+        } else {
+          files = fs.readdirSync(zoneDir)
+            .filter((f) => f.endsWith('.yaml') && !f.startsWith('encounter-'))
+            .sort();
+        }
+        lessons = files
           .map((f) => {
             try {
               const data: any = yaml.load(fs.readFileSync(path.join(zoneDir, f), 'utf-8'));

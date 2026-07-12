@@ -1,0 +1,97 @@
+id: drill-the-summoning
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Summoning"
+concept: functions_basics
+concepts_required: [main_function, functions_basics]
+
+teaching: |
+  Once more: a summons sets a bookmark, does the whole deed, and
+  returns to the exact spot. The parentheses are the summons; a bare
+  name does nothing:
+
+  ```cpp
+  void step_forward() {
+      std::cout << "A step forward.\n";
+  }
+
+  step_forward();   // the deed, then back to this line
+  ```
+
+narrative: |
+  The Forerunner marks four beats in the sand. "One step, two turns,
+  in strict order."
+
+objective: |
+  Forge two void spells above main: step_forward, printing A step
+  forward. and turn_about, printing Turn about. Between the carved
+  opening and closing lines, summon step_forward once and turn_about
+  twice. Five lines, exactly that order.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: forge void step_forward() here; its deed prints:  A step forward.
+
+  // TODO: forge void turn_about() here; its deed prints:  Turn about.
+
+  int main() {
+      // [carved by the realm] The drill begins:
+      std::cout << "The drill begins.\n";
+
+      // TODO: summon step_forward once, then turn_about twice
+
+      // [carved by the realm] The drill ends:
+      std::cout << "The drill ends.\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  void step_forward() {
+      std::cout << "A step forward.\n";
+  }
+
+  void turn_about() {
+      std::cout << "Turn about.\n";
+  }
+
+  int main() {
+      // [carved by the realm] The drill begins:
+      std::cout << "The drill begins.\n";
+
+      step_forward();
+      turn_about();
+      turn_about();
+
+      // [carved by the realm] The drill ends:
+      std::cout << "The drill ends.\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: five_lines, regex: "The drill begins\\.\\nA step forward\\.\\nTurn about\\.\\nTurn about\\.\\nThe drill ends\\." }
+    - type: source_matches
+      id: forged_both
+      regex: "void\\s+step_forward\\s*\\([\\s\\S]*void\\s+turn_about\\s*\\("
+      message: "Forge both spells above main: void step_forward() and void turn_about()."
+    - type: source_matches
+      id: turned_twice
+      regex: "turn_about\\s*\\(\\s*\\)\\s*;[\\s\\S]*turn_about\\s*\\(\\s*\\)\\s*;"
+      message: "Turn about twice: the summons turn_about(); on two separate lines."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Forge both spells above main before main speaks their names."
+  - trigger: "check_failed:five_lines"
+    message: "Begin, step once, turn twice, end. Three summons between the carved lines, and a bare name without () does nothing."
+  - trigger: "attempt:6"
+    message: "Two forgings above main, then inside main: step_forward();  turn_about();  turn_about();"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

@@ -1,0 +1,98 @@
+id: the-law-of-names
+kind: program
+zone: vault_of_variables
+act: 1
+title: "The Law of Names"
+concept: identifiers
+concepts_required: [variables_and_types, identifiers]
+
+teaching: |
+  Before a crystal can be named, the name must be lawful. Some ninety
+  words are reserved by the realm's own law, `int`, `return`, `class`,
+  and their kin, and no crystal may wear them. Beyond the reserved
+  words, the law is short:
+
+  ```cpp
+  int twin_blades = 2;   // lawful: letters, digits, underscore
+  int _hidden = 1;       // lawful, though leading _ is left to the realm's own
+  int 2blades = 2;       // REFUSED: a name may not begin with a digit
+  int class = 9;         // REFUSED: class belongs to the realm's law
+  ```
+
+  Case matters: `blade` and `Blade` are strangers to each other. The
+  Vault's house style is snake_case, lowercase words joined by
+  underscores. And the deeper law, the one no refusal enforces: a name
+  should say what the crystal holds. `twin_blades` tells a story.
+  `x2` tells nothing.
+
+examples:
+  - prompt: "The Keeper's own ledger, every name a small truth:"
+    code: |
+      int doors_sealed = 12;
+      int keys_remaining = 3;
+
+narrative: |
+  A dead apprentice's scroll lies on the Vault floor, twice refused:
+  one crystal named for a number, another wearing a word the realm
+  reserves. Cast it as it stands and read both refusals. The Keeper's
+  ledger records what the names should have been: twin_blades holding
+  2, and battle_class holding 9.
+
+objective: |
+  Cast the scroll and read the refusals. Then mend both names to the
+  ones the ledger demands: twin_blades with value 2 and battle_class
+  with value 9. Leave the Keeper's reading untouched.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      int 2blades = 2;
+      int class = 9;
+
+      // [carved by the realm] The Keeper reads the ledger:
+      std::cout << "blades " << twin_blades << "\n";
+      std::cout << "order " << battle_class << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      int twin_blades = 2;
+      int battle_class = 9;
+
+      // [carved by the realm] The Keeper reads the ledger:
+      std::cout << "blades " << twin_blades << "\n";
+      std::cout << "order " << battle_class << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: blades, text: "blades 2" }
+    - { type: stdout_contains, id: order, text: "order 9" }
+    - type: source_matches
+      id: digit_name_gone
+      regex: "int\\s+2blades"
+      expect_match: false
+      message: "A name may never begin with a digit. Rename it: int twin_blades = 2;"
+    - type: source_matches
+      id: reserved_name_gone
+      regex: "int\\s+class\\b"
+      expect_match: false
+      message: "class is reserved by the realm's law. Rename it: int battle_class = 9;"
+
+hints:
+  - trigger: "error:missing_semicolon"
+    message: "The refusal is not about seals this time. Read it: a name may not begin with a digit, and class belongs to the realm. Rename both crystals to the ledger's names."
+  - trigger: "error:undeclared_identifier"
+    message: "The Keeper's reading speaks twin_blades and battle_class. Your declarations must wear exactly those names."
+  - trigger: "attempt:6"
+    message: "Mend the two declarations: int twin_blades = 2;  and  int battle_class = 9;"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

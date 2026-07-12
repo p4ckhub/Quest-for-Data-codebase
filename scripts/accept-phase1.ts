@@ -254,7 +254,7 @@ function checkSaveValidation(): CheckResult {
       }
     },
     spellbook: [
-      { lesson_id: "forge-strike-warrior", name: "strike", signature: "int strike()", source: "function_forge/zone-2-lesson-2.yaml", equipped: true }
+      { lesson_id: "forge-strike-warrior", name: "strike", signature: "int strike()", source: "function_forge/forge-strike-warrior.yaml", equipped: true }
     ],
     inventory: [],
     settings_snapshot: { reduced_motion: false, font_size: 16, colorblind_palette: false, animation_speed: 1.0 }
@@ -338,8 +338,8 @@ function checkSaveLoadRoundTrip(): CheckResult {
         }
       },
       spellbook: [
-        { lesson_id: "forge-strike-warrior", name: "strike", signature: "int strike()", source: "function_forge/zone-2-lesson-2.yaml", equipped: true },
-        { lesson_id: "parameters-of-power", name: "strike_with", signature: "int strike_with(int fury)", source: "function_forge/zone-2-lesson-3.yaml", equipped: false }
+        { lesson_id: "forge-strike-warrior", name: "strike", signature: "int strike()", source: "function_forge/forge-strike-warrior.yaml", equipped: true },
+        { lesson_id: "parameters-of-power", name: "strike_with", signature: "int strike_with(int fury)", source: "function_forge/parameters-of-power.yaml", equipped: false }
       ],
       inventory: [],
       settings_snapshot: { reduced_motion: true, font_size: 18, colorblind_palette: false, animation_speed: 0.75 }
@@ -526,15 +526,15 @@ function checkLessonFiles(): CheckResult {
 function checkSpellUnlocks(): CheckResult {
   const yaml = require('js-yaml');
 
-  // Class spell unlocking paths (post-P1.5-5 renumbering):
-  // Warrior: zone-2-lesson-2 (forge-strike-warrior) grants strike
-  // Archer: zone-2-lesson-2 (forge-strike-warrior) grants loose_arrow
-  // Mage: zone-2-lesson-2 (forge-strike-warrior) grants force_bolt
+  // Class spell unlocking paths:
+  // Warrior: forge-strike-warrior grants strike
+  // Archer: forge-strike-warrior grants loose_arrow
+  // Mage: forge-strike-warrior grants force_bolt
 
   const spellLessons = [
-    { path: 'content/zones/act1/function_forge/zone-2-lesson-2.yaml', expectedSpell: 'strike' },
-    { path: 'content/zones/act1/function_forge/zone-2-lesson-3.yaml', expectedSpell: 'strike_with' },
-    { path: 'content/zones/act1/function_forge/zone-2-lesson-5.yaml', expectedSpell: 'attack' }
+    { path: 'content/zones/act1/function_forge/forge-strike-warrior.yaml', expectedSpell: 'strike' },
+    { path: 'content/zones/act1/function_forge/parameters-of-power.yaml', expectedSpell: 'strike_with' },
+    { path: 'content/zones/act1/function_forge/many-forms-one-name.yaml', expectedSpell: 'attack' }
   ];
 
   // Validate all spell unlock lessons
@@ -667,8 +667,8 @@ function checkRelaunchPersistence(): CheckResult {
         }
       },
       spellbook: [
-        { lesson_id: "forge-strike-warrior", name: "strike", signature: "int strike()", source: "function_forge/zone-2-lesson-2.yaml", equipped: true },
-        { lesson_id: "parameters-of-power", name: "strike_with", signature: "int strike_with(int fury)", source: "function_forge/zone-2-lesson-3.yaml", equipped: false }
+        { lesson_id: "forge-strike-warrior", name: "strike", signature: "int strike()", source: "function_forge/forge-strike-warrior.yaml", equipped: true },
+        { lesson_id: "parameters-of-power", name: "strike_with", signature: "int strike_with(int fury)", source: "function_forge/parameters-of-power.yaml", equipped: false }
       ],
       inventory: []
     };

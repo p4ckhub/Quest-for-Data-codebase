@@ -1,0 +1,62 @@
+id: drill-the-shape-of-clarity
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Shape of Clarity"
+concept: code_formatting
+concepts_required: [cout, statements_and_structure]
+
+teaching: |
+  Once more: whitespace between deeds is for human eyes, whitespace
+  inside quotes is the message itself, and adjacent quoted texts fuse:
+
+  ```cpp
+  std::cout << "The sand " "holds." << "\n";
+  // speaks: The sand holds.
+  ```
+
+narrative: |
+  The Forerunner flattens a scroll into one long line and hands it
+  back. "The realm reads it fine. You will not. Shape it, and mend
+  the quotes."
+
+objective: |
+  Reshape the scroll, one deed per line, indented inside main. Then
+  mend the quoted spacing so it speaks exactly: The sand holds. and
+  then The shape is the drill.
+
+starter_code: |
+  #include <iostream>
+  int main(){std::cout<<"The sand"<<"holds."<<"\n";std::cout<<"The shape  is"" the drill."<<"\n";return 0;}
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      std::cout << "The sand " << "holds." << "\n";
+      std::cout << "The shape is" " the drill." << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: exact_speech, regex: "The sand holds\\.\\nThe shape is the drill\\." }
+    - type: source_matches
+      id: one_deed_per_line
+      regex: ";[ \\t]*\\n[ \\t]*\\S"
+      message: "Shape the scroll for human eyes: end a deed, start a new line."
+
+hints:
+  - trigger: "check_failed:exact_speech"
+    message: "The realm hears every space inside quotes. One space between sand and holds, one space in shape is."
+  - trigger: "check_failed:one_deed_per_line"
+    message: "One deed per line, indented inside the braces."
+  - trigger: "error:missing_semicolon"
+    message: "Reshaping must not drop a seal. Every deed still ends with ';' wherever its line breaks."
+  - trigger: "attempt:6"
+    message: 'Give each std::cout its own line, then fix the quotes: "The sand " with a trailing space, and "The shape is" with a single space.'
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

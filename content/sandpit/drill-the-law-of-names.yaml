@@ -1,0 +1,78 @@
+id: drill-the-law-of-names
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Law of Names"
+concept: identifiers
+concepts_required: [variables_and_types, identifiers]
+
+teaching: |
+  The law, once more: no name begins with a digit, no name wears a
+  reserved word, and the house style is snake_case:
+
+  ```cpp
+  int rope_count = 3;   // lawful and honest
+  ```
+
+narrative: |
+  The Forerunner unrolls a scroll refused twice over. "One name starts
+  with a digit, one wears a reserved word. Mend both."
+
+objective: |
+  Cast the scroll and read the refusals. Mend the names to the ones
+  the drill demands: rope_count with value 3 and drill_rank with
+  value 1. Leave the carved reading untouched.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      int 3ropes = 3;
+      int return = 1;
+
+      // [carved by the realm] The reading speaks the ledger:
+      std::cout << "ropes " << rope_count << "\n";
+      std::cout << "rank " << drill_rank << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      int rope_count = 3;
+      int drill_rank = 1;
+
+      // [carved by the realm] The reading speaks the ledger:
+      std::cout << "ropes " << rope_count << "\n";
+      std::cout << "rank " << drill_rank << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: ropes, text: "ropes 3" }
+    - { type: stdout_contains, id: rank, text: "rank 1" }
+    - type: source_matches
+      id: digit_name_gone
+      regex: "int\\s+3ropes"
+      expect_match: false
+      message: "A name may never begin with a digit. Rename it: int rope_count = 3;"
+    - type: source_matches
+      id: reserved_name_gone
+      regex: "int\\s+return\\b"
+      expect_match: false
+      message: "return is reserved by the realm's law. Rename it: int drill_rank = 1;"
+
+hints:
+  - trigger: "error:missing_semicolon"
+    message: "The refusal is not about seals. A name may not begin with a digit, and return belongs to the realm. Rename both."
+  - trigger: "error:undeclared_identifier"
+    message: "The carved reading speaks rope_count and drill_rank. Your declarations must wear exactly those names."
+  - trigger: "attempt:6"
+    message: "Mend the two declarations: int rope_count = 3;  and  int drill_rank = 1;"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

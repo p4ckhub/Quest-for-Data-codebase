@@ -1,0 +1,105 @@
+id: first-vessels
+kind: program
+zone: character_creation
+act: 1
+title: "First Vessels"
+concept: variables_intro
+concepts_required: [main_function, cout]
+
+teaching: |
+  Until now your castings have spoken *literals*: values written
+  directly into the scroll, like `3` or `"awake"`. A literal is spent
+  the moment it is spoken. The realm reads it, uses it, keeps nothing.
+
+  To *keep* a value, you need a vessel. Ask the realm for one with a
+  definition statement:
+
+  ```cpp
+  int torches;
+  ```
+
+  This asks the realm to set aside a region of its storage, an
+  *object*, shaped to hold one whole number. The name `torches` makes
+  it a *variable*: an object you may call by name. The `int` at its
+  head is the type, and the type decides what the vessel may hold.
+  Once defined, the vessel accepts a value by assignment:
+
+  ```cpp
+  torches = 3;
+  ```
+
+  Now `torches` holds 3, and speaking its name yields the value
+  inside. The Vault beyond this gate is built on nothing but vessels.
+  This is your first.
+
+examples:
+  - prompt: "The same value, arriving two ways: once spent, once kept."
+    code: |
+      std::cout << 7 << std::endl;      // a literal, gone when the line ends
+      int embers;
+      embers = 7;
+      std::cout << embers << std::endl; // a vessel, still holding 7
+
+narrative: |
+  The last chamber before the Vault of Variables holds a single unlit
+  sconce and a question: where does a value live when the line that
+  spoke it has finished? Answer with three torches, counted twice:
+  once as a bare number, once from a vessel that remembers it.
+
+objective: |
+  Define an int named torches with no value, then assign it 3 on the
+  next line. The carved readings speak the literal 3 and then your
+  vessel, and both must say the same.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // TODO: define an int vessel named torches (no value yet)
+      // TODO: assign torches the value 3 on the next line
+
+      // [carved by the realm] The realm reads the value both ways:
+      std::cout << 3 << std::endl;
+      std::cout << torches << std::endl;
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      int torches;
+      torches = 3;
+
+      // [carved by the realm] The realm reads the value both ways:
+      std::cout << 3 << std::endl;
+      std::cout << torches << std::endl;
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: both_ways, regex: "3\\n3" }
+    - type: source_matches
+      id: bare_definition
+      regex: "int\\s+torches\\s*;"
+      message: "Define the vessel empty first: int torches; with no value attached."
+    - type: source_matches
+      id: assigned_after
+      regex: "torches\\s*=\\s*3"
+      message: "Give the vessel its value on its own line: torches = 3;"
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The carved reading speaks a vessel named torches that does not yet exist. Define it above: int torches;"
+  - trigger: "check_failed:bare_definition"
+    message: "This rite asks for the two-step: first int torches; empty, then the assignment. Defining with a value inside comes later, in the Vault."
+  - trigger: "check_failed:both_ways"
+    message: "Both readings must say 3: the literal first, then the vessel. Assign torches = 3; before the carved lines."
+  - trigger: "attempt:6"
+    message: "int torches;  then on the next line  torches = 3;"
+
+rewards:
+  xp: 50
+  unlocks_zone_progress: true

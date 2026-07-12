@@ -1,0 +1,113 @@
+id: drill-the-forgemasters-trial
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Forgemaster's Trial"
+concept: program_design
+concepts_required: [functions_basics, parameters, composition, cin_input]
+
+teaching: |
+  Once more: plan first, forge one spell at a time, and let main read
+  like the plan itself:
+
+  ```cpp
+  int main() {
+      speak(shape(catch_offering()));
+      return 0;
+  }
+  ```
+
+narrative: |
+  The Forerunner carves three deeds into the sand and steps back.
+  "The whole trial, small: catch, shape, speak."
+
+objective: |
+  Forge int catch_offering(), catching one int from the wind and
+  handing it back. Forge int shape(int offering), yielding
+  offering * 2 + 3. Forge void speak(int result), speaking one line:
+  The drill yields N. Then main is a single deed: the three summons,
+  chained inside out.
+
+starter_code: |
+  #include <iostream>
+
+  // [carved by the realm] The plan:
+  //   1. catch_offering()   catch one int from the wind, hand it back
+  //   2. shape(int)         work the formula: offering * 2 + 3
+  //   3. speak(int)         speak one line:  The drill yields N.
+
+  // TODO: forge the three spells here, one at a time
+
+  int main() {
+      // TODO: one deed: the three summons, chained inside out
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  // [carved by the realm] The plan:
+  //   1. catch_offering()   catch one int from the wind, hand it back
+  //   2. shape(int)         work the formula: offering * 2 + 3
+  //   3. speak(int)         speak one line:  The drill yields N.
+
+  int catch_offering() {
+      int offering{};
+      std::cin >> offering;
+      return offering;
+  }
+
+  int shape(int offering) {
+      return offering * 2 + 3;
+  }
+
+  void speak(int result) {
+      std::cout << "The drill yields " << result << ".\n";
+  }
+
+  int main() {
+      speak(shape(catch_offering()));
+      return 0;
+  }
+
+stdin_fixture: "4"
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: trial, regex: "The drill yields 11\\." }
+    - type: source_matches
+      id: first_deed
+      regex: "int\\s+catch_offering\\s*\\(\\s*\\)"
+      message: "The first deed: int catch_offering(), catching one int from the wind."
+    - type: source_matches
+      id: second_deed
+      regex: "int\\s+shape\\s*\\(\\s*int"
+      message: "The second deed: int shape(int offering), yielding offering * 2 + 3."
+    - type: source_matches
+      id: third_deed
+      regex: "void\\s+speak\\s*\\(\\s*int"
+      message: "The third deed: void speak(int result), speaking the drill line."
+    - type: source_matches
+      id: chained
+      regex: "speak\\s*\\([^;]*shape\\s*\\([^;]*catch_offering\\s*\\("
+      message: "main is one deed: speak(shape(catch_offering()));"
+    - type: source_matches
+      id: no_carved_answer
+      regex: "11"
+      expect_match: false
+      message: "The drill forges its own 11. Do not carve it."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Forge all three spells above main, in the plan's order."
+  - trigger: "check_failed:chained"
+    message: "Inside out: caught, shaped, spoken. One line: speak(shape(catch_offering()));"
+  - trigger: "check_failed:trial"
+    message: "The wind carries 4. Shaped, that is 4 * 2 + 3, which is 11."
+  - trigger: "attempt:6"
+    message: "catch_offering catches with std::cin, shape returns offering * 2 + 3, speak prints the line. Then main is speak(shape(catch_offering()));"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

@@ -1,0 +1,106 @@
+id: one-deed-one-spell
+kind: program
+zone: function_forge
+act: 1
+title: "One Deed, One Spell"
+concept: function_decomposition
+concepts_required: [functions_basics, parameters]
+
+teaching: |
+  Here is why the Forge exists. Carve the same deed into your scroll
+  twice, and you now own two places to get it wrong. Carve it three
+  times and you owe three debts: when the deed must change, you must
+  find every copy, and the copy you miss becomes a lie in your
+  working. The Forge's answer is old and simple. Forge once, summon
+  thrice.
+
+  ```cpp
+  void stoke(int coals) {
+      std::cout << "Stoke " << coals << " coals.\n";
+      std::cout << "The fire climbs by " << coals * 2 << ".\n";
+  }
+
+  int main() {
+      stoke(3);   // one forging, many summons
+      stoke(5);
+      return 0;
+  }
+  ```
+
+  The rule that follows: one spell, one deed. A spell should do a
+  single thing you can name in a breath. When a working grows
+  tangled, do not push through; split it into spells, each honest
+  and small. Change the forging once, and every summons follows
+  without being touched.
+
+narrative: |
+  The Forge-master reads your scroll aloud, the same deed three times
+  over, and his voice goes flatter with each repeat. "Three copies.
+  Three debts. Extract the deed, forge it once, and summon it three
+  times. The Forge must hear no difference at all."
+
+objective: |
+  The scroll casts as it stands, and that is not the trial. Extract
+  the pasted deed into one forging, void stoke(int coals), that
+  prints both lines for a given count. Delete the copies, summon
+  stoke(3), stoke(5), stoke(8), and leave the six output lines
+  exactly as they were.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: forge void stoke(int coals) above main, holding the two-line deed ONCE
+
+  int main() {
+      // The same deed, carved three times over. Extract it.
+      std::cout << "Stoke " << 3 << " coals.\n";
+      std::cout << "The fire climbs by " << 3 * 2 << ".\n";
+      std::cout << "Stoke " << 5 << " coals.\n";
+      std::cout << "The fire climbs by " << 5 * 2 << ".\n";
+      std::cout << "Stoke " << 8 << " coals.\n";
+      std::cout << "The fire climbs by " << 8 * 2 << ".\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  void stoke(int coals) {
+      std::cout << "Stoke " << coals << " coals.\n";
+      std::cout << "The fire climbs by " << coals * 2 << ".\n";
+  }
+
+  int main() {
+      stoke(3);
+      stoke(5);
+      stoke(8);
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: six_lines, regex: "Stoke 3 coals\\.\\nThe fire climbs by 6\\.\\nStoke 5 coals\\.\\nThe fire climbs by 10\\.\\nStoke 8 coals\\.\\nThe fire climbs by 16\\." }
+    - type: source_matches
+      id: forged_once
+      regex: "Stoke[\\s\\S]*Stoke"
+      expect_match: false
+      message: "The deed must live in ONE forging. If the word Stoke appears twice in your scroll, you still owe a debt."
+    - type: source_matches
+      id: summoned_thrice
+      regex: "stoke\\s*\\(\\s*3\\s*\\)[\\s\\S]*stoke\\s*\\(\\s*5\\s*\\)[\\s\\S]*stoke\\s*\\(\\s*8\\s*\\)"
+      message: "Summon the one forging three times: stoke(3);  stoke(5);  stoke(8);"
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Forge stoke above main before main summons it."
+  - trigger: "check_failed:forged_once"
+    message: "Extract, then delete. One void stoke(int coals) above main holds both lines; the three pasted copies in main must go."
+  - trigger: "check_failed:six_lines"
+    message: "The Forge must hear no difference: the same six lines, in the same order. Only the shape of the scroll changes, never its voice."
+  - trigger: "attempt:6"
+    message: "void stoke(int coals) { std::cout << \"Stoke \" << coals << \" coals.\\n\"; std::cout << \"The fire climbs by \" << coals * 2 << \".\\n\"; }  then main is just stoke(3); stoke(5); stoke(8);"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

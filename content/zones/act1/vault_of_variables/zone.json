@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "lessons": [
+    { "file": "variables-101.yaml" },
+    { "file": "essences-of-type.yaml" },
+    { "file": "five-bindings.yaml" },
+    { "file": "the-unbound-spirit.yaml" },
+    { "file": "the-rekindled-crystal.yaml" },
+    { "file": "the-law-of-names.yaml" },
+    { "file": "ledger-of-blows.yaml" },
+    { "file": "signs-of-power.yaml" },
+    { "file": "the-living-formula.yaml" },
+    { "file": "the-wrong-vessel.yaml" },
+    { "file": "sealed-with-const.yaml" },
+    { "file": "the-shape-of-clarity.yaml" },
+    { "file": "the-flow-of-echoes.yaml" },
+    { "file": "the-doubling-rite.yaml" }
+  ]
+}

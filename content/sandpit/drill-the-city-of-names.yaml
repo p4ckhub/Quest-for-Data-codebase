@@ -1,0 +1,97 @@
+id: drill-the-city-of-names
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The City of Names"
+concept: namespaces
+concepts_required: [functions_basics, return_values]
+
+teaching: |
+  Once more: two forgings with one name and one mouth cannot share a
+  scope. A namespace is a district, and the district marker chooses:
+
+  ```cpp
+  namespace drill {
+      int dig() { return 8; }
+  }
+
+  dig();          // the free dig
+  drill::dig();   // the dig of the drill district
+  ```
+
+narrative: |
+  The Forerunner sets two forgings side by side, both named dig.
+  "Give one a district and the quarrel ends."
+
+objective: |
+  Cast the scroll and read the refusal: two forgings named dig in one
+  scope. Wrap the second in namespace drill { } and mend the second
+  summons to drill::dig(). The drill expects street 3, then
+  district 8.
+
+starter_code: |
+  #include <iostream>
+
+  int dig() {
+      return 3;
+  }
+
+  // TODO: wrap this second forging in a district:  namespace drill { ... }
+  int dig() {
+      return 8;
+  }
+
+  int main() {
+      // TODO: after wrapping, mend the second summons: drill::dig()
+      std::cout << "street " << dig() << "\n";
+      std::cout << "district " << dig() << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int dig() {
+      return 3;
+  }
+
+  namespace drill {
+      int dig() {
+          return 8;
+      }
+  }
+
+  int main() {
+      std::cout << "street " << dig() << "\n";
+      std::cout << "district " << drill::dig() << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: two_districts, regex: "street 3\\ndistrict 8" }
+    - type: source_matches
+      id: district_walled
+      regex: "namespace\\s+drill\\s*\\{"
+      message: "Raise the district walls: namespace drill { } around the second forging."
+    - type: source_matches
+      id: qualified_summons
+      regex: "drill::dig\\s*\\("
+      message: "Summon the district's spell with its marker: drill::dig()."
+    - type: source_matches
+      id: both_stand
+      regex: "int\\s+dig[\\s\\S]*int\\s+dig"
+      message: "Both forgings must stand. Wrap one; delete neither."
+
+hints:
+  - trigger: "error:unknown_error"
+    message: "Two spells, one name, one district: the realm cannot choose. Wrap the second forging in namespace drill { }."
+  - trigger: "check_failed:qualified_summons"
+    message: "The wrapped spell lives in the drill district now: drill::dig()."
+  - trigger: "attempt:6"
+    message: "namespace drill { int dig() { return 8; } }  then  std::cout << \"district \" << drill::dig() << \"\\n\";"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

@@ -213,6 +213,7 @@ export async function runLesson(lesson: Lesson, playerCode: string): Promise<Run
       result,
       rawStdout,
       rawStderr: execStderr,
+      playerSource: playerCode,
     });
 
     return {
@@ -400,6 +401,21 @@ export function substituteVariables(lesson: Lesson, classData: any): Lesson {
       ...hint,
       message: substituteString(hint.message)
     }));
+  }
+
+  // Validation checks: stdout/source checks may assert class-substituted
+  // output (e.g. text: "As a {{class_name}}"), so substitute their string
+  // fields too. Only string-typed fields — numeric expected values pass through.
+  if (result.validation?.checks && Array.isArray(result.validation.checks)) {
+    result.validation = {
+      ...result.validation,
+      checks: result.validation.checks.map((check: any) => ({
+        ...check,
+        ...(typeof check.text === 'string' ? { text: substituteString(check.text) } : {}),
+        ...(typeof check.regex === 'string' ? { regex: substituteString(check.regex) } : {}),
+        ...(typeof check.expected === 'string' ? { expected: substituteString(check.expected) } : {}),
+      })),
+    };
   }
 
   // grants_spell is field-sensitive: {{starter_spell}} means the spell's NAME

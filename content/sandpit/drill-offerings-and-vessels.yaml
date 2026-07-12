@@ -1,0 +1,81 @@
+id: drill-offerings-and-vessels
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: Offerings and Vessels"
+concept: function_parameters
+concepts_required: [main_function, functions_basics, parameters]
+
+teaching: |
+  Once more: vessels in the mouth, offerings poured in as copies, and
+  any expression may be an offering, even another summons. The realm
+  resolves inside out:
+
+  ```cpp
+  int brace(int base, int bonus) {
+      return base + bonus * 3;
+  }
+
+  brace(1, brace(1, 1))   // inner first: brace(1, 1) is 4; then brace(1, 4) is 13
+  ```
+
+narrative: |
+  The Forerunner scratches 14 into the sand. "Two vessels, and the
+  second offering must itself be a summons."
+
+objective: |
+  Forge int brace(int base, int bonus), yielding base + bonus * 3.
+  Then proclaim one line, braced N, where N is the gift of
+  brace(2, brace(1, 1)).
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: forge int brace(int base, int bonus), yielding base + bonus * 3
+
+  int main() {
+      // TODO: proclaim  braced N  where N is the gift of brace(2, brace(1, 1))
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int brace(int base, int bonus) {
+      return base + bonus * 3;
+  }
+
+  int main() {
+      std::cout << "braced " << brace(2, brace(1, 1)) << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: braced, regex: "braced 14" }
+    - type: source_matches
+      id: both_vessels_worked
+      regex: "return(?=[^;]*base)(?=[^;]*bonus)[^;]*;"
+      message: "brace must work both vessels: return base + bonus * 3;"
+    - type: source_matches
+      id: nested_offering
+      regex: "brace\\s*\\([^()]*brace\\s*\\("
+      message: "The second offering must itself be a summons: brace(2, brace(1, 1))."
+    - type: source_matches
+      id: no_carved_answer
+      regex: "14"
+      expect_match: false
+      message: "Let the spell forge the 14. Do not carve it yourself."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Forge brace above main before main summons it."
+  - trigger: "check_failed:braced"
+    message: "Inside out: brace(1, 1) is 1 + 1 * 3, which is 4. Then brace(2, 4) is 2 + 4 * 3, which is 14."
+  - trigger: "attempt:6"
+    message: "int brace(int base, int bonus) { return base + bonus * 3; }  then  std::cout << \"braced \" << brace(2, brace(1, 1)) << \"\\n\";"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

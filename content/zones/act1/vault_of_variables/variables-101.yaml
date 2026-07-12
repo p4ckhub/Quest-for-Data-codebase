@@ -31,41 +31,57 @@ examples:
 narrative: |
   Three stat-crystals lie dark on the Vault floor. The Keeper's ledger
   records their true values: vitality 100, aether 50, and a stamina
-  flow of 1.5. Speak their names and values to awaken them.
+  flow of 1.5. Speak their names and values to awaken them. The reading
+  at the bottom of your scroll is carved by the realm; it will speak the
+  crystals once they exist.
 
 objective: |
-  Inside main, declare and initialize: an int named hp with value 100,
-  an int named mp with value 50, and a float named staminaRegen with
-  value 1.5f.
-
-prelude: |
-    #include "gameapi.h"
-    int main() {
+  Above the Keeper's reading, declare and initialize: an int named hp
+  with value 100, an int named mp with value 50, and a float named
+  staminaRegen with value 1.5f. Leave the reading itself untouched.
 
 starter_code: |
-        // TODO: awaken hp, mp, and staminaRegen here
+  #include <iostream>
 
-epilogue: |
-            static_assert(std::is_same<decltype(hp), int>::value, "hp must be an int");
-            static_assert(std::is_same<decltype(mp), int>::value, "mp must be an int");
-            static_assert(std::is_same<decltype(staminaRegen), float>::value, "staminaRegen must be a float");
-            gameapi::report("hp", hp);
-            gameapi::report("mp", mp);
-            gameapi::report("staminaRegen", staminaRegen);
-            return 0;
-            }
+  int main() {
+      // TODO: awaken hp, mp, and staminaRegen here
+
+      // [carved by the realm] The Keeper reads the crystals aloud:
+      std::cout << "hp " << hp << "\n";
+      std::cout << "mp " << mp << "\n";
+      std::cout << "stamina " << staminaRegen << "\n";
+      return 0;
+  }
 
 solution: |
+  #include <iostream>
+
+  int main() {
       int hp = 100;
       int mp = 50;
       float staminaRegen = 1.5f;
 
+      // [carved by the realm] The Keeper reads the crystals aloud:
+      std::cout << "hp " << hp << "\n";
+      std::cout << "mp " << mp << "\n";
+      std::cout << "stamina " << staminaRegen << "\n";
+      return 0;
+  }
+
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_equals, id: hp, expected: 100 }
-    - { type: check_equals, id: mp, expected: 50 }
-    - { type: check_equals, id: staminaRegen, expected: 1.5, tolerance: 0.001 }
+    - { type: stdout_contains, id: hp, text: "hp 100" }
+    - { type: stdout_contains, id: mp, text: "mp 50" }
+    - { type: stdout_contains, id: stamina, text: "stamina 1.5" }
+    - type: source_matches
+      id: hp_is_int
+      regex: "int\\s+hp"
+      message: "The ledger demands hp be an int crystal."
+    - type: source_matches
+      id: stamina_is_float
+      regex: "float\\s+staminaRegen"
+      message: "The ledger demands staminaRegen be a float crystal."
 
 hints:
   - trigger: "error:undeclared_identifier"

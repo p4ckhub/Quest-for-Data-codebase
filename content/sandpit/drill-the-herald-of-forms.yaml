@@ -1,0 +1,81 @@
+id: drill-the-herald-of-forms
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Herald of Forms"
+concept: forward_declarations
+concepts_required: [functions_basics, return_values]
+
+teaching: |
+  Once more: the realm reads top to bottom and refuses names it has
+  not met. A herald announces the spell early, header and seal, no
+  body:
+
+  ```cpp
+  int grains();   // the herald: promise and name, no deed
+  ```
+
+narrative: |
+  The Forerunner blocks your hand as you reach to drag the forging up
+  the scroll. "It stays. Send a herald."
+
+objective: |
+  Cast the scroll and read the refusal: main summons grains before
+  the realm has met it. The forging stays below main. Mend it with
+  one herald line above main: int grains(); The drill expects
+  grains 33.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: herald the spell here, one line, promise and seal:  int grains();
+
+  int main() {
+      std::cout << "grains " << grains() << "\n";
+      return 0;
+  }
+
+  // [carved by the realm] The forging stands below main, and it stays there:
+  int grains() {
+      return 33;
+  }
+
+solution: |
+  #include <iostream>
+
+  int grains();
+
+  int main() {
+      std::cout << "grains " << grains() << "\n";
+      return 0;
+  }
+
+  // [carved by the realm] The forging stands below main, and it stays there:
+  int grains() {
+      return 33;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: grains, regex: "grains 33" }
+    - type: source_matches
+      id: herald_sent
+      regex: "int\\s+grains\\s*\\(\\s*\\)\\s*;"
+      message: "Send the herald: one line above main, int grains(); with a seal and no body."
+    - type: source_matches
+      id: forging_below
+      regex: "int\\s+main[\\s\\S]*int\\s+grains\\s*\\(\\s*\\)\\s*\\{"
+      message: "The forging must stay below main. The herald line is the drill."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The realm has not met grains when main speaks it. Announce it above main: int grains();"
+  - trigger: "check_failed:forging_below"
+    message: "Put the forging back below main. Your mend is one herald line up top."
+  - trigger: "attempt:6"
+    message: "One line above main: int grains();"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

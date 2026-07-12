@@ -1,0 +1,105 @@
+id: the-bounded-life
+kind: program
+zone: function_forge
+act: 1
+title: "The Bounded Life"
+concept: local_scope
+concepts_required: [functions_basics, parameters, variables_and_types]
+
+teaching: |
+  Every crystal bound inside a spell lives a bounded life. It is born
+  where it is defined, and it dies at the spell's closing brace. The
+  vessels in a spell's mouth live the same span: born at the summons,
+  dead when the deed ends. Nothing survives to the next cast.
+
+  ```cpp
+  int temper(int heat) {   // this heat is born at the summons
+      return heat * 2;
+  }                        // and dies at this brace
+
+  int main() {
+      int heat = 9;        // a different heat entirely, main's alone
+      temper(heat);        // the offering carries a COPY across
+      return 0;
+  }
+  ```
+
+  Two spells may use the same name for different crystals without
+  quarrel: each lives inside its own walls and neither can see the
+  other. Which is the law's sharp edge: a spell cannot see the
+  caller's crystals at all. main's crystals are main's alone. If a
+  spell needs a value, the caller must pass it through the mouth.
+
+narrative: |
+  The Forge-master taps a scroll where a spell reaches over its own
+  wall, groping for a crystal that lives in main. "It will grasp
+  nothing. Walls are walls. Cast it, read the refusal, and then do
+  this properly: through the mouth."
+
+objective: |
+  Cast the scroll and read the refusal: temper cannot see main's
+  heat. Mend the working by giving temper a vessel, int heat, and
+  passing main's crystal as the offering: temper(heat). The Forge
+  expects tempered 18.
+
+starter_code: |
+  #include <iostream>
+
+  // This spell reaches for a crystal that lives in main. It will grasp nothing.
+  // Cast the scroll, read the refusal, then pass the value through the mouth.
+  int temper() {
+      return heat * 2;
+  }
+
+  int main() {
+      // [carved by the realm] The Forge's heat, main's alone:
+      int heat = 9;
+
+      std::cout << "tempered " << temper() << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int temper(int heat) {
+      return heat * 2;
+  }
+
+  int main() {
+      // [carved by the realm] The Forge's heat, main's alone:
+      int heat = 9;
+
+      std::cout << "tempered " << temper(heat) << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: tempered, regex: "tempered 18" }
+    - type: source_matches
+      id: mouth_opened
+      regex: "int\\s+temper\\s*\\(\\s*int\\s+\\w+\\s*\\)"
+      message: "Give temper a vessel in its mouth: int temper(int heat)."
+    - type: source_matches
+      id: offering_passed
+      regex: "temper\\s*\\(\\s*heat\\s*\\)"
+      message: "Pass main's crystal as the offering: temper(heat)."
+    - type: source_matches
+      id: no_carved_answer
+      regex: "18"
+      expect_match: false
+      message: "Let the spell do the tempering. Do not carve 18 into the scroll yourself."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "temper cannot see main's heat. A spell sees only its own crystals and vessels. Carve a vessel into its mouth, then pass heat as the offering."
+  - trigger: "check_failed:offering_passed"
+    message: "The vessel waits empty. Fill it at the summons: temper(heat)."
+  - trigger: "attempt:6"
+    message: "Two mends: int temper(int heat) { return heat * 2; }  and in main:  temper(heat)"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

@@ -2,10 +2,10 @@ import { ExecutionResult } from './index';
 
 // §11.4 validator — the one and only validation pipeline.
 // Evaluates a lesson's validation.checks against the parsed sandbox output
-// (events + @@RESULT@@). Implements exactly the six check types from §11.3.
+// (events + @@RESULT@@) plus, for source_matches, the player's source text.
 
 export interface CheckSpec {
-  type: 'check_equals' | 'check_in_range' | 'stdout_contains' | 'stdout_matches' | 'event_emitted' | 'exit_status';
+  type: 'check_equals' | 'check_in_range' | 'stdout_contains' | 'stdout_matches' | 'event_emitted' | 'exit_status' | 'source_matches';
   id?: string;
   expected?: number | string;
   tolerance?: number;
@@ -16,6 +16,8 @@ export interface CheckSpec {
   event_type?: string;
   match?: Record<string, unknown>;
   expect?: string;
+  expect_match?: boolean;  // source_matches: false = the pattern must NOT appear (default true)
+  message?: string;        // source_matches: authored failure text shown to the player
 }
 
 export interface CheckResult {
@@ -57,6 +59,7 @@ export interface ValidatorInput {
   result: ExecutionResult;
   rawStdout: string;   // non-event stdout lines, joined
   rawStderr?: string;
+  playerSource?: string; // the player's editor text (source_matches runs against this, not the assembled file)
 }
 
 export function evaluateChecks(checks: CheckSpec[], input: ValidatorInput): ValidationResult {
@@ -110,6 +113,21 @@ function evaluateOne(check: CheckSpec, input: ValidatorInput): CheckResult {
         id: check.id,
         passed: ok,
         message: ok ? '' : `Expected magic of kind "${check.event_type}" never manifested.`,
+      };
+    }
+    case 'source_matches': {
+      const re = new RegExp(check.regex ?? '', 'm');
+      const found = re.test(input.playerSource ?? '');
+      const wantMatch = check.expect_match !== false;
+      const ok = found === wantMatch;
+      const fallback = wantMatch
+        ? 'The scroll is missing a required inscription.'
+        : 'The scroll carries a forbidden inscription.';
+      return {
+        type: check.type,
+        id: check.id,
+        passed: ok,
+        message: ok ? '' : (check.message ?? fallback),
       };
     }
     case 'exit_status': {

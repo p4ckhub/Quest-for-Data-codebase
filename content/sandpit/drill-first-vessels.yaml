@@ -1,0 +1,80 @@
+id: drill-first-vessels
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: First Vessels"
+concept: variables_intro
+concepts_required: [main_function, cout]
+
+teaching: |
+  The two-step, once more: a definition statement asks the realm for
+  an empty vessel, and an assignment fills it:
+
+  ```cpp
+  int embers;
+  embers = 7;
+  ```
+
+  The literal is spent; the vessel keeps.
+
+narrative: |
+  The Forerunner sets an empty lantern in the sand. "A vessel first, a
+  value second. Show me five, both ways."
+
+objective: |
+  Define an int named lanterns with no value, then assign it 5 on the
+  next line. The carved readings speak the literal 5 and then your
+  vessel.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // TODO: define an int vessel named lanterns (no value yet)
+      // TODO: assign lanterns the value 5 on the next line
+
+      // [carved by the realm] The realm reads the value both ways:
+      std::cout << 5 << std::endl;
+      std::cout << lanterns << std::endl;
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      int lanterns;
+      lanterns = 5;
+
+      // [carved by the realm] The realm reads the value both ways:
+      std::cout << 5 << std::endl;
+      std::cout << lanterns << std::endl;
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: both_ways, regex: "5\\n5" }
+    - type: source_matches
+      id: bare_definition
+      regex: "int\\s+lanterns\\s*;"
+      message: "Define the vessel empty first: int lanterns; with no value attached."
+    - type: source_matches
+      id: assigned_after
+      regex: "lanterns\\s*=\\s*5"
+      message: "Give the vessel its value on its own line: lanterns = 5;"
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The carved reading speaks a vessel named lanterns that does not yet exist. Define it above: int lanterns;"
+  - trigger: "check_failed:bare_definition"
+    message: "The two-step: first int lanterns; empty, then the assignment on its own line."
+  - trigger: "check_failed:both_ways"
+    message: "Both readings must say 5: the literal first, then the vessel. Assign lanterns = 5; before the carved lines."
+  - trigger: "attempt:6"
+    message: "int lanterns;  then on the next line  lanterns = 5;"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

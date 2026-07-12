@@ -1,0 +1,84 @@
+id: drill-one-deed-one-spell
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: One Deed, One Spell"
+concept: function_decomposition
+concepts_required: [functions_basics, parameters]
+
+teaching: |
+  Once more: a deed pasted three times is three debts. Forge once,
+  summon thrice, and the output must not change:
+
+  ```cpp
+  void tread(int paces) {
+      std::cout << "Tread " << paces << " paces.\n";
+      std::cout << "The sand shifts by " << paces * 3 << ".\n";
+  }
+  ```
+
+narrative: |
+  The Forerunner reads your scroll, the same deed three times over.
+  "Three copies, three debts. Extract it."
+
+objective: |
+  The scroll casts as it stands. Extract the pasted deed into one
+  forging, void tread(int paces), delete the copies, and summon
+  tread(2), tread(4), tread(6). The six output lines must not change.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: forge void tread(int paces) above main, holding the two-line deed ONCE
+
+  int main() {
+      // The same deed, carved three times over. Extract it.
+      std::cout << "Tread " << 2 << " paces.\n";
+      std::cout << "The sand shifts by " << 2 * 3 << ".\n";
+      std::cout << "Tread " << 4 << " paces.\n";
+      std::cout << "The sand shifts by " << 4 * 3 << ".\n";
+      std::cout << "Tread " << 6 << " paces.\n";
+      std::cout << "The sand shifts by " << 6 * 3 << ".\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  void tread(int paces) {
+      std::cout << "Tread " << paces << " paces.\n";
+      std::cout << "The sand shifts by " << paces * 3 << ".\n";
+  }
+
+  int main() {
+      tread(2);
+      tread(4);
+      tread(6);
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: six_lines, regex: "Tread 2 paces\\.\\nThe sand shifts by 6\\.\\nTread 4 paces\\.\\nThe sand shifts by 12\\.\\nTread 6 paces\\.\\nThe sand shifts by 18\\." }
+    - type: source_matches
+      id: forged_once
+      regex: "Tread[\\s\\S]*Tread"
+      expect_match: false
+      message: "The deed must live in ONE forging. If the word Tread appears twice in your scroll, you still owe a debt."
+    - type: source_matches
+      id: summoned_thrice
+      regex: "tread\\s*\\(\\s*2\\s*\\)[\\s\\S]*tread\\s*\\(\\s*4\\s*\\)[\\s\\S]*tread\\s*\\(\\s*6\\s*\\)"
+      message: "Summon the one forging three times: tread(2);  tread(4);  tread(6);"
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Forge tread above main before main summons it."
+  - trigger: "check_failed:forged_once"
+    message: "Extract, then delete. One void tread(int paces) holds both lines; the pasted copies in main must go."
+  - trigger: "attempt:6"
+    message: "void tread(int paces) { std::cout << \"Tread \" << paces << \" paces.\\n\"; std::cout << \"The sand shifts by \" << paces * 3 << \".\\n\"; }  then main is tread(2); tread(4); tread(6);"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

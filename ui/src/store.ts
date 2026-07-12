@@ -300,6 +300,33 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   completeLesson: async (lesson, playerRegion) => {
+    // With whole-program starters (PHASE2 P2-0.5) the editor holds a complete
+    // file. The spellbook wants only the forged functions: strip #include
+    // lines and the player's main() so namespace-wrapping in spellbook.h
+    // stays legal C++.
+    const toSpellSource = (region: string): string => {
+      const noIncludes = region
+        .split("\n")
+        .filter((l) => !/^\s*#include\b/.test(l))
+        .join("\n");
+      const mainMatch = /(^|\n)[ \t]*int\s+main\s*\([^)]*\)\s*\{/.exec(noIncludes);
+      if (!mainMatch) return noIncludes.trim();
+      const start = mainMatch.index + mainMatch[1].length;
+      let i = noIncludes.indexOf("{", start);
+      let depth = 0;
+      for (; i < noIncludes.length; i++) {
+        if (noIncludes[i] === "{") depth++;
+        else if (noIncludes[i] === "}") {
+          depth--;
+          if (depth === 0) {
+            i++;
+            break;
+          }
+        }
+      }
+      return (noIncludes.slice(0, start) + noIncludes.slice(i)).trim();
+    };
+
     const { save, currentZoneId, player, sandpit } = get();
     if (!save || !currentZoneId || !player) return;
 
@@ -352,14 +379,15 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (lesson.grants_spell) {
       // Source of truth is the save (§11.8); one entry per lesson_id
       const existing = save.spellbook.find((s) => s.lesson_id === lesson.id);
+      const spellSource = toSpellSource(playerRegion);
       if (existing) {
-        existing.source = playerRegion;
+        existing.source = spellSource;
       } else {
         save.spellbook.push({
           lesson_id: lesson.id,
           name: lesson.grants_spell.name,
           signature: lesson.grants_spell.signature,
-          source: playerRegion,
+          source: spellSource,
           equipped: save.spellbook.length === 0, // first forged spell auto-equips
         });
       }

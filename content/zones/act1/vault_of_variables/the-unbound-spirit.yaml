@@ -1,0 +1,87 @@
+id: the-unbound-spirit
+kind: program
+zone: vault_of_variables
+act: 1
+title: "The Unbound Spirit"
+concept: uninitialized_variables
+concepts_required: [variables_and_types, initialization]
+
+teaching: |
+  Here is the Vault's darkest shelf. Define a crystal and give it no
+  value, and it is not empty. It holds whatever residue was left in
+  that region of storage by whoever used it last:
+
+  ```cpp
+  int omen;                  // unbound: holds residue, not zero
+  std::cout << omen << "\n"; // reading residue: the realm promises NOTHING
+  ```
+
+  Reading an unbound crystal is the realm's oldest treachery. It makes
+  no promise about what you will see. Not zero. Not the same number
+  twice. Not even the promise of failing loudly, which is the cruelest
+  part: the scroll casts clean, and the lie walks out wearing your
+  seal.
+
+  The law that follows is short and absolute: **bind every crystal the
+  moment it is born.** If you do not yet know its value, bind it empty
+  with braces, `int omen{};`, and it holds an honest 0 until you do.
+
+examples:
+  - prompt: "The Keeper, who has watched nine collapses, binds even its scratch work:"
+    code: |
+      int tally{};
+
+narrative: |
+  A spirit-crystal sits unbound on the floor, and the Keeper will not
+  touch it. Cast the scroll exactly as it stands and witness what the
+  crystal speaks. It is not a value anyone chose. It is residue, and
+  it may differ every time the scroll is cast. Then bind the spirit
+  properly: the ledger demands it hold 43.
+
+objective: |
+  First cast the scroll unchanged and witness the residue. Then bind
+  omen at its birth so it holds 43, and the Keeper's reading will
+  finally speak truth.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      int omen;
+
+      // [carved by the realm] The Keeper reads the spirit, whatever it holds:
+      std::cout << "omen " << omen << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      int omen{ 43 };
+
+      // [carved by the realm] The Keeper reads the spirit, whatever it holds:
+      std::cout << "omen " << omen << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: bound_omen, text: "omen 43" }
+    - type: source_matches
+      id: bound_at_birth
+      regex: "int\\s+omen\\s*[{=]"
+      message: "Bind the crystal the moment it is born: int omen{ 43 };"
+
+hints:
+  - trigger: "check_failed:bound_omen"
+    message: "That number is residue, not a value. The ledger demands 43: bind it at birth with int omen{ 43 };"
+  - trigger: "check_failed:bound_at_birth"
+    message: "Do not leave the definition bare. Put the value in the same statement: int omen{ 43 };"
+  - trigger: "attempt:6"
+    message: "Change the first line inside main to: int omen{ 43 };"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

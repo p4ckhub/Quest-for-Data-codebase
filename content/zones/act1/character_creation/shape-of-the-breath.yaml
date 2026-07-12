@@ -42,29 +42,31 @@ objective: |
   — a line break made with \n, the indent made with \t, and the quotes
   around awake made with \" marks.
 
-prelude: |
-    #include "gameapi.h"
-    #include <iostream>
-    int main() {
-        std::cout << "[The slate is blank. The archivist's chalk hovers.]" << std::endl;
-
 starter_code: |
-        // One cast, shaped with \n, \t, and \" -- not three casts
+  #include <iostream>
 
-epilogue: |
-        gameapi::report("shaped", 1);
-        return 0;
-        }
+  int main() {
+      std::cout << "[The slate is blank. The archivist's chalk hovers.]" << std::endl;
+
+      // One cast, shaped with \n, \t, and \" -- not three casts
+
+      return 0;
+  }
 
 solution: |
-        std::cout << "The chant rings:\n\t\"awake\"" << std::endl;
+  #include <iostream>
+
+  int main() {
+      std::cout << "[The slate is blank. The archivist's chalk hovers.]" << std::endl;
+      std::cout << "The chant rings:\n\t\"awake\"" << std::endl;
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
     - { type: stdout_contains, id: heading, text: "The chant rings:" }
     - { type: stdout_contains, id: chant, text: "\t\"awake\"" }
-    - { type: check_equals, id: shaped, expected: 1 }
 
 hints:
   - trigger: "error:missing_semicolon"

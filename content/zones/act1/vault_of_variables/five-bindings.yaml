@@ -1,0 +1,104 @@
+id: five-bindings
+kind: program
+zone: vault_of_variables
+act: 1
+title: "The Five Bindings"
+concept: initialization
+concepts_required: [variables_and_types, initialization]
+
+teaching: |
+  You have lit crystals one way. The Vault knows five. Each is a
+  *binding*: the manner in which a crystal takes its first value.
+
+  ```cpp
+  int a;         // default: no value given, holds residue (beware)
+  int b = 4;     // copy binding, the = you already know
+  int c( 4 );    // direct binding, with parentheses
+  int d{ 4 };    // list binding, with braces
+  int e{};       // value binding: empty braces, the crystal holds 0
+  ```
+
+  The Vault's house style is braces, and for one hard reason: braces
+  *refuse* a value that would lose part of itself. Pour `4.5` into an
+  int with `=` and the realm silently drops the `.5`. Pour it with
+  braces and the realm refuses outright, naming it a narrowing. The
+  refusal is a gift: better a loud no than a quiet loss.
+
+  Mark one trap now, for it will matter in the zones ahead: a single
+  `=` binds a value. A doubled `==` asks a question, are these equal.
+  Confuse them and the realm will do exactly what you said, not what
+  you meant.
+
+examples:
+  - prompt: "The Keeper binds a pair in the house style:"
+    code: |
+      int lanterns{ 12 };
+      int reserve{};
+
+narrative: |
+  Two crystals wait on the Keeper's shelf. The first was bound
+  carelessly by a long-gone apprentice, and the braces have refused the
+  spill ever since. The second was never bound at all. Cast the scroll
+  as it stands and read the refusal before you mend anything. The
+  Keeper's reading at the bottom will speak both crystals once they
+  exist.
+
+objective: |
+  Cast the scroll as given and read the narrowing refusal. Then mend
+  the embers crystal to hold the whole number 4 with braces, and bind
+  an int named ashes with empty braces so it holds 0. Leave the
+  Keeper's reading untouched.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      int embers{ 4.5 };
+      // TODO: bind an int named ashes with empty braces (value binding)
+
+      // [carved by the realm] The Keeper reads the shelf:
+      std::cout << "embers " << embers << "\n";
+      std::cout << "ashes " << ashes << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      int embers{ 4 };
+      int ashes{};
+
+      // [carved by the realm] The Keeper reads the shelf:
+      std::cout << "embers " << embers << "\n";
+      std::cout << "ashes " << ashes << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: embers, text: "embers 4" }
+    - { type: stdout_contains, id: ashes, text: "ashes 0" }
+    - type: source_matches
+      id: embers_braced
+      regex: "int\\s+embers\\s*\\{\\s*4\\s*\\}"
+      message: "Keep the braces and mend the value: int embers{ 4 };"
+    - type: source_matches
+      id: ashes_empty
+      regex: "int\\s+ashes\\s*\\{\\s*\\}"
+      message: "Value binding is empty braces: int ashes{};"
+
+hints:
+  - trigger: "error:unknown_error"
+    message: "Read the refusal: a narrowing. Braces will not let 4.5 pour into an int and lose its .5. Give embers a whole number instead."
+  - trigger: "check_failed:embers_braced"
+    message: "The Vault's house style is braces. Mend the value inside them: int embers{ 4 };"
+  - trigger: "check_failed:ashes_empty"
+    message: "Empty braces bind a crystal to 0: int ashes{};"
+  - trigger: "attempt:6"
+    message: "Two lines: int embers{ 4 };  and  int ashes{};"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

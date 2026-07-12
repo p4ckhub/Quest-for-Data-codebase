@@ -1,0 +1,76 @@
+id: drill-the-flow-of-echoes
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Flow of Echoes"
+concept: cin_input
+concepts_required: [variables_and_types, cin_input]
+
+teaching: |
+  Once more: one chained draw catches two offerings, and '\n' ends a
+  line without the flush ceremony of endl:
+
+  ```cpp
+  std::cin >> left >> right;
+  std::cout << "left " << left << '\n';
+  ```
+
+narrative: |
+  The Forerunner claps twice and the wind carries two numbers, 3 and
+  8. "One draw, two proclamations, no ceremonies."
+
+objective: |
+  Bind two int crystals, catch both offerings in one chained draw,
+  then proclaim left followed by the first and right followed by the
+  second. End every line with '\n' and use no endl.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] Two offerings ride one line of the wind: 3 8
+      // TODO: bind two int crystals and catch both in ONE chained draw
+      // TODO: proclaim "left " then the first, "right " then the second, each ended with '\n'
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] Two offerings ride one line of the wind: 3 8
+      int left{};
+      int right{};
+      std::cin >> left >> right;
+      std::cout << "left " << left << '\n';
+      std::cout << "right " << right << '\n';
+      return 0;
+  }
+
+stdin_fixture: "3 8"
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: both_offerings, regex: "left 3\\nright 8" }
+    - type: source_matches
+      id: one_draw
+      regex: "std::cin\\s*>>[^;]*>>[^;]*;"
+      message: "Catch both offerings in one chained draw: std::cin >> left >> right;"
+    - type: source_matches
+      id: no_endl
+      regex: "endl"
+      expect_match: false
+      message: "No endl ceremonies. End your lines with '\\n'."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Bind the crystals before the draw: int left{}; and int right{};"
+  - trigger: "check_failed:one_draw"
+    message: "One statement, two arrows: std::cin >> left >> right;"
+  - trigger: "attempt:6"
+    message: "std::cin >> left >> right;  then  std::cout << \"left \" << left << '\\n';  and the same for right."
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

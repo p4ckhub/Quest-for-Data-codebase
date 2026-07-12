@@ -1,0 +1,95 @@
+id: the-returned-gift
+kind: program
+zone: function_forge
+act: 1
+title: "The Returned Gift"
+concept: return_values
+concepts_required: [main_function, functions_basics]
+
+teaching: |
+  The mark before a spell's name is a promise. `int embers()` swears
+  to every caller: cast me, and an int comes back. The word that
+  keeps the promise is `return`. It does three things in one breath:
+  it works out the value, it hands a copy back to the caller, and it
+  ends the spell then and there.
+
+  ```cpp
+  int embers() {
+      return 12;   // work it out, hand it back, end the spell
+  }
+  ```
+
+  The gift lands wherever the summons was spoken. It can feed an
+  expression, fill a crystal, or be ignored outright; the caller
+  decides.
+
+  ```cpp
+  std::cout << embers() + 3 << "\n";   // the gift feeds the expression: 15
+  ```
+
+  But a spell that promises an int and ends without returning one
+  breaks its word, and the realm does not forgive it. What comes back
+  is a lie, and the whole working may collapse the moment it is
+  touched. You have seen this law before: main promises an int too,
+  and its return 0 tells the realm all went well.
+
+narrative: |
+  The Forge-master hands you a scroll already written, and his face
+  says he knows what is wrong with it. "This spell swears an int and
+  gives nothing. Cast it as it stands. Watch what a broken promise
+  does to a working. Then mend it: the gift is 12."
+
+objective: |
+  Cast the scroll once and witness the collapse. Then mend embers so
+  it keeps its promise: return 12. The carved casts in main read the
+  gift bare, then feed it into an expression with 3.
+
+starter_code: |
+  #include <iostream>
+
+  // This spell promises an int. Its deed ends without returning one.
+  // Cast the scroll once and watch the promise break. Then mend it.
+  int embers() {
+  }
+
+  int main() {
+      // [carved by the realm] The Forge weighs the gift, bare and worked:
+      std::cout << "gift " << embers() << "\n";
+      std::cout << "gift and three " << embers() + 3 << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int embers() {
+      return 12;
+  }
+
+  int main() {
+      // [carved by the realm] The Forge weighs the gift, bare and worked:
+      std::cout << "gift " << embers() << "\n";
+      std::cout << "gift and three " << embers() + 3 << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, id: survives, expect: clean }
+    - { type: stdout_matches, id: gift, regex: "gift 12\\ngift and three 15" }
+    - type: source_matches
+      id: promise_kept
+      regex: "int\\s+embers\\s*\\(\\s*\\)\\s*\\{[^}]*return"
+      message: "The promise is kept with a return statement inside embers."
+
+hints:
+  - trigger: "check_failed:survives"
+    message: "The promise broke and the working collapsed. A spell that swears an int must return one: return 12; inside embers."
+  - trigger: "check_failed:gift"
+    message: "The Forge expects gift 12, then gift and three 15. Return exactly 12 and let the carved expression do the rest."
+  - trigger: "attempt:6"
+    message: "The mended forging: int embers() { return 12; }"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

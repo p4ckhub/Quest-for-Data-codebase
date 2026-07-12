@@ -1,0 +1,96 @@
+id: offerings-and-vessels
+kind: program
+zone: function_forge
+act: 1
+title: "Offerings and Vessels"
+concept: function_parameters
+concepts_required: [main_function, functions_basics, parameters]
+
+teaching: |
+  A parameter is a vessel carved into the spell's mouth. An argument
+  is the offering the caller pours in. At every summons, each vessel
+  is born fresh and filled with a copy of its offering: the spell
+  works on the copies, and the caller's own crystals leave unharmed.
+  This is the law of passing by value.
+
+  ```cpp
+  int empower(int base, int bonus) {
+      return base + bonus * 2;
+  }
+  ```
+
+  Two vessels, so every summons must bring two offerings, in order.
+  And an offering need not be a bare number. Any expression will do,
+  even the gift of another summons. The realm resolves from the
+  inside out:
+
+  ```cpp
+  empower(1 + 2, empower(1, 2))
+  // the inner summons first: empower(1, 2) yields 5
+  // then the outer: empower(3, 5) yields 13
+  ```
+
+narrative: |
+  The Forge-master chalks a single number on the anvil: 14. "One
+  spell, two vessels. I want this exact working from you, and the
+  second offering must itself be a summons. The Forge reads scrolls,
+  not excuses."
+
+objective: |
+  Forge int empower(int base, int bonus), yielding base + bonus * 2.
+  Then in main, proclaim one line, empowered N, where N is the gift
+  of empower(4, empower(1, 2)). Let the realm resolve it inside out.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: forge int empower(int base, int bonus), yielding base + bonus * 2
+
+  int main() {
+      // TODO: proclaim  empowered N  where N is the gift of empower(4, empower(1, 2))
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int empower(int base, int bonus) {
+      return base + bonus * 2;
+  }
+
+  int main() {
+      std::cout << "empowered " << empower(4, empower(1, 2)) << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: empowered, regex: "empowered 14" }
+    - type: source_matches
+      id: both_vessels_worked
+      regex: "return(?=[^;]*base)(?=[^;]*bonus)[^;]*;"
+      message: "empower must work both vessels in its yield: return base + bonus * 2;"
+    - type: source_matches
+      id: nested_offering
+      regex: "empower\\s*\\([^()]*empower\\s*\\("
+      message: "The second offering must itself be a summons: empower(4, empower(1, 2))."
+    - type: source_matches
+      id: no_carved_answer
+      regex: "14"
+      expect_match: false
+      message: "Let the spell forge the 14. Do not carve it into the scroll yourself."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Forge empower above main before main summons it."
+  - trigger: "check_failed:nested_offering"
+    message: "Any expression can be an offering, even another summons. Pour one empower into the other: empower(4, empower(1, 2))."
+  - trigger: "check_failed:empowered"
+    message: "Inside out: empower(1, 2) yields 1 + 2 * 2, which is 5. Then empower(4, 5) yields 4 + 5 * 2, which is 14."
+  - trigger: "attempt:6"
+    message: "int empower(int base, int bonus) { return base + bonus * 2; }  then in main:  std::cout << \"empowered \" << empower(4, empower(1, 2)) << \"\\n\";"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

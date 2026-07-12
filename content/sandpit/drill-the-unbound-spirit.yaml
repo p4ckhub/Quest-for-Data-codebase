@@ -1,0 +1,64 @@
+id: drill-the-unbound-spirit
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Unbound Spirit"
+concept: uninitialized_variables
+concepts_required: [variables_and_types, initialization]
+
+teaching: |
+  Once more: an unbound crystal holds residue, and the realm promises
+  nothing about what you will read from it. Bind at birth, always:
+
+  ```cpp
+  int whisper{ 11 };   // bound the moment it is born
+  ```
+
+narrative: |
+  The Forerunner nudges an unbound crystal with one boot and steps
+  back. "Cast it as it lies, witness the residue, then bind it to 11."
+
+objective: |
+  Cast the scroll unchanged and witness the residue. Then bind whisper
+  at its birth so it holds 11.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      int whisper;
+
+      // [carved by the realm] The reading speaks the crystal, whatever it holds:
+      std::cout << "whisper " << whisper << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      int whisper{ 11 };
+
+      // [carved by the realm] The reading speaks the crystal, whatever it holds:
+      std::cout << "whisper " << whisper << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: bound_whisper, text: "whisper 11" }
+    - type: source_matches
+      id: bound_at_birth
+      regex: "int\\s+whisper\\s*[{=]"
+      message: "Bind the crystal the moment it is born: int whisper{ 11 };"
+
+hints:
+  - trigger: "check_failed:bound_whisper"
+    message: "That number is residue, not a value. Bind it at birth: int whisper{ 11 };"
+  - trigger: "attempt:6"
+    message: "Change the first line inside main to: int whisper{ 11 };"
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

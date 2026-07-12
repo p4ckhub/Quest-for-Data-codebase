@@ -1,0 +1,107 @@
+id: the-living-formula
+kind: program
+zone: vault_of_variables
+act: 1
+title: "The Living Formula"
+concept: expressions
+concepts_required: [variables_and_types, arithmetic, initialization]
+
+teaching: |
+  An *expression* is anything the realm can boil down to a single
+  value. A literal is one. A crystal's name is one. Sigils working
+  over both are one:
+
+  ```cpp
+  42               // a literal: already a value
+  base             // a name: yields what the crystal holds
+  base * 3 + bonus // sigils over both: boils down to one number
+  ```
+
+  Expressions do not stand alone. They live inside statements, and the
+  most elegant place they live is inside a binding. A crystal can be
+  born directly from a formula, no scratch crystals, no second step:
+
+  ```cpp
+  int might{ base * 3 + bonus };
+  ```
+
+  The realm boils the formula down first, then pours the single value
+  into the newborn crystal. One statement, one truth. When you catch
+  yourself lighting a crystal only to overwrite it a line later, stop:
+  the formula probably belonged in the binding.
+
+examples:
+  - prompt: "The Keeper births a crystal straight from a working:"
+    code: |
+      int reach = 4;
+      int grasp{ reach * 2 + 1 };
+
+narrative: |
+  The Keeper carves two crystals into the scroll, base 6 and bonus 4,
+  and points at the empty space between them and the reading below.
+  The ledger demands a crystal named might, born in a single statement
+  from the formula base * 3 + bonus. No scratch crystals. No second
+  step. One breath.
+
+objective: |
+  In one statement, bind an int named might to the value of
+  base * 3 + bonus. The Keeper's reading below will speak it once it
+  exists. Leave the carved lines untouched.
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] The Keeper's crystals, already lit:
+      int base = 6;
+      int bonus = 4;
+
+      // TODO: bind int might to base * 3 + bonus, in ONE statement
+
+      // [carved by the realm] The Keeper reads the newborn:
+      std::cout << "might " << might << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] The Keeper's crystals, already lit:
+      int base = 6;
+      int bonus = 4;
+
+      int might{ base * 3 + bonus };
+
+      // [carved by the realm] The Keeper reads the newborn:
+      std::cout << "might " << might << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_contains, id: might, text: "might 22" }
+    - type: source_matches
+      id: one_breath
+      regex: "int\\s+might\\s*[{=](?=[^;]*base)(?=[^;]*bonus)[^;]*;"
+      message: "Birth might in one statement, straight from the formula: int might{ base * 3 + bonus };"
+    - type: source_matches
+      id: no_carved_answer
+      regex: "22"
+      expect_match: false
+      message: "Let the formula do the work. Do not carve 22 into the scroll yourself."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The reading speaks a crystal named might that does not yet exist. Bind it above the Keeper's reading."
+  - trigger: "check_failed:one_breath"
+    message: "One statement, no scratch crystals: int might{ base * 3 + bonus };"
+  - trigger: "check_failed:might"
+    message: "The ledger expects base * 3 + bonus, which is 6 * 3 + 4. Check your sigils."
+  - trigger: "attempt:6"
+    message: "int might{ base * 3 + bonus };"
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

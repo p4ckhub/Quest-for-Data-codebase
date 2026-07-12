@@ -1,0 +1,98 @@
+id: the-silent-deed
+kind: program
+zone: function_forge
+act: 1
+title: "The Silent Deed"
+concept: void_functions
+concepts_required: [main_function, functions_basics, return_values]
+
+teaching: |
+  Not every spell answers. A spell marked `void` acts, and that is
+  all: it prints, it works, it changes the world, and it hands
+  nothing back. Its summons stands alone, a deed on its own line.
+
+  ```cpp
+  void announce() {
+      std::cout << "The deed is done.\n";
+  }
+
+  int main() {
+      announce();   // right: the deed, on its own line
+      return 0;
+  }
+  ```
+
+  Demand an answer from a silent spell and the realm refuses
+  outright. `std::cout << announce();` cannot compile: there is no
+  gift to speak, and cout will not print nothing. The same law cuts
+  the other way, too: a void spell may not return a value, so
+  `return 5;` inside one is refused. A bare `return;` is allowed as
+  an early exit, but writing it at the very end of the deed says
+  nothing the closing brace does not already say.
+
+narrative: |
+  The Forge-master unrolls a scroll that will not cast. "Whoever
+  wrote this asked a silent spell for an answer. Read the refusal
+  carefully. The mend is not more words. It is fewer, in the right
+  places."
+
+objective: |
+  Cast the scroll and read the refusal. Then restructure the working:
+  print the Forge's line first, ending it with a newline, and summon
+  announce() on its own line after. Two lines must ring out: The
+  Forge asks. and then The deed is done.
+
+starter_code: |
+  #include <iostream>
+
+  void announce() {
+      std::cout << "The deed is done.\n";
+  }
+
+  int main() {
+      // The cast below demands an answer from a spell that gives none.
+      // Read the refusal, then restructure the working.
+      std::cout << "The Forge asks.\n" << announce();
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  void announce() {
+      std::cout << "The deed is done.\n";
+  }
+
+  int main() {
+      std::cout << "The Forge asks.\n";
+      announce();
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: two_lines, regex: "The Forge asks\\.\\nThe deed is done\\." }
+    - type: source_matches
+      id: own_line
+      regex: "^\\s*announce\\s*\\(\\s*\\)\\s*;"
+      message: "Summon the silent deed on its own line: announce();"
+    - type: source_matches
+      id: not_in_cast
+      regex: "<<\\s*announce"
+      expect_match: false
+      message: "A void spell has no answer to feed a cast. Keep announce() out of the cout chain."
+
+hints:
+  - trigger: "error:unknown_error"
+    message: "The refusal says no match for operator<<. announce answers nothing, so cout has nothing to speak. Give the summons its own line, after the cout."
+  - trigger: "check_failed:two_lines"
+    message: "Two lines, in order: The Forge asks. then The deed is done. Print the first with its own cast, then summon announce();"
+  - trigger: "error:missing_return"
+    message: "A void spell may not return a value. Its deed simply ends at the closing brace."
+  - trigger: "attempt:6"
+    message: "The mended main: std::cout << \"The Forge asks.\\n\";  then  announce();  on the next line."
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

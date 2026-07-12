@@ -1,5 +1,5 @@
 id: parameters-of-power
-kind: functions
+kind: program
 zone: function_forge
 act: 1
 title: "Parameters of Power"
@@ -34,36 +34,60 @@ examples:
 narrative: |
  Power flows through your veins, but it must be directed. Learn to
  channel your fury with function parameters — each one a conduit of
- your {{class_name}}'s might.
+ your {{class_name}}'s might. The carved lines in main will test your
+ forging with two different offerings.
 
 objective: |
-  Write a function strike_with that takes one int parameter (fury) and
-  returns fury + 5 as the damage. The fury parameter must be used in
-  the return expression.
+  Complete strike_with so it returns fury + 5 as the damage. The fury
+  parameter must be used in the return expression — the carved tests
+  offer 5 and 10, and expect 10 and 15 back.
 
 starter_code: |
-        int strike_with(int fury) {
-            // TODO: Return fury + 5
-            return 0;
-        }
+  #include <iostream>
 
-harness: forge_parameters_main.cpp
+  int strike_with(int fury) {
+      // TODO: Return fury + 5
+      return 0;
+  }
+
+  int main() {
+      // [carved by the realm] The Forge tests two offerings:
+      std::cout << "with fury 5: " << strike_with(5) << "\n";
+      std::cout << "with fury 10: " << strike_with(10) << "\n";
+      return 0;
+  }
 
 solution: |
-        int strike_with(int fury) {
-            return fury + 5;
-        }
+  #include <iostream>
+
+  int strike_with(int fury) {
+      return fury + 5;
+  }
+
+  int main() {
+      // [carved by the realm] The Forge tests two offerings:
+      std::cout << "with fury 5: " << strike_with(5) << "\n";
+      std::cout << "with fury 10: " << strike_with(10) << "\n";
+      return 0;
+  }
 
 validation:
   checks:
     - { type: exit_status, expect: clean }
-    - { type: check_in_range, id: min_damage, min: 10, max: 15 }
+    - { type: stdout_contains, id: low_offering, text: "with fury 5: 10" }
+    - { type: stdout_contains, id: high_offering, text: "with fury 10: 15" }
+    - type: source_matches
+      id: fury_used
+      regex: "return[^;]*fury"
+      message: "The offering sits unused in the mouth. Work fury into the return expression."
 
 hints:
   - trigger: "error:missing_return"
     message: "Your function promises to return an int — don't leave it empty."
-  - trigger: "error:undeclared_identifier"
+  - trigger: "check_failed:fury_used"
     message: "The fury parameter isn't being used. Use it in your expression."
+  - trigger: "check_failed:low_offering"
+    message: "An offering of 5 must yield 10 — the fury, plus the Forge's 5."
   - trigger: "attempt:6"
     message: 'Use: return fury + 5; where fury is the function parameter'
 

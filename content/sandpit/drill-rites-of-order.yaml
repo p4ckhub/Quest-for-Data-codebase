@@ -1,0 +1,68 @@
+id: drill-rites-of-order
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Rites of Order"
+concept: statements_and_structure
+concepts_required: [main_function]
+
+teaching: |
+  Same rite, different lines. Every statement sealed with `;`, every
+  deed performed top to bottom, starting at `main()`:
+
+  ```cpp
+  std::cout << "First." << std::endl;
+  std::cout << "Second." << std::endl;
+  ```
+
+  Read the refusal first; it names the line.
+
+narrative: |
+  The Forerunner rakes two lines in the sand, out of order, one
+  unsealed. "Mend the seal, then teach them their order."
+
+objective: |
+  Seal the unsealed statement, then reorder the casts so the first
+  line spoken is "The sand settles." and the second is "The circle is
+  drawn."
+
+starter_code: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] The drill demands, in this order:
+      //   The sand settles.
+      //   The circle is drawn.
+      std::cout << "The circle is drawn." << std::endl;
+      std::cout << "The sand settles." << std::endl
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] The drill demands, in this order:
+      //   The sand settles.
+      //   The circle is drawn.
+      std::cout << "The sand settles." << std::endl;
+      std::cout << "The circle is drawn." << std::endl;
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: proclamation, regex: "The sand settles\\.\\nThe circle is drawn\\." }
+
+hints:
+  - trigger: "error:missing_semicolon"
+    message: "The refusal names the line where a seal is missing. Read it, then end that statement with ';'."
+  - trigger: "check_failed:proclamation"
+    message: "The realm performs deeds top to bottom. The sand must settle before the circle is drawn. Swap the two casts."
+  - trigger: "attempt:6"
+    message: "Add the missing ';' after the second cast, then swap the two cast lines so the sand settles first."
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

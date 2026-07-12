@@ -1,0 +1,103 @@
+id: the-herald-of-forms
+kind: program
+zone: function_forge
+act: 1
+title: "The Herald of Forms"
+concept: forward_declarations
+concepts_required: [functions_basics, return_values]
+
+teaching: |
+  The realm reads your scroll the way a scribe reads: top to bottom,
+  once, refusing every name it has not yet met. If main summons a
+  spell whose forging sits below main, the summons comes first in
+  the reading, and the realm refuses a stranger.
+
+  You could move the forging above main. Or you could send a herald.
+  A herald is the spell's header sealed with a semicolon, and no body
+  at all:
+
+  ```cpp
+  int ember();   // the herald: promise and name, no deed
+
+  int main() {
+      std::cout << ember() << "\n";   // the name is known; the summons stands
+      return 0;
+  }
+
+  int ember() {  // the forging, met later; the realm binds them at the end
+      return 21;
+  }
+  ```
+
+  Learn the two words, for the Forge uses them exactly. The herald is
+  a *declaration*: it announces a spell's shape. The forging is a
+  *definition*: it supplies the deed. Declare a spell and never
+  define it, and the scroll still compiles; the refusal comes later,
+  at the LINK, when the realm goes to bind every summons to a body
+  and finds one missing.
+
+narrative: |
+  The Forge-master bars your hand as you reach to drag the forging up
+  the scroll. "No. The forging stays where it stands. Kings do not
+  rearrange their halls for every messenger. They send heralds."
+
+objective: |
+  Cast the scroll and read the refusal: main summons ember before the
+  realm has met it. The forging must stay below main. Mend the
+  working with a single herald line above main: int ember(); The
+  Forge expects ember 21.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: herald the spell here, one line, promise and seal:  int ember();
+
+  int main() {
+      std::cout << "ember " << ember() << "\n";
+      return 0;
+  }
+
+  // [carved by the realm] The forging stands below main, and it stays there:
+  int ember() {
+      return 21;
+  }
+
+solution: |
+  #include <iostream>
+
+  int ember();
+
+  int main() {
+      std::cout << "ember " << ember() << "\n";
+      return 0;
+  }
+
+  // [carved by the realm] The forging stands below main, and it stays there:
+  int ember() {
+      return 21;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: ember, regex: "ember 21" }
+    - type: source_matches
+      id: herald_sent
+      regex: "int\\s+ember\\s*\\(\\s*\\)\\s*;"
+      message: "Send the herald: one line above main, int ember(); with a seal and no body."
+    - type: source_matches
+      id: forging_below
+      regex: "int\\s+main[\\s\\S]*int\\s+ember\\s*\\(\\s*\\)\\s*\\{"
+      message: "The forging must stay below main. The herald line is the lesson; moving the body is the road that is barred."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The realm reads top to bottom and has not met ember when main speaks it. Announce it above main: int ember();"
+  - trigger: "check_failed:forging_below"
+    message: "Put the forging back below main. Your mend is one herald line up top, nothing more."
+  - trigger: "attempt:6"
+    message: "One line above main: int ember();  The realm meets the name early and binds it to the body at the end."
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true
