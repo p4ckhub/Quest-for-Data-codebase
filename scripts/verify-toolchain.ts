@@ -49,14 +49,26 @@ for (const [profileName, profile] of Object.entries(lock.profiles)) {
     console.log(`Verifying ${profileName}...`);
 
     try {
-      const compilerPath = typedProfile.path || typedProfile.compiler;
+      let compilerPath = typedProfile.path || typedProfile.compiler;
       if (!compilerPath) {
         console.error(`ERROR ${profileName}: no path or compiler specified`);
         allVerified = false;
         continue;
       }
 
-      const versionOutput = execSync(`${compilerPath} --version`, { encoding: 'utf-8' });
+      // Fetched profiles (e.g. windows-native) store a repo-relative path;
+      // resolve it and demand the fetch has actually happened — verifying a
+      // PATH fallback here would report the wrong compiler as "verified".
+      if (typedProfile.path && !path.isAbsolute(typedProfile.path)) {
+        compilerPath = path.join(TOOLCHAIN_DIR, '..', typedProfile.path);
+        if (!fs.existsSync(compilerPath)) {
+          console.error(`ERROR ${profileName}: ${compilerPath} not found - run: npm run toolchain:fetch`);
+          allVerified = false;
+          continue;
+        }
+      }
+
+      const versionOutput = execSync(`"${compilerPath}" --version`, { encoding: 'utf-8' });
       const versionLine = versionOutput.trim().split('\n')[0];
       console.log(`OK ${profileName}: ${versionLine}`);
 
@@ -69,7 +81,7 @@ for (const [profileName, profile] of Object.entries(lock.profiles)) {
       fs.writeFileSync(testCppPath, `#include <iostream>\nint main() { std::cout << "Hello from ${profileName}" << std::endl; return 0; }`);
 
       try {
-        execSync(`${compilerPath} -std=c++17 -o "${testBinPath}" "${testCppPath}"`, { stdio: 'pipe' });
+        execSync(`"${compilerPath}" -std=c++17 -o "${testBinPath}" "${testCppPath}"`, { stdio: 'pipe' });
         const runResult = execSync(testBinPath, { encoding: 'utf-8', timeout: 5000 });
         console.log(`OK Compiled and ran hello from ${profileName}`);
       } catch (e) {

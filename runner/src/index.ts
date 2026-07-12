@@ -40,15 +40,23 @@ function resolveSandboxRun(): string {
 }
 
 // Read compiler path (+ optional extra flags) from the platform's toolchain
-// lock profile. extra_flags carries e.g. -static-libgcc/-static-libstdc++ on
-// Windows so player-compiled lesson.exe doesn't need MinGW DLLs on PATH.
+// lock profile. extra_flags carries e.g. -static on Windows so player-compiled
+// lesson.exe doesn't need MinGW DLLs on the player's machine. A fetched
+// profile's path is repo-relative (toolchain/mingw64/...); if the toolchain
+// hasn't been downloaded yet (npm run toolchain:fetch), fall back to PATH.
 function getCompilerProfile(): { path: string; extraFlags: string[] } {
   const lockPath = path.join(TOOLCHAIN_DIR, 'toolchain.lock.json');
   const lockData = JSON.parse(fs.readFileSync(lockPath, 'utf-8'));
   const profileKey = process.platform === 'win32' ? 'windows-native' : 'linux-native';
   const profile = lockData.profiles?.[profileKey];
   if (profile?.path) {
-    return { path: profile.path, extraFlags: profile.extra_flags ?? [] };
+    const resolved = path.isAbsolute(profile.path)
+      ? profile.path
+      : path.join(path.dirname(TOOLCHAIN_DIR), profile.path);
+    const compilerPath = !fs.existsSync(resolved) && profile.fetch
+      ? (profile.compiler ?? 'g++')
+      : resolved;
+    return { path: compilerPath, extraFlags: profile.extra_flags ?? [] };
   }
   return { path: process.platform === 'win32' ? 'g++' : '/usr/bin/g++', extraFlags: [] };
 }

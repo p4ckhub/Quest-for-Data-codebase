@@ -10,6 +10,7 @@ ui/dist/
 toolchain/*.zip
 toolchain/*.tar.*
 toolchain/llvm-mingw-*
+toolchain/mingw64/
 !toolchain/toolchain.lock.json
 
 # Node modules

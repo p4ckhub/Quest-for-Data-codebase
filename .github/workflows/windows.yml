@@ -64,6 +64,19 @@ jobs:
         shell: pwsh
         run: npm ci
 
+      # The player-facing compiler: WinLibs MinGW-w64, downloaded by the same
+      # toolchain:fetch step a player's first run uses. Cached on the pinned
+      # archive checksum so the ~215 MB download happens once per pin bump.
+      - name: Cache WinLibs toolchain
+        uses: actions/cache@v4
+        with:
+          path: toolchain/mingw64
+          key: winlibs-8332dbad378edc4b3defc46fca76087a980dec28010adeb39dd8f967c2e75dda
+
+      - name: Fetch toolchain (WP-5)
+        shell: pwsh
+        run: npm run toolchain:fetch
+
       - name: Sandbox test suite (WP-4)
         shell: pwsh
         run: npx vitest run tests/sandbox.test.ts

@@ -12,12 +12,21 @@
     "windows-native": {
       "type": "system",
       "compiler": "g++",
-      "path": "g++",
+      "path": "toolchain/mingw64/bin/g++.exe",
       "platform": "win32",
-      "used_for": "local lesson compiles on Windows (MinGW-w64 g++ on PATH; bundling under toolchain/mingw64/ pending - WINDOWS_PHASE.md Open Question 4)",
-      "extra_flags": ["-static-libgcc", "-static-libstdc++"]
+      "used_for": "local lesson compiles on Windows (WinLibs MinGW-w64, fetched on first run by toolchain:fetch; falls back to g++ on PATH if not fetched)",
+      "extra_flags": [
+        "-static",
+        "-static-libgcc",
+        "-static-libstdc++"
+      ],
+      "fetch": {
+        "url": "https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0posix-18.1.5-11.0.1-ucrt-r8/winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64ucrt-11.0.1-r8.zip",
+        "sha256": "8332dbad378edc4b3defc46fca76087a980dec28010adeb39dd8f967c2e75dda",
+        "extract_to": "toolchain"
+      }
     }
   },
   "extracted_at": "",
-  "updated_at": "2026-07-08T22:05:47.097Z"
+  "updated_at": "2026-07-12T21:30:09.453Z"
 }

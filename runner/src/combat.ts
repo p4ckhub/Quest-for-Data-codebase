@@ -41,7 +41,15 @@ function getCompilerProfile(): { path: string; extraFlags: string[] } {
       const profileKey = process.platform === 'win32' ? 'windows-native' : 'linux-native';
       const profile = lockData.profiles?.[profileKey];
       if (profile?.path) {
-        return { path: profile.path, extraFlags: profile.extra_flags ?? [] };
+        // Fetched profiles use repo-relative paths; fall back to PATH lookup
+        // when the toolchain hasn't been downloaded yet (npm run toolchain:fetch).
+        const resolved = path.isAbsolute(profile.path)
+          ? profile.path
+          : path.join(PROJECT_ROOT, profile.path);
+        const compilerPath = !fs.existsSync(resolved) && profile.fetch
+          ? (profile.compiler ?? 'g++')
+          : resolved;
+        return { path: compilerPath, extraFlags: profile.extra_flags ?? [] };
       }
     } catch { /* ignore */ }
   }

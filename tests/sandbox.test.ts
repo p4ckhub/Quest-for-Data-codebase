@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll } from 'vitest';
 import { spawnSync } from 'child_process';
 import { writeFileSync, rmSync, existsSync, readFileSync } from 'fs';
 import { tmpdir } from 'os';
-import { join } from 'path';
+import { join, isAbsolute } from 'path';
 
 const IS_WINDOWS = process.platform === 'win32';
 const EXE_SUFFIX = IS_WINDOWS ? '.exe' : '';
@@ -10,15 +10,19 @@ const EXE_SUFFIX = IS_WINDOWS ? '.exe' : '';
 const SANDBOX_PATH = join(__dirname, '..', 'toolchain', 'bin', `sandbox_run${EXE_SUFFIX}`);
 
 // Resolve the fixture compiler the same way the runner does (toolchain lock
-// profile per platform) instead of assuming a bare `g++` on PATH; fall back to
-// PATH lookup when the profile's binary isn't present (e.g. CI's MSYS2 g++).
+// profile per platform; repo-relative paths for fetched profiles) instead of
+// assuming a bare `g++` on PATH; fall back to PATH lookup when the profile's
+// binary isn't present (e.g. CI before toolchain:fetch, using MSYS2's g++).
 function resolveTestCompiler(): string {
   try {
     const lockPath = join(__dirname, '..', 'toolchain', 'toolchain.lock.json');
     const lockData = JSON.parse(readFileSync(lockPath, 'utf-8'));
     const profileKey = IS_WINDOWS ? 'windows-native' : 'linux-native';
     const profilePath = lockData.profiles?.[profileKey]?.path;
-    if (profilePath && existsSync(profilePath)) return profilePath;
+    if (profilePath) {
+      const resolved = isAbsolute(profilePath) ? profilePath : join(__dirname, '..', profilePath);
+      if (existsSync(resolved)) return resolved;
+    }
   } catch {}
   return 'g++';
 }
