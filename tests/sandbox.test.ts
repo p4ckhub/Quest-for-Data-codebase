@@ -1,17 +1,42 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { spawnSync } from 'child_process';
-import { writeFileSync, rmSync } from 'fs';
+import { writeFileSync, rmSync, existsSync, readFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 
-const SANDBOX_PATH = join(__dirname, '..', 'toolchain', 'bin', 'sandbox_run');
+const IS_WINDOWS = process.platform === 'win32';
+const EXE_SUFFIX = IS_WINDOWS ? '.exe' : '';
+
+const SANDBOX_PATH = join(__dirname, '..', 'toolchain', 'bin', `sandbox_run${EXE_SUFFIX}`);
+
+// Resolve the fixture compiler the same way the runner does (toolchain lock
+// profile per platform) instead of assuming a bare `g++` on PATH; fall back to
+// PATH lookup when the profile's binary isn't present (e.g. CI's MSYS2 g++).
+function resolveTestCompiler(): string {
+  try {
+    const lockPath = join(__dirname, '..', 'toolchain', 'toolchain.lock.json');
+    const lockData = JSON.parse(readFileSync(lockPath, 'utf-8'));
+    const profileKey = IS_WINDOWS ? 'windows-native' : 'linux-native';
+    const profilePath = lockData.profiles?.[profileKey]?.path;
+    if (profilePath && existsSync(profilePath)) return profilePath;
+  } catch {}
+  return 'g++';
+}
+
+const TEST_COMPILER = resolveTestCompiler();
 
 describe('Sandbox Tests', () => {
   function compileFixture(name: string, source: string): string {
     const path = join(__dirname, 'fixtures', `${name}_fixture`);
+    const exe = path + EXE_SUFFIX;
     writeFileSync(path + '.cpp', source);
-    spawnSync('g++', ['-std=c++17', '-O0', '-g0', path + '.cpp', '-o', path], { stdio: 'inherit' });
-    return path;
+    spawnSync(TEST_COMPILER, ['-std=c++17', '-O0', '-g0', path + '.cpp', '-o', exe], { stdio: 'inherit' });
+    return exe;
+  }
+
+  function cleanupFixture(exe: string): void {
+    rmSync(exe.replace(/\.exe$/, '') + '.cpp', { force: true });
+    try { rmSync(exe, { force: true }); } catch {}
   }
 
   beforeAll(() => {
@@ -20,7 +45,20 @@ describe('Sandbox Tests', () => {
   });
 
   it('should kill process on wall timeout', () => {
-    const source = `#include <cstdio>
+    // Only fixture that needs a platform branch: sleep() lives in unistd.h on
+    // POSIX, Sleep() in windows.h. Everything else in this suite is portable
+    // C++ shared verbatim across platforms (deliberate — see WINDOWS_PHASE.md
+    // WP-4 on why the staged sandbox_run/tests/*.cpp fixtures were NOT wired
+    // in: test_memory.cpp's `if (!ptr) break` exits cleanly instead of
+    // crashing, so it never exercises the killed_by:"memory" path).
+    const source = IS_WINDOWS
+      ? `#include <cstdio>
+#include <windows.h>
+int main() {
+    while (1) Sleep(1000);
+    return 0;
+}`
+      : `#include <cstdio>
 #include <unistd.h>
 int main() {
     while (1) sleep(1);
@@ -33,8 +71,7 @@ int main() {
       const output = res.stdout || '';
       expect(output).toContain('"killed_by":"wall_timeout"');
     } finally {
-      rmSync(path + '.cpp', { force: true });
-      try { rmSync(path, { force: true }); } catch {}
+      cleanupFixture(path);
     }
   });
 
@@ -56,8 +93,7 @@ int main() {
       const output = res.stdout || '';
       expect(output).toContain('"killed_by":"memory"');
     } finally {
-      rmSync(path + '.cpp', { force: true });
-      try { rmSync(path, { force: true }); } catch {}
+      cleanupFixture(path);
     }
   });
 
@@ -82,8 +118,7 @@ int main() {
       // matches killed_by=sigsegv (see EXIT_STATUS_ROWS in runner/src/validator.ts)
       expect(output).toContain('"killed_by":"sigsegv"');
     } finally {
-      rmSync(path + '.cpp', { force: true });
-      try { rmSync(path, { force: true }); } catch {}
+      cleanupFixture(path);
     }
   });
 
@@ -110,8 +145,7 @@ int main() {
         rmSync(stdinFile, { force: true });
       }
     } finally {
-      rmSync(path + '.cpp', { force: true });
-      try { rmSync(path, { force: true }); } catch {}
+      cleanupFixture(path);
     }
   });
 
@@ -130,8 +164,7 @@ int main() {
       const output = res.stdout || '';
       expect(output).toContain('"killed_by":"output_cap"');
     } finally {
-      rmSync(path + '.cpp', { force: true });
-      try { rmSync(path, { force: true }); } catch {}
+      cleanupFixture(path);
     }
   });
 
@@ -162,8 +195,7 @@ int main() {
       const median = times[Math.floor(times.length / 2)];
       expect(median).toBeLessThan(50);
     } finally {
-      rmSync(path + '.cpp', { force: true });
-      try { rmSync(path, { force: true }); } catch {}
+      cleanupFixture(path);
     }
   });
 });

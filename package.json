@@ -15,6 +15,8 @@
     "accept:phase3": "ts-node scripts/accept-phase3.ts",
     "accept:phase4": "ts-node scripts/accept-phase4.ts",
     "sandbox:test": "ts-node tests/sandbox.test.ts",
+    "sandbox:build": "cmake -S sandbox_run -B sandbox_run/build && cmake --build sandbox_run/build --config Release",
+    "sandbox:build:win-cross": "cmake -S sandbox_run -B sandbox_run/build-win -DCMAKE_TOOLCHAIN_FILE=cmake/mingw-w64-x86_64.cmake && cmake --build sandbox_run/build-win --config Release",
     "pch:gameapi": "g++ -std=c++17 -O0 -g0 -Igameapi gameapi/gameapi.h -o gameapi/gameapi.gch",
     "smoke:gameapi": "ts-node scripts/smoke-gameapi.ts",
     "content:validate": "ts-node scripts/validate-content.ts",

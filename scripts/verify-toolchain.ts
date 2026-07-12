@@ -1,5 +1,6 @@
 import { execSync } from 'child_process';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 
 const TOOLCHAIN_DIR = path.join(__dirname, '../toolchain');
@@ -10,6 +11,7 @@ interface Profile {
   compiler?: string;
   version?: string;
   path?: string;
+  platform?: string;
 }
 
 interface LockFile {
@@ -27,12 +29,21 @@ if (!fs.existsSync(LOCK_FILE)) {
 const lock = JSON.parse(fs.readFileSync(LOCK_FILE, 'utf-8')) as LockFile;
 let allVerified = true;
 
-console.log('Host architecture:', execSync('uname -m', { encoding: 'utf-8' }).trim());
+console.log('Host architecture:', os.arch(), `(${process.platform})`);
 
 // Process each profile
 for (const [profileName, profile] of Object.entries(lock.profiles)) {
   if (!profile) continue;
   const typedProfile = profile as Profile;
+
+  // A profile for another OS can't be verified on this host — and on a host
+  // that happens to have the same compiler name on PATH it would fake-pass
+  // (e.g. windows-native's "g++" resolving to Linux g++). The lock predates
+  // the win32 profile, so platform uses "linux"/"win32" as process.platform does.
+  if (typedProfile.platform && typedProfile.platform !== process.platform) {
+    console.log(`SKIP ${profileName}: platform ${typedProfile.platform} (host is ${process.platform})`);
+    continue;
+  }
 
   if (typedProfile.type === 'system') {
     console.log(`Verifying ${profileName}...`);
@@ -66,9 +77,10 @@ for (const [profileName, profile] of Object.entries(lock.profiles)) {
         allVerified = false;
       }
 
-      // Clean up
+      // Clean up (MinGW g++ appends .exe when -o has no extension)
       if (fs.existsSync(testCppPath)) fs.unlinkSync(testCppPath);
       if (fs.existsSync(testBinPath)) fs.unlinkSync(testBinPath);
+      if (fs.existsSync(testBinPath + '.exe')) fs.unlinkSync(testBinPath + '.exe');
     } catch (e: any) {
       console.error(`ERROR Failed to run ${typedProfile.compiler} --version`);
       allVerified = false;

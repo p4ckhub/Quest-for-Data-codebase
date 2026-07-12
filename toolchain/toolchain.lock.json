@@ -8,6 +8,14 @@
       "path": "/usr/bin/g++",
       "platform": "linux",
       "used_for": "local lesson compiles on Linux"
+    },
+    "windows-native": {
+      "type": "system",
+      "compiler": "g++",
+      "path": "g++",
+      "platform": "win32",
+      "used_for": "local lesson compiles on Windows (MinGW-w64 g++ on PATH; bundling under toolchain/mingw64/ pending - WINDOWS_PHASE.md Open Question 4)",
+      "extra_flags": ["-static-libgcc", "-static-libstdc++"]
     }
   },
   "extracted_at": "",

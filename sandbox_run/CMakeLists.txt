@@ -14,12 +14,18 @@ if(APPLE OR UNIX)
     add_executable(sandbox_run src/sandbox_posix.cpp)
     target_link_libraries(sandbox_run PRIVATE pthread)
 elseif(WIN32)
-    # Windows implementation - placeholder stub for now (contains main())
+    # Windows implementation (contains main())
     add_executable(sandbox_run src/sandbox_win.cpp)
+    # Static runtime: a bare Windows install has no libgcc_s_seh-1.dll /
+    # libstdc++-6.dll / libwinpthread-1.dll (MinGW links them dynamically by
+    # default). Job Object/process/pipe APIs live in kernel32, linked by default.
+    target_link_options(sandbox_run PRIVATE -static -static-libgcc -static-libstdc++)
 else()
     message(FATAL_ERROR "Unsupported platform")
 endif()
 
+# Anchored to the source dir, not the build dir: the repo-root toolchain/bin
+# is where the runner looks, no matter where -B put the build tree.
 set_target_properties(sandbox_run PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../toolchain/bin
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../toolchain/bin
 )

@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 import { Spell, generateSpellbook } from './spellbook';
 
 // §11.5: the TS side never simulates combat. This module only prepares the
@@ -8,9 +8,15 @@ import { Spell, generateSpellbook } from './spellbook';
 // harness, runs it under sandbox_run (guardrail #2 — spellbook source is
 // player code), and parses the resulting event stream.
 
+// The binary is sandbox_run on POSIX, sandbox_run.exe on Windows.
+function sandboxRunExists(dir: string): boolean {
+  return fs.existsSync(path.join(dir, 'toolchain', 'bin', 'sandbox_run')) ||
+         fs.existsSync(path.join(dir, 'toolchain', 'bin', 'sandbox_run.exe'));
+}
+
 function findProjectRoot(): string {
   let dir = __dirname;
-  while (!fs.existsSync(path.join(dir, 'toolchain', 'bin', 'sandbox_run'))) {
+  while (!sandboxRunExists(dir)) {
     const parent = path.dirname(dir);
     if (parent === dir) {
       throw new Error(`Project root with toolchain/bin/sandbox_run not found above ${__dirname}`);
@@ -23,20 +29,23 @@ function findProjectRoot(): string {
 const PROJECT_ROOT = findProjectRoot();
 const GAMEAPI_DIR = path.join(PROJECT_ROOT, 'gameapi');
 const TOOLCHAIN_DIR = path.join(PROJECT_ROOT, 'toolchain');
-const SANDBOX_RUN = path.join(TOOLCHAIN_DIR, 'bin', 'sandbox_run');
+const SANDBOX_RUN = fs.existsSync(path.join(TOOLCHAIN_DIR, 'bin', 'sandbox_run'))
+  ? path.join(TOOLCHAIN_DIR, 'bin', 'sandbox_run')
+  : path.join(TOOLCHAIN_DIR, 'bin', 'sandbox_run.exe');
 
-function getCompilerPath(): string {
+function getCompilerProfile(): { path: string; extraFlags: string[] } {
   const lockPath = path.join(TOOLCHAIN_DIR, 'toolchain.lock.json');
   if (fs.existsSync(lockPath)) {
     try {
       const lockData = JSON.parse(fs.readFileSync(lockPath, 'utf-8'));
-      const linuxNative = lockData.profiles?.['linux-native'];
-      if (linuxNative && linuxNative.path) {
-        return linuxNative.path;
+      const profileKey = process.platform === 'win32' ? 'windows-native' : 'linux-native';
+      const profile = lockData.profiles?.[profileKey];
+      if (profile?.path) {
+        return { path: profile.path, extraFlags: profile.extra_flags ?? [] };
       }
     } catch { /* ignore */ }
   }
-  return '/usr/bin/g++';
+  return { path: process.platform === 'win32' ? 'g++' : '/usr/bin/g++', extraFlags: [] };
 }
 
 // Canonical CombatState (§11.5), extended with the data-driven fields the
@@ -151,29 +160,38 @@ export function runCombatTurn(
   fs.mkdirSync(spellbookDir, { recursive: true });
   generateSpellbook({ spellbook: spells }, spellbookDir);
 
-  // Compile the harness against this spellbook
+  // Compile the harness against this spellbook. Argument-array invocation (no
+  // shell): identical argv on both platforms, immune to spaces in paths.
   const exePath = path.join(sandboxDir, 'combat.exe');
-  const compiler = getCompilerPath();
-  const sources = [
+  const compilerProfile = getCompilerProfile();
+  const compileArgs = [
+    '-std=c++17', '-O0', '-g0', '-Wall',
+    ...compilerProfile.extraFlags,
+    `-I${spellbookDir}`,
+    `-I${GAMEAPI_DIR}`,
+    `-I${path.join(GAMEAPI_DIR, 'third_party')}`,
     path.join(GAMEAPI_DIR, 'combat_main.cpp'),
     path.join(GAMEAPI_DIR, 'gameapi.cpp'),
     ...extraSources,
-  ].join(' ');
-  const includes = `-I${spellbookDir} -I${GAMEAPI_DIR} -I${path.join(GAMEAPI_DIR, 'third_party')}`;
-  const cmd = `${compiler} -std=c++17 -O0 -g0 -Wall ${includes} ${sources} -o ${exePath}`;
+    '-o', exePath,
+  ];
 
   try {
-    execSync(cmd, { stdio: 'pipe' });
+    execFileSync(compilerProfile.path, compileArgs, { stdio: 'pipe' });
   } catch (e: any) {
     const stderr = e.stderr ? String(e.stderr) : String(e.message);
     throw new Error(`Failed to compile combat harness: ${stderr}`);
   }
 
   // Execute under sandbox_run; cwd = sandboxDir so the harness finds state.json
-  const runCmd = `${SANDBOX_RUN} --wall-ms 5000 --cpu-ms 3000 --mem-mb 512 --stdout-cap-kb 1024 --cwd ${sandboxDir} -- ${exePath} --action ${action}`;
+  const runArgs = [
+    '--wall-ms', '5000', '--cpu-ms', '3000', '--mem-mb', '512', '--stdout-cap-kb', '1024',
+    '--cwd', sandboxDir,
+    '--', exePath, '--action', action,
+  ];
   let output: string;
   try {
-    output = execSync(runCmd, { encoding: 'utf-8', stdio: 'pipe', cwd: sandboxDir });
+    output = execFileSync(SANDBOX_RUN, runArgs, { encoding: 'utf-8', stdio: 'pipe', cwd: sandboxDir });
   } catch (e: any) {
     output = (e.stdout ? String(e.stdout) : '') + (e.stderr ? String(e.stderr) : '');
   }

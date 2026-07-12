@@ -1,18 +1,25 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import { execSync } from 'child_process';
+import * as os from 'os';
+import { execFileSync } from 'child_process';
 import * as yaml from 'js-yaml';
 import { evaluateChecks, CheckSpec, CheckResult as ValidatorCheckResult } from './validator';
 import { classifyFirstError } from './error_table';
 
+// The binary is sandbox_run on POSIX, sandbox_run.exe on Windows.
+function sandboxRunExists(dir: string): boolean {
+  return fs.existsSync(path.join(dir, 'toolchain', 'bin', 'sandbox_run')) ||
+         fs.existsSync(path.join(dir, 'toolchain', 'bin', 'sandbox_run.exe'));
+}
+
 // This module runs from two locations with different depths: runner/src (ts-node,
 // vitest) and dist/runner/src (compiled, loaded by the Electron main process).
 // Walk up to the project root instead of hardcoding a relative depth; the marker
-// is toolchain/bin/sandbox_run (dist/ also carries a stray toolchain.lock.json,
+// is toolchain/bin/sandbox_run[.exe] (dist/ also carries a stray toolchain.lock.json,
 // so the lock file alone is not a safe marker).
 export function findProjectRoot(): string {
   let dir = __dirname;
-  while (!fs.existsSync(path.join(dir, 'toolchain', 'bin', 'sandbox_run'))) {
+  while (!sandboxRunExists(dir)) {
     const parent = path.dirname(dir);
     if (parent === dir) {
       throw new Error(`Project root with toolchain/bin/sandbox_run not found above ${__dirname}`);
@@ -24,21 +31,32 @@ export function findProjectRoot(): string {
 
 const TOOLCHAIN_DIR = path.join(findProjectRoot(), 'toolchain');
 
-// Read compiler path from toolchain lock file
-function getCompilerPath(): string {
+// Resolve the actual on-disk sandbox binary name. execFileSync with an explicit
+// path does no PATHEXT resolution, so the .exe must be spelled out on Windows.
+function resolveSandboxRun(): string {
+  const base = path.join(TOOLCHAIN_DIR, 'bin', 'sandbox_run');
+  if (fs.existsSync(base)) return base;
+  return base + '.exe';
+}
+
+// Read compiler path (+ optional extra flags) from the platform's toolchain
+// lock profile. extra_flags carries e.g. -static-libgcc/-static-libstdc++ on
+// Windows so player-compiled lesson.exe doesn't need MinGW DLLs on PATH.
+function getCompilerProfile(): { path: string; extraFlags: string[] } {
   const lockPath = path.join(TOOLCHAIN_DIR, 'toolchain.lock.json');
   const lockData = JSON.parse(fs.readFileSync(lockPath, 'utf-8'));
-  const linuxNative = lockData.profiles?.['linux-native'];
-  if (linuxNative && linuxNative.path) {
-    return linuxNative.path;
+  const profileKey = process.platform === 'win32' ? 'windows-native' : 'linux-native';
+  const profile = lockData.profiles?.[profileKey];
+  if (profile?.path) {
+    return { path: profile.path, extraFlags: profile.extra_flags ?? [] };
   }
-  // Fallback to g++ if not found
-  return '/usr/bin/g++';
+  return { path: process.platform === 'win32' ? 'g++' : '/usr/bin/g++', extraFlags: [] };
 }
 
 const PCH_PATH = path.join(TOOLCHAIN_DIR, 'pch', 'linux-native', 'gameapi.pch');
 const USE_PCH = false; // PCH not compatible with g++, disabled
-const COMPILER_PATH = getCompilerPath();
+const COMPILER_PROFILE = getCompilerProfile();
+const COMPILER_PATH = COMPILER_PROFILE.path;
 
 export interface Lesson {
   id: string;
@@ -124,7 +142,7 @@ export interface RunResult {
 export async function runLesson(lesson: Lesson, playerCode: string): Promise<RunResult> {
   try {
     // 1. Assemble main.cpp
-    const tempDir = path.join(process.env.TMPDIR || '/tmp', `quest-${lesson.id}-${Date.now()}`);
+    const tempDir = path.join(os.tmpdir(), `quest-${lesson.id}-${Date.now()}`);
     fs.mkdirSync(tempDir, { recursive: true });
 
     let fullCode: string;
@@ -144,33 +162,44 @@ export async function runLesson(lesson: Lesson, playerCode: string): Promise<Run
 
     const limits = resolveLimits(lesson.limits);
 
-    // 2. Compile with linux-native toolchain
+    // 2. Compile with the platform's native toolchain profile
     const exePath = path.join(tempDir, 'lesson.exe');
-    const pchFlag = USE_PCH ? `-include-pch ${PCH_PATH}` : '';
-    const gameapiCpp = path.join(TOOLCHAIN_DIR, '..', 'gameapi', 'gameapi.cpp');
-    const jsonInclude = path.join(TOOLCHAIN_DIR, '..', 'gameapi', 'third_party');
+    const pchFlagParts = USE_PCH ? ['-include-pch', PCH_PATH] : [];
+    const gameapiDir = path.join(TOOLCHAIN_DIR, '..', 'gameapi');
+    const gameapiCpp = path.join(gameapiDir, 'gameapi.cpp');
+    const jsonInclude = path.join(gameapiDir, 'third_party');
 
-    let extraSources = `${mainCpp} ${gameapiCpp}`;
+    let extraSources = [mainCpp, gameapiCpp];
 
     // For kind=functions, include the harness file (player functions + harness main)
     if (lesson.kind === 'functions' && lesson.harness) {
-      const harnessPath = path.join(TOOLCHAIN_DIR, '..', 'gameapi', lesson.harness);
-      extraSources = `${mainCpp} ${harnessPath} ${gameapiCpp}`;
+      const harnessPath = path.join(gameapiDir, lesson.harness);
+      extraSources = [mainCpp, harnessPath, gameapiCpp];
     }
 
     // Extra hidden units the lesson links in (§11.6: leakcheck.cpp for
     // memory-zone lessons). Always from gameapi/, never player-supplied paths.
     for (const unit of lesson.extra_units ?? []) {
-      extraSources += ` ${path.join(TOOLCHAIN_DIR, '..', 'gameapi', path.basename(unit))}`;
+      extraSources.push(path.join(gameapiDir, path.basename(unit)));
     }
 
-    const compileCmd = `${COMPILER_PATH} -std=c++17 -O0 -g0 -Wall ${pchFlag} -I${TOOLCHAIN_DIR}/../gameapi -I${jsonInclude} ${extraSources} -o ${exePath}`;
+    // Argument-array invocation (no shell): identical argv on both platforms,
+    // immune to spaces in paths (C:\Program Files\..., usernames with spaces).
+    const compileArgs = [
+      '-std=c++17', '-O0', '-g0', '-Wall',
+      ...COMPILER_PROFILE.extraFlags,
+      ...pchFlagParts,
+      `-I${gameapiDir}`,
+      `-I${jsonInclude}`,
+      ...extraSources,
+      '-o', exePath,
+    ];
 
     let compileOutput: string;
     let compileSuccessful = true;
 
     try {
-      compileOutput = execSync(compileCmd, { encoding: 'utf8', stdio: 'pipe', timeout: limits.compile_ms });
+      compileOutput = execFileSync(COMPILER_PATH, compileArgs, { encoding: 'utf8', stdio: 'pipe', timeout: limits.compile_ms });
     } catch (e: any) {
       compileSuccessful = false;
       compileOutput = e.stdout ? String(e.stdout) : '';
@@ -190,20 +219,27 @@ export async function runLesson(lesson: Lesson, playerCode: string): Promise<Run
     }
 
     // 2b. stdin fixture (§11.3): required for any lesson using std::cin
-    let stdinFlag = '';
+    let stdinArgs: string[] = [];
     if (lesson.stdin_fixture !== undefined) {
       const stdinPath = path.join(tempDir, 'input.txt');
       fs.writeFileSync(stdinPath, lesson.stdin_fixture);
-      stdinFlag = `--stdin-file ${stdinPath}`;
+      stdinArgs = ['--stdin-file', stdinPath];
     }
 
     // 3. Execute under sandbox_run with lesson-resolved limits
-    const sandboxCmd = `${path.join(TOOLCHAIN_DIR, 'bin', 'sandbox_run')} --wall-ms ${limits.wall_ms} --cpu-ms ${limits.cpu_ms} --mem-mb ${limits.mem_mb} --stdout-cap-kb ${limits.stdout_cap_kb} ${stdinFlag} -- ${exePath}`;
+    const sandboxArgs = [
+      '--wall-ms', String(limits.wall_ms),
+      '--cpu-ms', String(limits.cpu_ms),
+      '--mem-mb', String(limits.mem_mb),
+      '--stdout-cap-kb', String(limits.stdout_cap_kb),
+      ...stdinArgs,
+      '--', exePath,
+    ];
 
     let execOutput: string;
     let execStderr = '';
     try {
-      execOutput = execSync(sandboxCmd, { encoding: 'utf8', stdio: 'pipe' });
+      execOutput = execFileSync(resolveSandboxRun(), sandboxArgs, { encoding: 'utf8', stdio: 'pipe' });
     } catch (e: any) {
       // sandbox_run returns 0 but may have killed the process
       execOutput = e.stdout ? String(e.stdout) : '';

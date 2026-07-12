@@ -1,0 +1,80 @@
+# Windows verification for the sandbox_run port (WINDOWS_PHASE.md WP-CI).
+# This is the phase's behavioral-verification environment: the ARM64 Linux dev
+# box can only cross-compile-check sandbox_win.cpp; Job Object semantics,
+# structured exception codes, and pipe EOF behavior are proven here, on real
+# Windows. MinGW-w64 g++ (not MSVC) throughout — runner/src/error_table.ts
+# matches GCC diagnostic text verbatim, so MSVC would silently break every
+# in-game compile-error hint.
+
+name: windows
+
+on:
+  push:
+    branches: [Windows]
+  pull_request:
+    branches: [Windows]
+  workflow_dispatch:
+
+jobs:
+  sandbox:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: false
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-ninja
+
+      - name: Build sandbox_run.exe
+        run: |
+          cmake -S sandbox_run -B sandbox_run/build -G Ninja
+          cmake --build sandbox_run/build --config Release
+          ls -l toolchain/bin/sandbox_run.exe
+
+      # Manual smoke of the WP-0 contract before the full suite: hello-world
+      # child must produce its stdout followed by a well-formed @@RESULT@@ line.
+      - name: Smoke test @@RESULT@@ contract
+        run: |
+          printf '#include <iostream>\nint main(){ std::cout << "hi\\n"; return 0; }\n' > hello.cpp
+          g++ -std=c++17 -static-libgcc -static-libstdc++ hello.cpp -o hello.exe
+          ./toolchain/bin/sandbox_run.exe -- "$(pwd -W)/hello.exe" | tee smoke.out
+          grep -q '^hi$' smoke.out
+          grep -q '@@RESULT@@ {"exit_code":0,"wall_ms":' smoke.out
+          grep -q '"killed_by":null}' smoke.out
+
+      # Expose the MSYS2 mingw64 g++ to the non-msys2 steps below (vitest
+      # fixture compiles resolve the windows-native lock profile's bare "g++"
+      # from PATH).
+      - name: Add mingw64 to PATH
+        run: cygpath -w /mingw64/bin >> "$GITHUB_PATH"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: npm ci
+        shell: pwsh
+        run: npm ci
+
+      - name: Sandbox test suite (WP-4)
+        shell: pwsh
+        run: npx vitest run tests/sandbox.test.ts
+
+      - name: Toolchain verify (WP-5)
+        shell: pwsh
+        run: npm run toolchain:verify
+
+      # Known-good Windows binary downloadable from any green run — feeds the
+      # WP-7 manual play session and the WP-5 bundling decision.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sandbox_run-windows-x64
+          path: toolchain/bin/sandbox_run.exe

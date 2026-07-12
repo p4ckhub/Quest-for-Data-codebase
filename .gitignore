@@ -2,6 +2,10 @@
 dist/
 ui/dist/
 
+# CMake build trees (npm run sandbox:build / sandbox:build:win-cross)
+/sandbox_run/build/
+/sandbox_run/build-win/
+
 # Toolchain archives and extracted directories (lock file stays in git)
 toolchain/*.zip
 toolchain/*.tar.*
