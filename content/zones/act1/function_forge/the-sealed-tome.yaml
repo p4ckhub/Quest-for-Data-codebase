@@ -1,0 +1,112 @@
+id: the-sealed-tome
+kind: program
+zone: function_forge
+act: 1
+title: "The Sealed Tome"
+concept: header_guards
+concepts_required: [header_files, preprocessor]
+compile_mode: double_include
+
+prelude: |
+  #include <iostream>
+
+epilogue: |
+  int main() {
+      std::cout << "blessing " << blessing() << "\n";
+      return 0;
+  }
+
+teaching: |
+  Books include books. Your scroll includes two books, and each of
+  those, being thorough, includes the same third. The unseen scribe
+  pastes faithfully, and now the third book's text stands TWICE in
+  one scroll. If that book holds a definition, the realm meets the
+  same forging twice and refuses.
+
+  This trial does it to you on purpose. You are not writing a scroll
+  today. You are writing the TOME ITSELF, and the realm's own scroll
+  copies your tome twice before compiling, thus:
+
+  ```cpp
+  #include <iostream>
+  #include "tome.h"     // your tome, pasted once
+  #include "tome.h"     // and pasted again, as careless books will
+  int main() {
+      std::cout << "blessing " << blessing() << "\n";
+      return 0;
+  }
+  ```
+
+  The mend is a seal. A guard wraps the whole tome:
+
+  ```cpp
+  #ifndef SEALED_TOME
+  #define SEALED_TOME
+
+  // the tome's contents
+
+  #endif
+  ```
+
+  First pasting: the banner SEALED_TOME does not fly, so the scribe
+  keeps the passage and raises the banner. Second pasting: the banner
+  flies, so the whole passage vanishes. One copy survives, per
+  scroll, every time. The realm also honors a modern seal, #pragma
+  once, one line that means the same. Know both; write the guard
+  here.
+
+narrative: |
+  The Forge-master lays your unbound pages beside a press that stamps
+  every book twice. "Careless scribes copy a tome into the same
+  scroll again and again. A sealed tome does not mind. Seal yours."
+
+objective: |
+  Cast the tome as it stands and read the refusal: the realm's scroll
+  pastes your tome twice, and blessing is forged twice. Seal the tome
+  with a guard so the second pasting vanishes. The forging itself
+  must survive. The Keeper expects blessing 7.
+
+starter_code: |
+  // Your tome. The realm's scroll will paste this file TWICE.
+  // TODO: seal it with a guard:
+  //   #ifndef SEALED_TOME  and  #define SEALED_TOME  above,
+  //   #endif  below.
+
+  int blessing() {
+      return 7;
+  }
+
+solution: |
+  #ifndef SEALED_TOME
+  #define SEALED_TOME
+
+  int blessing() {
+      return 7;
+  }
+
+  #endif
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: blessing, regex: "blessing 7" }
+    - type: source_matches
+      id: tome_sealed
+      regex: "(#ifndef[\\s\\S]*#define[\\s\\S]*#endif)|(#pragma\\s+once)"
+      message: "Seal the tome: #ifndef SEALED_TOME, #define SEALED_TOME above the forging, #endif below it. Or the modern seal, #pragma once, on the first line."
+    - type: source_matches
+      id: forging_survives
+      regex: "int\\s+blessing\\s*\\(\\s*\\)\\s*\\{"
+      message: "The forging of blessing must survive inside the seal. Guard it, do not delete it."
+
+hints:
+  - trigger: "error:redefinition"
+    message: "The realm pasted your tome twice, so blessing stands forged twice. Wrap the whole tome in a guard: #ifndef SEALED_TOME / #define SEALED_TOME at the top, #endif at the bottom."
+  - trigger: "check_failed:tome_sealed"
+    message: "The seal is three lines: #ifndef SEALED_TOME, then #define SEALED_TOME, then everything, then #endif at the very end."
+  - trigger: "attempt:6"
+    message: "Line one: #ifndef SEALED_TOME. Line two: #define SEALED_TOME. Last line: #endif. The forging sits between them, untouched."
+
+rewards:
+  xp: 100
+  unlocks_zone_progress: true

@@ -1,0 +1,87 @@
+id: allies-beyond-the-wall
+kind: program
+zone: function_forge
+act: 1
+title: "Allies Beyond the Wall"
+concept: multiple_files
+concepts_required: [functions_basics, forward_declarations]
+extra_units:
+  - forge_ally.cpp
+
+teaching: |
+  A working never has to live on one scroll. Great programs span many,
+  and the realm compiles each scroll ALONE, with no memory of the
+  others. While your scroll is being read, the realm cannot see any
+  spell forged elsewhere, no matter how near the other scroll lies.
+
+  So how does one scroll summon a spell forged on another? The same
+  way it summons a spell defined below main: a herald.
+
+  ```cpp
+  int rally();   // forged on another scroll; the herald makes the name known here
+  ```
+
+  The herald satisfies the compiler, which only needs the name and
+  shape. Then, after every scroll is compiled, the LINKER walks
+  through them all and binds each summons to its one true body,
+  wherever that body was forged. Compile alone, bind together. That
+  is the whole law of many scrolls.
+
+narrative: |
+  The Forge-master unrolls a second scroll beside yours, already
+  crowded with runes you did not write. "An ally fights beyond the
+  wall. You will never see their forging. Send a herald, and trust
+  the binding."
+
+objective: |
+  Cast the scroll and read the refusal: rally is forged on another
+  scroll, and the realm has not met the name. Do not forge rally
+  yourself. Herald it above main with int rally(); and let the
+  binding find the body. The Keeper expects rally 14.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: herald the ally's spell here:  int rally();
+  // Its forging lives on another scroll. Do not write a body.
+
+  int main() {
+      std::cout << "rally " << rally() << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int rally();
+
+  int main() {
+      std::cout << "rally " << rally() << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: rally, regex: "rally 14" }
+    - type: source_matches
+      id: herald_sent
+      regex: "int\\s+rally\\s*\\(\\s*\\)\\s*;"
+      message: "Herald the ally's spell above main: int rally(); with a seal and no body."
+    - type: source_matches
+      id: no_local_forging
+      regex: "int\\s+rally\\s*\\(\\s*\\)\\s*\\{"
+      expect_match: false
+      message: "You forged rally yourself. The body already exists on the ally's scroll; your scroll sends only the herald."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The realm compiles your scroll alone and has not met rally. Announce it above main: int rally();"
+  - trigger: "check_failed:no_local_forging"
+    message: "Remove your body for rally. The ally's scroll already carries the forging; two bodies collide at the binding."
+  - trigger: "attempt:6"
+    message: "One herald line above main: int rally();  The linker binds the summons to the ally's body after both scrolls compile."
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

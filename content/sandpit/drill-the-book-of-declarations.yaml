@@ -1,0 +1,63 @@
+id: drill-the-book-of-declarations
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Book of Declarations"
+concept: header_files
+concepts_required: [multiple_files, forward_declarations]
+extra_units:
+  - forge_allies.cpp
+
+teaching: |
+  Once more: a header is a book of heralds. Quotes for your own
+  books, brackets for the realm's, and never a body in the book:
+
+  ```cpp
+  #include "forge_allies.h"
+  ```
+
+narrative: |
+  The Forerunner slides the slim volume across the table. "Same book,
+  different errand. Open it."
+
+objective: |
+  The book forge_allies.h heralds shield_wall and battle_hymn.
+  Include it and print the two gifts joined as one sum. The drill
+  expects war strength 14.
+
+starter_code: |
+  #include <iostream>
+  // TODO: include the book of heralds
+
+  int main() {
+      std::cout << "war strength " << shield_wall() + battle_hymn() << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+  #include "forge_allies.h"
+
+  int main() {
+      std::cout << "war strength " << shield_wall() + battle_hymn() << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: strength, regex: "war strength 14" }
+    - type: source_matches
+      id: book_opened
+      regex: "#include\\s*\"forge_allies\\.h\""
+      message: "Open the book with quotes: #include \"forge_allies.h\""
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Both heralds live in forge_allies.h. Include it with quotes."
+  - trigger: "attempt:6"
+    message: "#include \"forge_allies.h\" under the iostream line. Then both spells stand known."
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

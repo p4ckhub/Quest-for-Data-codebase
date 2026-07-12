@@ -1,0 +1,71 @@
+id: drill-allies-beyond-the-wall
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: Allies Beyond the Wall"
+concept: multiple_files
+concepts_required: [functions_basics, forward_declarations]
+extra_units:
+  - forge_ally.cpp
+
+teaching: |
+  Once more: each scroll compiles alone. A spell forged elsewhere
+  needs a herald on your scroll, and the linker binds the summons to
+  the body at the end:
+
+  ```cpp
+  int rally();   // forged on another scroll
+  ```
+
+narrative: |
+  The Forerunner taps the wall of the training yard. "Someone is
+  forging on the other side. Herald them."
+
+objective: |
+  rally is forged on another scroll. Do not forge it yourself.
+  Herald it above main and print its gift doubled. The drill expects
+  double rally 28.
+
+starter_code: |
+  #include <iostream>
+
+  // TODO: herald the ally's spell:  int rally();
+
+  int main() {
+      std::cout << "double rally " << rally() * 2 << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+
+  int rally();
+
+  int main() {
+      std::cout << "double rally " << rally() * 2 << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: rally, regex: "double rally 28" }
+    - type: source_matches
+      id: herald_sent
+      regex: "int\\s+rally\\s*\\(\\s*\\)\\s*;"
+      message: "Herald the ally's spell above main: int rally();"
+    - type: source_matches
+      id: no_local_forging
+      regex: "int\\s+rally\\s*\\(\\s*\\)\\s*\\{"
+      expect_match: false
+      message: "Do not forge rally yourself. The body lives on the ally's scroll."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "Your scroll has not met rally. One herald line above main: int rally();"
+  - trigger: "attempt:6"
+    message: "int rally(); above main. The linker finds the body on the other scroll."
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false
