@@ -1,0 +1,79 @@
+id: drill-the-sealed-tome
+kind: program
+zone: sandpit
+act: 1
+title: "Drill: The Sealed Tome"
+concept: header_guards
+concepts_required: [header_files, preprocessor]
+compile_mode: double_include
+
+prelude: |
+  #include <iostream>
+
+epilogue: |
+  int main() {
+      std::cout << "ward " << ward() << "\n";
+      return 0;
+  }
+
+teaching: |
+  Once more: the realm's scroll pastes your tome twice. An unguarded
+  definition is met twice and refused. Seal the whole tome:
+
+  ```cpp
+  #ifndef DRILL_TOME
+  #define DRILL_TOME
+
+  // contents
+
+  #endif
+  ```
+
+narrative: |
+  The Forerunner feeds your pages into the double-stamping press
+  without apology. "Again. Seal this one too."
+
+objective: |
+  Your tome forges ward, and the realm pastes it twice. Seal the
+  tome with a guard so one copy survives. The drill expects ward 11.
+
+starter_code: |
+  // Your tome. It will be pasted TWICE.
+  // TODO: seal it: #ifndef DRILL_TOME / #define DRILL_TOME above, #endif below.
+
+  int ward() {
+      return 11;
+  }
+
+solution: |
+  #ifndef DRILL_TOME
+  #define DRILL_TOME
+
+  int ward() {
+      return 11;
+  }
+
+  #endif
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: ward, regex: "ward 11" }
+    - type: source_matches
+      id: tome_sealed
+      regex: "(#ifndef[\\s\\S]*#define[\\s\\S]*#endif)|(#pragma\\s+once)"
+      message: "Seal the tome: #ifndef DRILL_TOME, #define DRILL_TOME above, #endif below. Or #pragma once on the first line."
+    - type: source_matches
+      id: forging_survives
+      regex: "int\\s+ward\\s*\\(\\s*\\)\\s*\\{"
+      message: "Keep the forging of ward inside the seal."
+
+hints:
+  - trigger: "error:redefinition"
+    message: "Pasted twice, forged twice. Guard the whole tome: #ifndef DRILL_TOME / #define DRILL_TOME at the top, #endif at the bottom."
+  - trigger: "attempt:6"
+    message: "Three lines: #ifndef DRILL_TOME, #define DRILL_TOME, then at the very end #endif."
+
+rewards:
+  xp: 0
+  unlocks_zone_progress: false

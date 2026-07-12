@@ -49,6 +49,7 @@ export interface Lesson {
   epilogue?: string;
   harness?: string;
   extra_units?: string[];   // hidden units linked from gameapi/ (§11.6)
+  compile_mode?: 'double_include'; // P2-6: player text is a header, pasted twice into one unit (header-guard lessons)
   validation?: Validation;
   hints?: Hint[];
   teaching?: string;        // always-visible instruction block, worked example inside (PHASE1.5 §3)
@@ -123,10 +124,20 @@ export interface RunResult {
 export async function runLesson(lesson: Lesson, playerCode: string): Promise<RunResult> {
   try {
     // 1. Assemble main.cpp
-    const fullCode = `${lesson.prelude || ''}\n${playerCode}\n${lesson.epilogue || ''}`;
-
     const tempDir = path.join(process.env.TMPDIR || '/tmp', `quest-${lesson.id}-${Date.now()}`);
     fs.mkdirSync(tempDir, { recursive: true });
+
+    let fullCode: string;
+    if (lesson.compile_mode === 'double_include') {
+      // The player's editor text is a book (header), not a program. It is
+      // written to tome.h and included TWICE into one unit; the lesson's
+      // prelude/epilogue supply the surrounding scroll. An unguarded tome
+      // holding a definition fails with a redefinition refusal.
+      fs.writeFileSync(path.join(tempDir, 'tome.h'), playerCode);
+      fullCode = `${lesson.prelude || ''}\n#include "tome.h"\n#include "tome.h"\n${lesson.epilogue || ''}`;
+    } else {
+      fullCode = `${lesson.prelude || ''}\n${playerCode}\n${lesson.epilogue || ''}`;
+    }
 
     const mainCpp = path.join(tempDir, 'main.cpp');
     fs.writeFileSync(mainCpp, fullCode);

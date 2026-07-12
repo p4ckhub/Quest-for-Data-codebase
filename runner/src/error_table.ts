@@ -48,10 +48,11 @@ export const errorTable: ErrorInfo[] = [
     friendlyTemplate: "A binding rune '{{' was opened but never closed with '}}'."
   },
 
-  // 5. redeclaration - redeclaration of identifier
+  // 5. redeclaration - redeclaration of identifier (g++ says "redefinition of"
+  // for duplicate function/class bodies, "redeclaration of" for locals)
   {
     id: 'redefinition',
-    regex: /redeclaration of ['\u2018\u2019][^\u2018\u2019]+['\u2018\u2019]/i,
+    regex: /re(?:declaration|definition) of ['\u2018\u2019][^\u2018\u2019]+['\u2018\u2019]/i,
     friendlyTemplate: "'{1}' has already been given form — you cannot awaken it twice in one scope."
   },
 

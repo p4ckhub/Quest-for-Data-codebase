@@ -1,0 +1,93 @@
+id: the-book-of-declarations
+kind: program
+zone: function_forge
+act: 1
+title: "The Book of Declarations"
+concept: header_files
+concepts_required: [multiple_files, forward_declarations]
+extra_units:
+  - forge_allies.cpp
+
+teaching: |
+  One ally, one herald. But a war-band of twenty spells across ten
+  scrolls? Copying twenty herald lines into every scroll that summons
+  them does not scale, and every copy is a place for the heralds to
+  drift out of truth.
+
+  So the realm keeps books. A header is a book of heralds: nothing
+  but declarations, gathered once, included wherever they are needed.
+
+  ```cpp
+  #include "forge_allies.h"   // your own book: quotes
+  #include <iostream>         // the realm's book: brackets
+  ```
+
+  Quotes tell the realm to look among your own books first. Brackets
+  go straight to the realm's own shelves. The include is a true
+  pasting: the unseen scribe copies the book's whole text into your
+  scroll before the compiler reads a line.
+
+  One law above all: the book carries heralds, never bodies. If a
+  spell's BODY sat in the book, every scroll that includes it would
+  forge that spell again, and the binding would meet the same body
+  twice and refuse. Declarations in the book, one definition on one
+  scroll. The realm calls this the One Definition Rule.
+
+narrative: |
+  The Forge-master sets a slim volume on the anvil, its spine stamped
+  with two names. "The war-band wrote their heralds down so nobody
+  has to remember them. Open the book. Do not copy it by hand."
+
+objective: |
+  Two allied spells, shield_wall and battle_hymn, are forged on
+  another scroll, and their heralds are gathered in the book
+  forge_allies.h. Include the book at the top of your scroll with
+  quotes, then summon both. The Keeper expects shield 9 and hymn 5
+  on their own lines.
+
+starter_code: |
+  #include <iostream>
+  // TODO: include the book of heralds:  #include "forge_allies.h"
+
+  int main() {
+      std::cout << "shield " << shield_wall() << "\n";
+      std::cout << "hymn " << battle_hymn() << "\n";
+      return 0;
+  }
+
+solution: |
+  #include <iostream>
+  #include "forge_allies.h"
+
+  int main() {
+      std::cout << "shield " << shield_wall() << "\n";
+      std::cout << "hymn " << battle_hymn() << "\n";
+      return 0;
+  }
+
+validation:
+  checks:
+    - { type: exit_status, expect: clean }
+    - { type: stdout_matches, id: shield, regex: "shield 9" }
+    - { type: stdout_matches, id: hymn, regex: "hymn 5" }
+    - type: source_matches
+      id: book_opened
+      regex: "#include\\s*\"forge_allies\\.h\""
+      message: "Open the book with quotes: #include \"forge_allies.h\" at the top of your scroll."
+    - type: source_matches
+      id: no_hand_copies
+      regex: "int\\s+(shield_wall|battle_hymn)\\s*\\(\\s*\\)\\s*[;{]"
+      expect_match: false
+      message: "You copied heralds by hand. Strike them; the book carries both, and the include pastes them in."
+
+hints:
+  - trigger: "error:undeclared_identifier"
+    message: "The realm has met neither spell. Their heralds live in forge_allies.h. Include it with quotes, not brackets."
+  - trigger: "check_failed:no_hand_copies"
+    message: "The lesson is the book, not the copying. Remove your hand-written herald lines and let #include \"forge_allies.h\" carry them."
+  - trigger: "attempt:6"
+    message: "One line under #include <iostream>:  #include \"forge_allies.h\"  Then both summons stand known."
+
+rewards:
+  xp: 75
+  unlocks_zone_progress: true

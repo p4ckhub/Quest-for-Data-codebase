@@ -13,8 +13,11 @@
     { "file": "one-deed-one-spell.yaml" },
     { "file": "many-forms-one-name.yaml" },
     { "file": "the-herald-of-forms.yaml" },
+    { "file": "allies-beyond-the-wall.yaml" },
     { "file": "the-city-of-names.yaml" },
     { "file": "the-unseen-scribe.yaml" },
+    { "file": "the-book-of-declarations.yaml" },
+    { "file": "the-sealed-tome.yaml" },
     { "file": "the-forgemasters-trial.yaml" }
   ]
 }

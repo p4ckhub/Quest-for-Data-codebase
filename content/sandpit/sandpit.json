@@ -29,8 +29,11 @@
     { "file": "drill-the-bounded-life.yaml", "mandatory": false },
     { "file": "drill-one-deed-one-spell.yaml", "mandatory": false },
     { "file": "drill-the-herald-of-forms.yaml", "mandatory": false },
+    { "file": "drill-allies-beyond-the-wall.yaml", "mandatory": false },
     { "file": "drill-the-city-of-names.yaml", "mandatory": false },
     { "file": "drill-the-unseen-scribe.yaml", "mandatory": false },
+    { "file": "drill-the-book-of-declarations.yaml", "mandatory": false },
+    { "file": "drill-the-sealed-tome.yaml", "mandatory": false },
     { "file": "drill-the-forgemasters-trial.yaml", "mandatory": false }
   ]
 }

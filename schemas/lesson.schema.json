@@ -30,6 +30,8 @@
     "prelude": { "type": "string" },
     "epilogue": { "type": "string" },
     "harness": { "type": "string" },
+    "extra_units": { "type": "array", "items": { "type": "string" } },
+    "compile_mode": { "enum": ["double_include"] },
     "stdin_fixture": { "type": "string" },
     "solution": { "type": "string" },
     "validation": {
