@@ -6,6 +6,36 @@ rem Full sequence per WINDOWS_PHASE.md (verified 2026-07-12).
 
 cd /d "%~dp0"
 
+where node >nul 2>nul
+if errorlevel 1 (
+    echo === Node.js not found - installing via winget ===
+    where winget >nul 2>nul
+    if errorlevel 1 (
+        echo winget is not available on this machine.
+        echo Install Node.js LTS manually from https://nodejs.org, then re-run this script.
+        pause
+        exit /b 1
+    )
+
+    winget install --id OpenJS.NodeJS.LTS -e --silent --accept-package-agreements --accept-source-agreements
+    if errorlevel 1 goto :error
+
+    rem winget updates the registry, not this already-open cmd session's PATH.
+    rem Pull the fresh machine + user PATH from the registry so `node`/`npm`
+    rem resolve without having to close and reopen the terminal.
+    for /f "usebackq tokens=2,*" %%A in (`reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path`) do set "SYS_PATH=%%B"
+    for /f "usebackq tokens=2,*" %%A in (`reg query "HKCU\Environment" /v Path 2^>nul`) do set "USER_PATH=%%B"
+    set "PATH=%SYS_PATH%;%USER_PATH%"
+
+    where node >nul 2>nul
+    if errorlevel 1 (
+        echo Node.js was installed but isn't resolving in this session.
+        echo Close this window, re-open a new terminal, and re-run this script.
+        pause
+        exit /b 1
+    )
+)
+
 echo === Installing root dependencies ===
 call npm ci
 if errorlevel 1 goto :error
