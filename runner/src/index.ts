@@ -311,7 +311,7 @@ export function parseExecutionOutput(output: string): ParsedOutput {
   const rawLines: string[] = [];
   let resultLine = '';
 
-  const lines = output.split('\n');
+  const lines = output.split(/\r?\n/);
   for (const line of lines) {
     if (line.startsWith('@@EV@@ ')) {
       const jsonStr = line.substring('@@EV@@ '.length).trim();
