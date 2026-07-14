@@ -14,13 +14,14 @@ function getCompilerPath(): string {
   if (fs.existsSync(lockPath)) {
     try {
       const lockData = JSON.parse(fs.readFileSync(lockPath, 'utf-8'));
-      const linuxNative = lockData.profiles?.['linux-native'];
-      if (linuxNative && linuxNative.path) {
-        return linuxNative.path;
+      const profileKey = process.platform === 'win32' ? 'windows-native' : 'linux-native';
+      const profile = lockData.profiles?.[profileKey];
+      if (profile && profile.path) {
+        return profile.path;
       }
     } catch { /* ignore */ }
   }
-  return '/usr/bin/g++';
+  return process.platform === 'win32' ? 'g++' : '/usr/bin/g++';
 }
 
 // Spell interface matching save.json structure (§13: `source`; the legacy

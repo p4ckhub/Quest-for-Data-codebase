@@ -1,6 +1,7 @@
 import { spawnSync, execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as os from 'os';
 
 const TEST_CODE = `#include "gameapi.h"
 int main() {
@@ -9,18 +10,38 @@ int main() {
 }
 `;
 
+function getCompilerProfile(): { path: string; extraFlags: string[] } {
+  const PROJECT_ROOT = path.join(__dirname, '..');
+  const TOOLCHAIN_DIR = path.join(PROJECT_ROOT, 'toolchain');
+  const lockPath = path.join(TOOLCHAIN_DIR, 'toolchain.lock.json');
+  const lockData = JSON.parse(fs.readFileSync(lockPath, 'utf-8'));
+  const profileKey = process.platform === 'win32' ? 'windows-native' : 'linux-native';
+  const profile = lockData.profiles?.[profileKey];
+  if (profile?.path) {
+    const resolved = path.isAbsolute(profile.path)
+      ? profile.path
+      : path.join(path.dirname(TOOLCHAIN_DIR), profile.path);
+    const compilerPath = !fs.existsSync(resolved) && profile.fetch
+      ? (profile.compiler ?? 'g++')
+      : resolved;
+    return { path: compilerPath, extraFlags: profile.extra_flags ?? [] };
+  }
+  return { path: process.platform === 'win32' ? 'g++' : '/usr/bin/g++', extraFlags: [] };
+}
+
 async function main(): Promise<void> {
     const workdir = process.cwd();
-    
+
     // Create temp dir for test
-    const tmpDir = fs.mkdtempSync('/tmp/smoke-gameapi-');
-    
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'smoke-gameapi-'));
+
     try {
         // Write source files to temp dir
         fs.writeFileSync(path.join(tmpDir, 'main.cpp'), TEST_CODE);
-        
+
         // Paths
-        const gxx = '/usr/bin/g++';
+        const compilerProfile = getCompilerProfile();
+        const gxx = compilerProfile.path;
         const gameapiPath = path.join(workdir, 'gameapi');
         const thirdPartyPath = path.join(workdir, 'gameapi', 'third_party');
         

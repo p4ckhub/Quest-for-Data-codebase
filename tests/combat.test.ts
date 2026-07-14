@@ -13,19 +13,19 @@ import { Spell, SaveObject, generateSpellbook, loadSave } from '../runner/src/sp
 const PROJECT_ROOT = path.join(__dirname, '..');
 const GAMEAPI_DIR = path.join(PROJECT_ROOT, 'gameapi');
 const TOOLCHAIN_DIR = path.join(PROJECT_ROOT, 'toolchain');
-const COMPILER_PATH = '/usr/bin/g++';
 const JSON_INCLUDE = path.join(GAMEAPI_DIR, 'third_party');
 
 function getCompilerPath(): string {
   const lockPath = path.join(TOOLCHAIN_DIR, 'toolchain.lock.json');
   if (fs.existsSync(lockPath)) {
     const lockData = JSON.parse(fs.readFileSync(lockPath, 'utf-8'));
-    const linuxNative = lockData.profiles?.['linux-native'];
-    if (linuxNative && linuxNative.path) {
-      return linuxNative.path;
+    const profileKey = process.platform === 'win32' ? 'windows-native' : 'linux-native';
+    const profile = lockData.profiles?.[profileKey];
+    if (profile && profile.path) {
+      return profile.path;
     }
   }
-  return '/usr/bin/g++';
+  return process.platform === 'win32' ? 'g++' : '/usr/bin/g++';
 }
 
 describe('Combat System', () => {

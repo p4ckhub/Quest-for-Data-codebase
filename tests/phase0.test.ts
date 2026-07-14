@@ -1,5 +1,22 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
+import * as os from 'os';
+
+function getCompilerPath(): string {
+  const path = require('path');
+  const fs = require('fs');
+  const TOOLCHAIN_DIR = path.join(__dirname, '..', 'toolchain');
+  const lockPath = path.join(TOOLCHAIN_DIR, 'toolchain.lock.json');
+  if (fs.existsSync(lockPath)) {
+    const lockData = JSON.parse(fs.readFileSync(lockPath, 'utf-8'));
+    const profileKey = process.platform === 'win32' ? 'windows-native' : 'linux-native';
+    const profile = lockData.profiles?.[profileKey];
+    if (profile && profile.path) {
+      return profile.path;
+    }
+  }
+  return process.platform === 'win32' ? 'g++' : '/usr/bin/g++';
+}
 
 describe('Phase 0 Pipeline Tests', () => {
   it('should have toolchain lock with linux-native profile', () => {
@@ -44,15 +61,15 @@ describe('Phase 0 Pipeline Tests', () => {
 
     // Build the lesson using the same approach as the runner: since P2-0.5
     // the solution is a complete program (visible main), no prelude/epilogue
-    const tempDir = path.join(process.env.TMPDIR || '/tmp', `vitest-${Date.now()}`);
+    const tempDir = path.join(os.tmpdir(), `vitest-${Date.now()}`);
     fs.mkdirSync(tempDir, { recursive: true });
 
     const fullCode = substitutedLesson.solution;
     const mainCpp = path.join(tempDir, 'main.cpp');
     fs.writeFileSync(mainCpp, fullCode);
-    
+
     const exePath = path.join(tempDir, 'lesson.exe');
-    const compilerPath = '/usr/bin/g++';
+    const compilerPath = getCompilerPath();
     const gameapiCpp = path.join(__dirname, '..', 'gameapi', 'gameapi.cpp');
     const jsonInclude = path.join(__dirname, '..', 'gameapi', 'third_party');
     

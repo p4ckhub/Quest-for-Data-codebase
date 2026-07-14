@@ -22,9 +22,9 @@
     "content:validate": "ts-node scripts/validate-content.ts",
     "lessons:validate": "ts-node scripts/validate-lessons.ts",
     "combat:test": "vitest run tests/combat.test.ts",
-    "electron:dev": "concurrently \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"cd ui && npm run dev\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"electron app/main.ts\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
+    "electron:dev": "concurrently \"cd ui && npm run dev\" \"electron app/main.ts\"",
     "electron:build": "cd ui && npm run build",
-    "electron:smoke": "xvfb-run -a npx electron --no-sandbox dist/scripts/electron-smoke.js"
+    "electron:smoke": "node -e \"if(process.platform==='linux'){require('child_process').spawnSync('xvfb-run',['npx','electron','--no-sandbox','dist/scripts/electron-smoke.js'],{stdio:'inherit'});} else {require('child_process').spawnSync('npx',['electron','--no-sandbox','dist/scripts/electron-smoke.js'],{stdio:'inherit'})}\""
   },
   "keywords": [],
   "author": "",

@@ -1,10 +1,28 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as os from 'os';
 import { execSync } from 'child_process';
 
 const BASE_DIR = path.join(__dirname, '..');
 const TOOLCHAIN_DIR = path.join(BASE_DIR, 'toolchain');
 const SANDBOX_PATH = path.join(TOOLCHAIN_DIR, 'bin', 'sandbox_run');
+
+function getCompilerProfile(): { path: string; extraFlags: string[] } {
+  const lockPath = path.join(TOOLCHAIN_DIR, 'toolchain.lock.json');
+  const lockData = JSON.parse(fs.readFileSync(lockPath, 'utf-8'));
+  const profileKey = process.platform === 'win32' ? 'windows-native' : 'linux-native';
+  const profile = lockData.profiles?.[profileKey];
+  if (profile?.path) {
+    const resolved = path.isAbsolute(profile.path)
+      ? profile.path
+      : path.join(path.dirname(TOOLCHAIN_DIR), profile.path);
+    const compilerPath = !fs.existsSync(resolved) && profile.fetch
+      ? (profile.compiler ?? 'g++')
+      : resolved;
+    return { path: compilerPath, extraFlags: profile.extra_flags ?? [] };
+  }
+  return { path: process.platform === 'win32' ? 'g++' : '/usr/bin/g++', extraFlags: [] };
+}
 
 interface CheckResult {
   name: string;
@@ -103,16 +121,17 @@ function runNegativeCheck(): CheckResult {
   
   try {
     const fullCode = `${lessonData.prelude}\n${wrongSolution}\n${lessonData.epilogue}`;
-    
-    const tempDir = path.join(process.env.TMPDIR || '/tmp', `quest-negative-${Date.now()}`);
+
+    const tempDir = path.join(os.tmpdir(), `quest-negative-${Date.now()}`);
     fs.mkdirSync(tempDir, { recursive: true });
-    
+
     const mainCpp = path.join(tempDir, 'main.cpp');
     fs.writeFileSync(mainCpp, fullCode);
-    
+
     // Compile with the toolchain compiler
     const exePath = path.join(tempDir, 'lesson.exe');
-    const compilerPath = '/usr/bin/g++';
+    const compilerProfile = getCompilerProfile();
+    const compilerPath = compilerProfile.path;
     const gameapiCpp = path.join(BASE_DIR, 'gameapi/gameapi.cpp');
     const jsonInclude = path.join(BASE_DIR, 'gameapi/third_party');
     
@@ -180,8 +199,8 @@ function runNegativeCheck(): CheckResult {
     // Now test that the correct solution PASSES
     const correctSolution = lessonData.solution;
     const correctFullCode = `${lessonData.prelude}\n${correctSolution}\n${lessonData.epilogue}`;
-    
-    const correctTempDir = path.join(process.env.TMPDIR || '/tmp', `quest-correct-${Date.now()}`);
+
+    const correctTempDir = path.join(os.tmpdir(), `quest-correct-${Date.now()}`);
     fs.mkdirSync(correctTempDir, { recursive: true });
     
     const correctMainCpp = path.join(correctTempDir, 'main.cpp');
@@ -253,15 +272,16 @@ function measureSpeed(): CheckResult {
   try {
     // Warm up by compiling PCH and doing a warm-up run
     execSync(`npm run pch:gameapi`, { cwd: BASE_DIR, stdio: 'pipe' });
-    
+
     // Do a warm-up run (compile + run)
-    const tempDirWarm = path.join(process.env.TMPDIR || '/tmp', `speed-warm-${Date.now()}`);
+    const tempDirWarm = path.join(os.tmpdir(), `speed-warm-${Date.now()}`);
     fs.mkdirSync(tempDirWarm, { recursive: true });
     const fullCodeWarm = `${lessonData.prelude}\n${solution}\n${lessonData.epilogue}`;
     const mainCppWarm = path.join(tempDirWarm, 'main.cpp');
     fs.writeFileSync(mainCppWarm, fullCodeWarm);
     const exePathWarm = path.join(tempDirWarm, 'lesson.exe');
-    const compilerPath = '/usr/bin/g++';
+    const compilerProfile = getCompilerProfile();
+    const compilerPath = compilerProfile.path;
     const gameapiCpp = path.join(BASE_DIR, 'gameapi/gameapi.cpp');
     const jsonInclude = path.join(BASE_DIR, 'gameapi/third_party');
     execSync(`${compilerPath} -std=c++17 -O0 -g0 -Wall -I${BASE_DIR}/gameapi -I${jsonInclude} ${mainCppWarm} ${gameapiCpp} -o ${exePathWarm}`, { stdio: 'pipe' });
@@ -269,9 +289,9 @@ function measureSpeed(): CheckResult {
     
     for (let i = 0; i < maxRuns; i++) {
       const start = Date.now();
-      
+
       // Run the Cast pipeline (assemble + compile + run + parse)
-      const tempDir = path.join(process.env.TMPDIR || '/tmp', `speed-${Date.now()}`);
+      const tempDir = path.join(os.tmpdir(), `speed-${Date.now()}`);
       fs.mkdirSync(tempDir, { recursive: true });
       const fullCode = `${lessonData.prelude}\n${solution}\n${lessonData.epilogue}`;
       const mainCpp = path.join(tempDir, 'main.cpp');
