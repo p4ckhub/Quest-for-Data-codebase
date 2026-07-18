@@ -309,8 +309,6 @@ export interface ParsedOutput {
 }
 
 export function parseExecutionOutput(output: string): ParsedOutput {
-  console.log('RAW output before replace:', JSON.stringify(output));
-  console.log('AFTER replace:', JSON.stringify(output.replace(/\r\n/g, '\n')));
 
   const events: any[] = [];
   const rawLines: string[] = [];
