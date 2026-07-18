@@ -95,6 +95,9 @@ function evaluateOne(check: CheckSpec, input: ValidatorInput): CheckResult {
     case 'stdout_matches': {
       const re = new RegExp(check.regex ?? '');
       const ok = re.test(input.rawStdout);
+      console.log('DEBUG regex source:', JSON.stringify(re.source));
+      console.log('DEBUG testing against:', JSON.stringify(input.rawStdout));
+      console.log('DEBUG result:', re.test(input.rawStdout));
       return {
         type: check.type,
         id: check.id,
