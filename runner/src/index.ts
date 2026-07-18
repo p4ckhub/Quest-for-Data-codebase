@@ -256,6 +256,8 @@ export async function runLesson(lesson: Lesson, playerCode: string): Promise<Run
 
     // 4. Parse @@EV@@ events, @@RESULT@@ line, and raw (player-visible) stdout
     const { events, result, rawStdout } = parseExecutionOutput(execOutput);
+    
+    console.log('DEBUG rawStdout bytes:', JSON.stringify(rawStdout));
 
     // 5. Map outcome to game result
     const outcome = mapOutcome(result);
