@@ -309,10 +309,12 @@ export interface ParsedOutput {
 }
 
 export function parseExecutionOutput(output: string): ParsedOutput {
+  console.log('RAW output before replace:', JSON.stringify(output));
+  console.log('AFTER replace:', JSON.stringify(output.replace(/\r\n/g, '\n')));
+
   const events: any[] = [];
   const rawLines: string[] = [];
   let resultLine = '';
-
   const lines = output.replace(/\r\n/g, '\n').split('\n');
   for (const line of lines) {
     if (line.startsWith('@@EV@@ ')) {
