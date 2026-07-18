@@ -43,21 +43,7 @@ objective: |
   with value 100, a float named mana with value 50.5f, and a double
   named speed with value 2.5. All must be declared as const.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // TODO: Declare hp as const int = 100
-      // TODO: Declare mana as const float = 50.5f
-      // TODO: Declare speed as const double = 2.5
-
-      // [carved by the realm] The Keeper reads the sealed shelf:
-      std::cout << "hp " << hp << "\n";
-      std::cout << "mana " << mana << "\n";
-      std::cout << "speed " << speed << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

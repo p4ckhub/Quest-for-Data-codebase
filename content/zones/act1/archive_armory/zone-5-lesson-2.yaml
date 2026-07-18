@@ -27,11 +27,7 @@ prelude: |
       int arrow_count = 0;
       int arrow_sum = 0;
 
-starter_code: |
-      // TODO: push_back 5, 10, 15 into quiver
-      // TODO: set arrow_count to quiver.size()
-      // TODO: loop over quiver, adding each element to arrow_sum
-
+starter_code: ""
 epilogue: |
       gameapi::report("arrow_count", arrow_count);
       gameapi::report("arrow_sum", arrow_sum);

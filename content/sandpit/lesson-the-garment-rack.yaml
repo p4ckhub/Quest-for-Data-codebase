@@ -53,9 +53,7 @@ prelude: |
         std::string cloak = "ash-grey";
         std::cout << "[The rack creaks. The crimson cloak waits on its peg.]" << std::endl;
 
-starter_code: |
-        // Speak the cloak, change the cloak, speak it again
-
+starter_code: ""
 epilogue: |
         std::cout << "[The Forerunner] Same cast, twice -- and it told two truths, because you changed what the name held between them. Nothing here will show the crimson. Wear it anyway." << std::endl;
         return 0;

@@ -26,12 +26,7 @@ prelude: |
   int main() {
       int safe_steps = 0;
 
-starter_code: |
-      // TODO: for counter 1 through 20:
-      //   if counter == 13 -> break
-      //   else if counter % 3 == 0 -> continue
-      //   otherwise add 1 to safe_steps
-
+starter_code: ""
 epilogue: |
       gameapi::report("safe_steps", safe_steps);
       return 0;

@@ -26,12 +26,7 @@ prelude: |
   #include <string>
   #include <memory>
 
-starter_code: |
-  int bind_companion() {
-      // TODO: std::make_unique<int>(30), return *bond + 12 — no delete!
-      return 0;
-  }
-
+starter_code: ""
 harness: crypt_smart_main.cpp
 extra_units: [leakcheck.cpp]
 

@@ -27,10 +27,7 @@ prelude: |
       std::string item;
       int count = 0;
 
-starter_code: |
-      // TODO: read the item word from std::cin into item
-      // TODO: read the number from std::cin into count
-
+starter_code: ""
 epilogue: |
       gameapi::report("item", item);
       gameapi::report("count", count);

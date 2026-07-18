@@ -58,10 +58,7 @@ prelude: |
         int dummy_hp = 3;
         std::cout << "[The rope dummy sways on its post. Three stitches hold it. It has no idea what is coming, because it is a dummy.]" << std::endl;
 
-starter_code: |
-        // Strike, and unstitch: print the blow, then dummy_hp = dummy_hp - 1;
-        // Three times, until nothing holds
-
+starter_code: ""
 epilogue: |
         gameapi::report("dummy_hp", dummy_hp);
         if (dummy_hp <= 0) {

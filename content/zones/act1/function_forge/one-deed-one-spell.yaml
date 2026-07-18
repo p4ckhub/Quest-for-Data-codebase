@@ -46,22 +46,7 @@ objective: |
   stoke(3), stoke(5), stoke(8), and leave the six output lines
   exactly as they were.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: forge void stoke(int coals) above main, holding the two-line deed ONCE
-
-  int main() {
-      // The same deed, carved three times over. Extract it.
-      std::cout << "Stoke " << 3 << " coals.\n";
-      std::cout << "The fire climbs by " << 3 * 2 << ".\n";
-      std::cout << "Stoke " << 5 << " coals.\n";
-      std::cout << "The fire climbs by " << 5 * 2 << ".\n";
-      std::cout << "Stoke " << 8 << " coals.\n";
-      std::cout << "The fire climbs by " << 8 * 2 << ".\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

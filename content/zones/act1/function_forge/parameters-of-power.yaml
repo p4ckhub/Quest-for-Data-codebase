@@ -42,21 +42,7 @@ objective: |
   parameter must be used in the return expression — the carved tests
   offer 5 and 10, and expect 10 and 15 back.
 
-starter_code: |
-  #include <iostream>
-
-  int strike_with(int fury) {
-      // TODO: Return fury + 5
-      return 0;
-  }
-
-  int main() {
-      // [carved by the realm] The Forge tests two offerings:
-      std::cout << "with fury 5: " << strike_with(5) << "\n";
-      std::cout << "with fury 10: " << strike_with(10) << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

@@ -47,21 +47,7 @@ objective: |
   working with a single herald line above main: int ember(); The
   Forge expects ember 21.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: herald the spell here, one line, promise and seal:  int ember();
-
-  int main() {
-      std::cout << "ember " << ember() << "\n";
-      return 0;
-  }
-
-  // [carved by the realm] The forging stands below main, and it stays there:
-  int ember() {
-      return 21;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

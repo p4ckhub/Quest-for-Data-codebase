@@ -49,16 +49,7 @@ objective: |
   echo, and second followed by the second. End every line with '\n'
   and use no endl anywhere.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // [carved by the realm] Two echoes wait on one line of the wind: 7 12
-      // TODO: bind two int crystals and catch both echoes in ONE chained draw
-      // TODO: proclaim "first " then the first echo, "second " then the second, each ended with '\n'
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

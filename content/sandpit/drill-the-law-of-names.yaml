@@ -23,19 +23,7 @@ objective: |
   the drill demands: rope_count with value 3 and drill_rank with
   value 1. Leave the carved reading untouched.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      int 3ropes = 3;
-      int return = 1;
-
-      // [carved by the realm] The reading speaks the ledger:
-      std::cout << "ropes " << rope_count << "\n";
-      std::cout << "rank " << drill_rank << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

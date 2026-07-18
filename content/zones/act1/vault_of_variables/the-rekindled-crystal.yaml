@@ -41,21 +41,7 @@ objective: |
   Below it, assign lanterns 9 (no int, no redeclaring). Then initialize
   your own int named oaths with value 1, and assign it 3.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // [carved by the realm] The Keeper lit this at dawn:
-      int lanterns = 2;
-
-      // Rekindle lanterns to 9, then birth oaths at 1 and rekindle it to 3
-
-      // [carved by the realm] The Keeper reads the stand at nightfall:
-      std::cout << "lanterns " << lanterns << "\n";
-      std::cout << "oaths " << oaths << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

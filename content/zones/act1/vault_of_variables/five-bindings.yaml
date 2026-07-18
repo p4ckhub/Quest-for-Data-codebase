@@ -49,19 +49,7 @@ objective: |
   an int named ashes with empty braces so it holds 0. Leave the
   Keeper's reading untouched.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      int embers{ 4.5 };
-      // TODO: bind an int named ashes with empty braces (value binding)
-
-      // [carved by the realm] The Keeper reads the shelf:
-      std::cout << "embers " << embers << "\n";
-      std::cout << "ashes " << ashes << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

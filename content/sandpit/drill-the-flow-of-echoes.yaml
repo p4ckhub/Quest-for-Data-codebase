@@ -24,16 +24,7 @@ objective: |
   then proclaim left followed by the first and right followed by the
   second. End every line with '\n' and use no endl.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // [carved by the realm] Two offerings ride one line of the wind: 3 8
-      // TODO: bind two int crystals and catch both in ONE chained draw
-      // TODO: proclaim "left " then the first, "right " then the second, each ended with '\n'
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

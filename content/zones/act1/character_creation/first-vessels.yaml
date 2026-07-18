@@ -51,19 +51,7 @@ objective: |
   next line. The carved readings speak the literal 3 and then your
   vessel, and both must say the same.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // TODO: define an int vessel named torches (no value yet)
-      // TODO: assign torches the value 3 on the next line
-
-      // [carved by the realm] The realm reads the value both ways:
-      std::cout << 3 << std::endl;
-      std::cout << torches << std::endl;
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

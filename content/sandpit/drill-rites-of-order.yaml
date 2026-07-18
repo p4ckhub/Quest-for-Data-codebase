@@ -26,18 +26,7 @@ objective: |
   line spoken is "The sand settles." and the second is "The circle is
   drawn."
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // [carved by the realm] The drill demands, in this order:
-      //   The sand settles.
-      //   The circle is drawn.
-      std::cout << "The circle is drawn." << std::endl;
-      std::cout << "The sand settles." << std::endl
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

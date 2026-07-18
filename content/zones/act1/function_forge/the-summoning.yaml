@@ -51,24 +51,7 @@ objective: |
   hammer_falls once and bellows_roar twice. Five lines must ring out,
   in exactly that order.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: forge void hammer_falls() here; its deed prints:  The hammer falls.
-
-  // TODO: forge void bellows_roar() here; its deed prints:  The bellows roar.
-
-  int main() {
-      // [carved by the realm] The Forge wakes:
-      std::cout << "The Forge wakes.\n";
-
-      // TODO: summon hammer_falls once, then bellows_roar twice
-
-      // [carved by the realm] The Forge rests:
-      std::cout << "The Forge rests.\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

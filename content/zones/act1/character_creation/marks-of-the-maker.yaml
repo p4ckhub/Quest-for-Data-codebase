@@ -36,15 +36,7 @@ objective: |
   cast that says what this working is for. The Keeper reads your scroll and
   will not accept a TODO left standing.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // TODO: Replace this with a descriptive maker's mark
-      std::cout << "The world advances one tick!" << std::endl;
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

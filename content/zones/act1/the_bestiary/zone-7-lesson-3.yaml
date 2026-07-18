@@ -28,11 +28,7 @@ prelude: |
   #include "monsters.h"
   #include <string>
 
-starter_code: |
-  // TODO: class GraveTroll : public Monster { ... };
-  // Private: int rage = 0;
-  // Override species(), max_hp(), attack(), and on_hit(int amount).
-
+starter_code: ""
 epilogue: |
   REGISTER_MONSTER("grave_troll", GraveTroll)
 

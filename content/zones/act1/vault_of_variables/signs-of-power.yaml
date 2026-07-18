@@ -44,19 +44,7 @@ objective: |
   (str + agi) * 2. Let the sigils do the work; do not carve the answers
   yourself.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // [carved by the realm] The Keeper's crystals, already lit:
-      int str = 7;
-      int agi = 5;
-
-      // TODO: proclaim "unbent " followed by str + agi * 2
-      // TODO: proclaim "bent " followed by (str + agi) * 2
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

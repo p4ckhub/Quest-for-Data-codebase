@@ -48,24 +48,7 @@ objective: |
   spell must CAST the small one — the Keeper reads your scroll and
   will know if you merely wrote 10.
 
-starter_code: |
-  #include <iostream>
-
-  int base_force() {
-      // TODO: return the base force: 4
-  }
-
-  int empowered() {
-      // TODO: cast base_force() and add the blessing of 6
-  }
-
-  int main() {
-      // [carved by the realm] The Forge weighs both moulds:
-      std::cout << "base " << base_force() << "\n";
-      std::cout << "empowered " << empowered() << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

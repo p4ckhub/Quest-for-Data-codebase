@@ -45,16 +45,7 @@ objective: |
   quotes, then summon both. The Keeper expects shield 9 and hymn 5
   on their own lines.
 
-starter_code: |
-  #include <iostream>
-  // TODO: include the book of heralds:  #include "forge_allies.h"
-
-  int main() {
-      std::cout << "shield " << shield_wall() << "\n";
-      std::cout << "hymn " << battle_hymn() << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
   #include "forge_allies.h"

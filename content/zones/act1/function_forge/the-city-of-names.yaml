@@ -44,25 +44,7 @@ objective: |
   the second summons to call it by district: forge::strike(). The
   Forge expects street 7, then district 12.
 
-starter_code: |
-  #include <iostream>
-
-  int strike() {
-      return 7;
-  }
-
-  // TODO: wrap this second forging in a district:  namespace forge { ... }
-  int strike() {
-      return 12;
-  }
-
-  int main() {
-      // TODO: after wrapping, mend the second summons: forge::strike()
-      std::cout << "street " << strike() << "\n";
-      std::cout << "district " << strike() << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

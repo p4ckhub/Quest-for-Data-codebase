@@ -52,9 +52,7 @@ prelude: |
     int main() {
         std::cout << "[The pool holds your reflection perfectly still, waiting.]" << std::endl;
 
-starter_code: |
-        // Hold your hair color in a variable, then speak it
-
+starter_code: ""
 epilogue: |
         std::cout << "[The Forerunner] So it is, and so the realm remembers -- even though no mirror here will show it yet. What you declare, you carry." << std::endl;
         return 0;

@@ -21,12 +21,7 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: |
-  // TODO: define a struct named Potion with:
-  //   - a std::string member called name
-  //   - an int member called heal
-  // Remember: a struct definition ends with };
-
+starter_code: ""
 epilogue: |
   int main() {
       Potion p;

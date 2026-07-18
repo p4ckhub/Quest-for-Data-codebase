@@ -90,9 +90,7 @@ prelude: |
     #include "gameapi.h"
     int main() {
 
-starter_code: |
-        // Two facts, two crystals. The shelf waits.
-
+starter_code: ""
 epilogue: |
             gameapi::report("brazier_lit", brazier_lit);
             gameapi::report("door_mark", door_mark);

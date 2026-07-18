@@ -26,19 +26,7 @@ objective: |
   next line. The carved readings speak the literal 5 and then your
   vessel.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // TODO: define an int vessel named lanterns (no value yet)
-      // TODO: assign lanterns the value 5 on the next line
-
-      // [carved by the realm] The realm reads the value both ways:
-      std::cout << 5 << std::endl;
-      std::cout << lanterns << std::endl;
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

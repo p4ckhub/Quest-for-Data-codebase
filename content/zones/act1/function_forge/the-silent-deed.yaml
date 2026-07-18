@@ -42,20 +42,7 @@ objective: |
   announce() on its own line after. Two lines must ring out: The
   Forge asks. and then The deed is done.
 
-starter_code: |
-  #include <iostream>
-
-  void announce() {
-      std::cout << "The deed is done.\n";
-  }
-
-  int main() {
-      // The cast below demands an answer from a spell that gives none.
-      // Read the refusal, then restructure the working.
-      std::cout << "The Forge asks.\n" << announce();
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

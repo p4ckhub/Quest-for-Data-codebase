@@ -18,13 +18,7 @@ objective: |
   times for 4 damage each, accumulating the total in a variable, and
   returns the total (12). The loop is the point — let it do the adding.
 
-starter_code: |
-  int flurry() {
-      int total = 0;
-      // TODO: loop 3 times, adding 4 to total each pass
-      return total;
-  }
-
+starter_code: ""
 harness: corridor_flurry_main.cpp
 
 solution: |

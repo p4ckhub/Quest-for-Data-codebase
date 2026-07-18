@@ -50,19 +50,7 @@ objective: |
   2. attack(int fury) with one int parameter, returns fury + 3
   The carved casts offer nothing, then 9 — and expect 7, then 12.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: Overloaded form 1: attack() -> int, returns 7
-  // TODO: Overloaded form 2: attack(int fury) -> int, returns fury + 3
-
-  int main() {
-      // [carved by the realm] The Forge casts both forms:
-      std::cout << "bare " << attack() << "\n";
-      std::cout << "with 9: " << attack(9) << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

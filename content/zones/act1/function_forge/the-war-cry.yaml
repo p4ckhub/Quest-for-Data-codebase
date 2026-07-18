@@ -46,19 +46,7 @@ objective: |
   but a true war cry ends with an exclamation mark. The summons in
   main is already carved; leave it be.
 
-starter_code: |
-  #include <iostream>
-
-  void war_cry() {
-      // TODO: let the Forge hear you
-  }
-
-  int main() {
-      // [carved by the realm] The Forge casts your forging:
-      war_cry();
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

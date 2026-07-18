@@ -28,21 +28,7 @@ objective: |
   The drill yields N. Then main is a single deed: the three summons,
   chained inside out.
 
-starter_code: |
-  #include <iostream>
-
-  // [carved by the realm] The plan:
-  //   1. catch_offering()   catch one int from the wind, hand it back
-  //   2. shape(int)         work the formula: offering * 2 + 3
-  //   3. speak(int)         speak one line:  The drill yields N.
-
-  // TODO: forge the three spells here, one at a time
-
-  int main() {
-      // TODO: one deed: the three summons, chained inside out
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

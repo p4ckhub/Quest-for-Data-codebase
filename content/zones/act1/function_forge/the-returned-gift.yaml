@@ -44,21 +44,7 @@ objective: |
   it keeps its promise: return 12. The carved casts in main read the
   gift bare, then feed it into an expression with 3.
 
-starter_code: |
-  #include <iostream>
-
-  // This spell promises an int. Its deed ends without returning one.
-  // Cast the scroll once and watch the promise break. Then mend it.
-  int embers() {
-  }
-
-  int main() {
-      // [carved by the realm] The Forge weighs the gift, bare and worked:
-      std::cout << "gift " << embers() << "\n";
-      std::cout << "gift and three " << embers() + 3 << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

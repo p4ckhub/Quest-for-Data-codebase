@@ -23,10 +23,7 @@ prelude: |
   int main() {
       int total = 0;
 
-starter_code: |
-      // TODO: declare  int blades[4]  with values {3, 7, 2, 8}
-      // TODO: for each index 0..3, add blades[index] to total
-
+starter_code: ""
 epilogue: |
       gameapi::report("total", total);
       gameapi::report("first_blade", blades[0]);

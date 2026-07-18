@@ -24,17 +24,7 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: |
-  int seal_the_rift() {
-      int total = 0;
-      for (int i = 0; i < 3; ++i) {
-          int* shard = new int(i + 1);
-          total += *shard;
-          // the shard is never released — the rift weeps
-      }
-      return total;
-  }
-
+starter_code: ""
 harness: crypt_rift_main.cpp
 extra_units: [leakcheck.cpp]
 

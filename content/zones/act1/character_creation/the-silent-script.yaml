@@ -44,18 +44,7 @@ objective: |
   the line itself must remain on the scroll. Then replace the TODO
   with a why-mark of your own above the working cast.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // [carved by the realm] An older hand left this line. Silence it; do not destroy it.
-      summon the elder scribes
-
-      // TODO: replace this with a why-mark for the cast below
-      std::cout << "The script keeps what the voice cannot." << std::endl;
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

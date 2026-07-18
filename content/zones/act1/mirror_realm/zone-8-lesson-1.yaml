@@ -24,10 +24,7 @@ prelude: |
   int main() {
       int lantern = 20;
 
-starter_code: |
-      // TODO: declare  int& mirror = lantern;
-      // then assign 100 to mirror
-
+starter_code: ""
 epilogue: |
       gameapi::report("lantern", lantern);
       gameapi::report("mirror", mirror);

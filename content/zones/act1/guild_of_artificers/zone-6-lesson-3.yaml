@@ -29,13 +29,7 @@ prelude: |
 
   int reclaimed = 0;
 
-starter_code: |
-  class Ward {
-  // TODO: private int strength
-  // TODO: public constructor Ward(int s), method int power(),
-  //       and destructor ~Ward() that does  reclaimed += strength;
-  };
-
+starter_code: ""
 epilogue: |
   int main() {
       {

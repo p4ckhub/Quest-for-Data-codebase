@@ -41,17 +41,7 @@ objective: |
   I count 3 gates before me
   — and let the 3 travel bare (unquoted), chained into the final cast.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      std::cout << "[The dais takes your weight. The halls lean in to listen.]" << std::endl;
-
-      // Three casts, in order -- the last one carries a bare number
-
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

@@ -25,21 +25,7 @@ objective: |
   one herald line above main: int grains(); The drill expects
   grains 33.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: herald the spell here, one line, promise and seal:  int grains();
-
-  int main() {
-      std::cout << "grains " << grains() << "\n";
-      return 0;
-  }
-
-  // [carved by the realm] The forging stands below main, and it stays there:
-  int grains() {
-      return 33;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

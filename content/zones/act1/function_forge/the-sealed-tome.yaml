@@ -66,16 +66,7 @@ objective: |
   with a guard so the second pasting vanishes. The forging itself
   must survive. The Keeper expects blessing 7.
 
-starter_code: |
-  // Your tome. The realm's scroll will paste this file TWICE.
-  // TODO: seal it with a guard:
-  //   #ifndef SEALED_TOME  and  #define SEALED_TOME  above,
-  //   #endif  below.
-
-  int blessing() {
-      return 7;
-  }
-
+starter_code: ""
 solution: |
   #ifndef SEALED_TOME
   #define SEALED_TOME

@@ -26,16 +26,7 @@ objective: |
   Herald it above main and print its gift doubled. The drill expects
   double rally 28.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: herald the ally's spell:  int rally();
-
-  int main() {
-      std::cout << "double rally " << rally() * 2 << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

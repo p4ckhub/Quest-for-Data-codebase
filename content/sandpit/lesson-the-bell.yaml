@@ -48,9 +48,7 @@ prelude: |
     int main() {
         std::cout << "[The bell waits, tarnished and patient.]" << std::endl;
 
-starter_code: |
-        // One cast: words, then the bare number 3, then more words
-
+starter_code: ""
 epilogue: |
         std::cout << "[The bell sings. Somewhere far off, something answers it.]" << std::endl;
         std::cout << "[The Forerunner] Three rings. The realm counted with you -- it always does, when a number travels bare." << std::endl;

@@ -27,10 +27,7 @@ prelude: |
   #include "monsters.h"
   #include <string>
 
-starter_code: |
-  // TODO: class AshWolf : public Monster { ... };
-  // Override species(), attack(), and max_hp() — each marked `override`.
-
+starter_code: ""
 epilogue: |
   REGISTER_MONSTER("ash_wolf", AshWolf)
 

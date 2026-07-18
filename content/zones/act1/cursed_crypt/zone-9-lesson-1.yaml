@@ -25,12 +25,7 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: |
-  int bind_spirit() {
-      // TODO: new int(21), double it, delete, return the double
-      return 0;
-  }
-
+starter_code: ""
 harness: crypt_bind_main.cpp
 extra_units: [leakcheck.cpp]
 

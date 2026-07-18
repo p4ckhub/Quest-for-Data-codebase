@@ -43,19 +43,7 @@ objective: |
   isAwake with value true, and a char named symbol with value 'X'.
   Leave the reading itself untouched.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // TODO: Declare isAwake as bool = true
-      // TODO: Declare symbol as char = 'X'
-
-      // [carved by the realm] The Keeper reads the crystals aloud:
-      std::cout << "awake " << isAwake << "\n";
-      std::cout << "sigil " << symbol << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

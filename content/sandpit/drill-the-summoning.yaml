@@ -29,24 +29,7 @@ objective: |
   opening and closing lines, summon step_forward once and turn_about
   twice. Five lines, exactly that order.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: forge void step_forward() here; its deed prints:  A step forward.
-
-  // TODO: forge void turn_about() here; its deed prints:  Turn about.
-
-  int main() {
-      // [carved by the realm] The drill begins:
-      std::cout << "The drill begins.\n";
-
-      // TODO: summon step_forward once, then turn_about twice
-
-      // [carved by the realm] The drill ends:
-      std::cout << "The drill ends.\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

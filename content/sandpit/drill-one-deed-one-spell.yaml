@@ -26,22 +26,7 @@ objective: |
   forging, void tread(int paces), delete the copies, and summon
   tread(2), tread(4), tread(6). The six output lines must not change.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: forge void tread(int paces) above main, holding the two-line deed ONCE
-
-  int main() {
-      // The same deed, carved three times over. Extract it.
-      std::cout << "Tread " << 2 << " paces.\n";
-      std::cout << "The sand shifts by " << 2 * 3 << ".\n";
-      std::cout << "Tread " << 4 << " paces.\n";
-      std::cout << "The sand shifts by " << 4 * 3 << ".\n";
-      std::cout << "Tread " << 6 << " paces.\n";
-      std::cout << "The sand shifts by " << 6 * 3 << ".\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

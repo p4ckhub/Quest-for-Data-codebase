@@ -40,19 +40,7 @@ objective: |
   with value 100, an int named mp with value 50, and a float named
   staminaRegen with value 1.5f. Leave the reading itself untouched.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // TODO: awaken hp, mp, and staminaRegen here
-
-      // [carved by the realm] The Keeper reads the crystals aloud:
-      std::cout << "hp " << hp << "\n";
-      std::cout << "mp " << mp << "\n";
-      std::cout << "stamina " << staminaRegen << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

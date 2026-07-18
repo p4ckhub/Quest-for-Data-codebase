@@ -27,10 +27,7 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: |
-  // TODO: void polish_copy(int gleam)  — add 50 to gleam (a copy)
-  // TODO: void polish_true(int& gleam) — add 50 to gleam (the real one)
-
+starter_code: ""
 epilogue: |
   int main() {
       int blade = 10;

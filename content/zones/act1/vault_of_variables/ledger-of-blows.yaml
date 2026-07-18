@@ -42,21 +42,7 @@ objective: |
   named blow with the value of str * 2 + agi — computed from the
   variables themselves, not written as a bare number.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // [carved by the realm] The ledger's standing entries:
-      int str = 8;
-      int agi = 5;
-
-      // The old formula: might doubled, plus swiftness
-
-      // [carved by the realm] The ledger tallies aloud:
-      std::cout << "blow " << blow << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

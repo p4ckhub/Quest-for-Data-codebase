@@ -26,10 +26,7 @@ prelude: |
       int copper = 5;
       int silver = 12;
 
-starter_code: |
-      // TODO: int* finger = &copper;   then  *finger += 10;
-      // TODO: re-aim: finger = &silver;  then  *finger += 10;
-
+starter_code: ""
 epilogue: |
       gameapi::report("copper", copper);
       gameapi::report("silver", silver);

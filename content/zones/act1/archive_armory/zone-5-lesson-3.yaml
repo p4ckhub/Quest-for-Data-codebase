@@ -28,10 +28,7 @@ prelude: |
       std::string blade_name = "";
       int name_length = 0;
 
-starter_code: |
-      // TODO: join prefix + "-" + suffix into blade_name
-      // TODO: set name_length to blade_name.length()
-
+starter_code: ""
 epilogue: |
       gameapi::report("blade_name", blade_name);
       gameapi::report("name_length", name_length);

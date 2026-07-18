@@ -29,12 +29,7 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: |
-  class Character {
-  // TODO: private name, hp, str
-  // TODO: public constructor, who(), attack(), take_damage(), health()
-  };
-
+starter_code: ""
 epilogue: |
   int main() {
       Character hero("Aster", 30, 7);

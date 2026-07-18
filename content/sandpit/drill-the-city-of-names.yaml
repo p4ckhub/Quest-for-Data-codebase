@@ -29,25 +29,7 @@ objective: |
   summons to drill::dig(). The drill expects street 3, then
   district 8.
 
-starter_code: |
-  #include <iostream>
-
-  int dig() {
-      return 3;
-  }
-
-  // TODO: wrap this second forging in a district:  namespace drill { ... }
-  int dig() {
-      return 8;
-  }
-
-  int main() {
-      // TODO: after wrapping, mend the second summons: drill::dig()
-      std::cout << "street " << dig() << "\n";
-      std::cout << "district " << dig() << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

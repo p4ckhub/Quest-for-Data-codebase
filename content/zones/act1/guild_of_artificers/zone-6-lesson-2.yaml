@@ -27,12 +27,7 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: |
-  class Lockbox {
-  // TODO: a private section holding  int gold = 0;
-  // TODO: a public section with deposit, spend, and balance
-  };
-
+starter_code: ""
 epilogue: |
   int main() {
       Lockbox box;

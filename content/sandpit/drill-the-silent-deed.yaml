@@ -24,19 +24,7 @@ objective: |
   drill asks. with its own cast, and summon call_out() on its own
   line after. Two lines must ring out.
 
-starter_code: |
-  #include <iostream>
-
-  void call_out() {
-      std::cout << "The call rings out.\n";
-  }
-
-  int main() {
-      // The cast below demands an answer from a spell that gives none.
-      std::cout << "The drill asks.\n" << call_out();
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

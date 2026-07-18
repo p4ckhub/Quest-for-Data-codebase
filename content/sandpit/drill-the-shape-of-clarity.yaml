@@ -25,10 +25,7 @@ objective: |
   mend the quoted spacing so it speaks exactly: The sand holds. and
   then The shape is the drill.
 
-starter_code: |
-  #include <iostream>
-  int main(){std::cout<<"The sand"<<"holds."<<"\n";std::cout<<"The shape  is"" the drill."<<"\n";return 0;}
-
+starter_code: ""
 solution: |
   #include <iostream>
 

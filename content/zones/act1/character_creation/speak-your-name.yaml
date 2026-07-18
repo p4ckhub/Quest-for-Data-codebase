@@ -38,20 +38,7 @@ objective: |
   in one cast, exactly so:
   The halls record you, NAME.
 
-starter_code: |
-  #include <iostream>
-  #include <string>
-
-  int main() {
-      std::cout << "State your name: ";
-      std::string name;
-
-      // TODO: Read the name with cin, then proclaim it back:
-      // The halls record you, NAME.
-
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
   #include <string>

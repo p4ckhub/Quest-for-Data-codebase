@@ -26,13 +26,7 @@ prelude: |
       char sigil = 'W';
       std::string element = "";
 
-starter_code: |
-      // TODO: switch on sigil:
-      //   'F' -> element = "fire"
-      //   'W' -> element = "water"
-      //   'E' -> element = "earth"
-      //   default -> element = "unknown"
-
+starter_code: ""
 epilogue: |
       gameapi::report("element", element);
       return 0;

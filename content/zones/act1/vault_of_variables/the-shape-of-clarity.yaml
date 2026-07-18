@@ -44,10 +44,7 @@ objective: |
   mend the spacing inside the quotes so it speaks exactly two lines:
   The vault breathes. and then Its shape is law.
 
-starter_code: |
-  #include <iostream>
-  int main(){std::cout<<"The vault"<<"breathes."<<"\n";std::cout<<"Its shape  is"" law."<<"\n";return 0;}
-
+starter_code: ""
 solution: |
   #include <iostream>
 

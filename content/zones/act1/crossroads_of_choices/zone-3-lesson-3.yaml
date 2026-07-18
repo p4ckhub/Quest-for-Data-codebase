@@ -19,13 +19,7 @@ objective: |
   fixed doctrine, or branch on the omen value the Crossroads passes
   you. Any solution that always returns 1 or 2 passes.
 
-starter_code: |
-  int choose_gate(int omen) {
-      // TODO: return 1 for the Gate of Valor, or 2 for the Gate of Cunning.
-      // Branch on omen if you wish - the road remembers your doctrine.
-      return 0;
-  }
-
+starter_code: ""
 harness: crossroads_gate_main.cpp
 
 solution: |

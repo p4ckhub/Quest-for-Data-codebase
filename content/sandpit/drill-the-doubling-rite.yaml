@@ -25,16 +25,7 @@ objective: |
   reading Twice N is 2N. Double it inside the cast and never overwrite
   paces.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // TODO: proclaim the prompt:  Name your paces:
-      // TODO: bind an int crystal named paces and catch the offering
-      // TODO: proclaim:  Twice N is 2N   with the doubling done inside the cast
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

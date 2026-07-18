@@ -46,16 +46,7 @@ objective: |
   reading Twice N is 2N, where N is the offering. Do the doubling
   inside the final cast, and never overwrite tribute.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // TODO: proclaim the prompt:  Speak a number:
-      // TODO: bind an int crystal named tribute and catch the offering
-      // TODO: proclaim:  Twice N is 2N   with the doubling done inside the cast
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

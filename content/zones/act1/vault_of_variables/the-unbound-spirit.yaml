@@ -43,17 +43,7 @@ objective: |
   omen at its birth so it holds 43, and the Keeper's reading will
   finally speak truth.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      int omen;
-
-      // [carved by the realm] The Keeper reads the spirit, whatever it holds:
-      std::cout << "omen " << omen << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

@@ -39,17 +39,7 @@ objective: |
   yourself. Herald it above main with int rally(); and let the
   binding find the body. The Keeper expects rally 14.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: herald the ally's spell here:  int rally();
-  // Its forging lives on another scroll. Do not write a body.
-
-  int main() {
-      std::cout << "rally " << rally() << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

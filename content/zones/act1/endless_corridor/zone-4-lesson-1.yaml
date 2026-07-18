@@ -26,10 +26,7 @@ prelude: |
       int wards = 12;
       int strikes = 0;
 
-starter_code: |
-      // TODO: while wards is greater than 0:
-      //   subtract 3 from wards, add 1 to strikes
-
+starter_code: ""
 epilogue: |
       gameapi::report("wards", wards);
       gameapi::report("strikes", strikes);

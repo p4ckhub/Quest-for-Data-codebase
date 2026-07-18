@@ -42,17 +42,7 @@ objective: |
   — a line break made with \n, the indent made with \t, and the quotes
   around awake made with \" marks.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      std::cout << "[The slate is blank. The archivist's chalk hovers.]" << std::endl;
-
-      // One cast, shaped with \n, \t, and \" -- not three casts
-
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

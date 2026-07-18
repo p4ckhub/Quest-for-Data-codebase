@@ -25,15 +25,7 @@ objective: |
   Include it and print the two gifts joined as one sum. The drill
   expects war strength 14.
 
-starter_code: |
-  #include <iostream>
-  // TODO: include the book of heralds
-
-  int main() {
-      std::cout << "war strength " << shield_wall() + battle_hymn() << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
   #include "forge_allies.h"

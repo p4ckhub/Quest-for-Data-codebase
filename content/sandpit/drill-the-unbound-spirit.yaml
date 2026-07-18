@@ -22,17 +22,7 @@ objective: |
   Cast the scroll unchanged and witness the residue. Then bind whisper
   at its birth so it holds 11.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      int whisper;
-
-      // [carved by the realm] The reading speaks the crystal, whatever it holds:
-      std::cout << "whisper " << whisper << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

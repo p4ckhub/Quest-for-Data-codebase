@@ -42,23 +42,7 @@ objective: |
   passing main's crystal as the offering: temper(heat). The Forge
   expects tempered 18.
 
-starter_code: |
-  #include <iostream>
-
-  // This spell reaches for a crystal that lives in main. It will grasp nothing.
-  // Cast the scroll, read the refusal, then pass the value through the mouth.
-  int temper() {
-      return heat * 2;
-  }
-
-  int main() {
-      // [carved by the realm] The Forge's heat, main's alone:
-      int heat = 9;
-
-      std::cout << "tempered " << temper() << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

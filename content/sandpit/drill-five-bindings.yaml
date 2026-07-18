@@ -24,19 +24,7 @@ objective: |
   the whole number 2 with braces, then bind an int named soot with
   empty braces. The carved reading speaks both.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      int coals{ 2.5 };
-      // TODO: bind an int named soot with empty braces
-
-      // [carved by the realm] The reading speaks both crystals:
-      std::cout << "coals " << coals << "\n";
-      std::cout << "soot " << soot << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

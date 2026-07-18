@@ -33,20 +33,7 @@ objective: |
   (inclusive). The carved lines in main will cast it and read its force
   aloud.
 
-starter_code: |
-  #include <iostream>
-
-  int strike() {
-      // TODO: return your strike's force (5-10)
-  }
-
-  int main() {
-      // [carved by the realm] The Forge weighs your strike:
-      int force = strike();
-      std::cout << "force " << force << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

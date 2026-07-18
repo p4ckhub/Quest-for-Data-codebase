@@ -46,25 +46,7 @@ objective: |
   it with one directive above main: #define EMBER_LIT. Exactly two
   lines must ring out, and the entombed passage must stay entombed.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: raise the banner here, one directive, no seal:  #define EMBER_LIT
-
-  int main() {
-      std::cout << "The scribe reads.\n";
-
-  #ifdef EMBER_LIT
-      std::cout << "The ember is lit.\n";
-  #endif
-
-  #if 0
-      std::cout << "The entombed passage stirs.\n";
-  #endif
-
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

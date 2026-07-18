@@ -24,19 +24,7 @@ objective: |
   fury + calm * 2, then bent followed by (fury + calm) * 2. Let the
   sigils do the work.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // [carved by the realm] The drill's crystals, already lit:
-      int fury = 4;
-      int calm = 3;
-
-      // TODO: proclaim "unbent " followed by fury + calm * 2
-      // TODO: proclaim "bent " followed by (fury + calm) * 2
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

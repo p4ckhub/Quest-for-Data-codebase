@@ -43,19 +43,7 @@ objective: |
   ones the ledger demands: twin_blades with value 2 and battle_class
   with value 9. Leave the Keeper's reading untouched.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      int 2blades = 2;
-      int class = 9;
-
-      // [carved by the realm] The Keeper reads the ledger:
-      std::cout << "blades " << twin_blades << "\n";
-      std::cout << "order " << battle_class << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

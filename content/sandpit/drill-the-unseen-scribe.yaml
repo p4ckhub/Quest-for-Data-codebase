@@ -28,25 +28,7 @@ objective: |
   one directive above main: #define SAND_RAKED. Exactly two lines
   must ring out, and the entombed passage must stay entombed.
 
-starter_code: |
-  #include <iostream>
-
-  // TODO: raise the banner here, one directive, no seal:  #define SAND_RAKED
-
-  int main() {
-      std::cout << "The scribe reads the sand.\n";
-
-  #ifdef SAND_RAKED
-      std::cout << "The sand is raked.\n";
-  #endif
-
-  #if 0
-      std::cout << "The buried passage stirs.\n";
-  #endif
-
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

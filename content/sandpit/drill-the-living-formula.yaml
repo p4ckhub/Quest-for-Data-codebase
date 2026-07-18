@@ -22,21 +22,7 @@ objective: |
   In one statement, bind an int named strike to the value of
   grit * 3 + edge. The carved reading below speaks it once it exists.
 
-starter_code: |
-  #include <iostream>
-
-  int main() {
-      // [carved by the realm] The drill's crystals, already lit:
-      int grit = 5;
-      int edge = 2;
-
-      // TODO: bind int strike to grit * 3 + edge, in ONE statement
-
-      // [carved by the realm] The reading speaks the newborn:
-      std::cout << "strike " << strike << "\n";
-      return 0;
-  }
-
+starter_code: ""
 solution: |
   #include <iostream>
 

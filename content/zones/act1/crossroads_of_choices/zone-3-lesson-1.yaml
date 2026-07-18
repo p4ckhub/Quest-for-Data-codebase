@@ -24,10 +24,7 @@ prelude: |
       int gold = 7;
       std::string gate = "";
 
-starter_code: |
-      // TODO: if gold is at least 5, set gate to "open";
-      // otherwise set gate to "sealed"
-
+starter_code: ""
 epilogue: |
       gameapi::report("gate", gate);
       gameapi::report("gold", gold);
