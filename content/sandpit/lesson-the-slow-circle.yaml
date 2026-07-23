@@ -51,7 +51,11 @@ prelude: |
     int main() {
         std::cout << "[You rise. The sand shifts underfoot. The Forerunner watches you go.]" << std::endl;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm wrote the scaffolding around you (the greyed lines) -- fill only here.
+    // TODO: Speak the first sight on its own line, exactly as the objective lists it.
+    // TODO: Speak the second sight beneath it.
+    // TODO: Speak the third sight beneath that.
 epilogue: |
         std::cout << "[The Forerunner] Good. Dummy, rack, pool. You walked it exactly as you wrote it -- the realm did not skip a step, and it never will." << std::endl;
         return 0;

@@ -24,7 +24,13 @@ objective: |
   the whole number 2 with braces, then bind an int named soot with
   empty braces. The carved reading speaks both.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function for the whole rite to live in.
+    // TODO: Bind an int named coals to the whole number the objective asks for -- keep it in braces so the realm refuses any spill.
+    // TODO: Bind an int named soot with EMPTY braces, so it holds nothing but zero.
+    // TODO: Reproduce the carved reading exactly as given -- two spoken lines, each a label then its value.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

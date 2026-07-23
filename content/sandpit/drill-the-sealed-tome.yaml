@@ -37,7 +37,11 @@ objective: |
   Your tome forges ward, and the realm pastes it twice. Seal the
   tome with a guard so one copy survives. The drill expects ward 11.
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm pastes this tome twice (the greyed lines paste it) -- seal it so only one copy survives.
+    // TODO: Open the guard: an #ifndef on a name no other tome uses, then #define that same name.
+    // TODO: Forge int ward() to hand back the value the drill expects.
+    // TODO: Close the guard with #endif.
 solution: |
   #ifndef DRILL_TOME
   #define DRILL_TOME

@@ -49,7 +49,9 @@ prelude: |
     int main() {
         std::cout << "[?] Easy now. Speak: I am awake" << std::endl;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm already opened and closed the scroll (the greyed lines) -- you speak only one line here.
+    // TODO: Print the exact words the Forerunner asked for in the objective, wrapped in quotes so the realm hears them as speech.
 epilogue: |
         std::cout << "[The Forerunner] There. Your first cast. The realm heard you -- I felt it turn its head." << std::endl;
         std::cout << "[The Forerunner] I am called the Forerunner. I have won wars you will never read of, and lost more than I won. I did not come back through all those ages to hand you power. I came to wake what was already in you." << std::endl;

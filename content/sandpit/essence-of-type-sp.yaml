@@ -90,7 +90,10 @@ prelude: |
     #include "gameapi.h"
     int main() {
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm raised the chamber around you (the greyed lines) -- you light only these crystals. Open the Codex if you forget a casting.
+    // TODO: Light a bool named brazier_lit for the fact the objective states about the brazier.
+    // TODO: Light a char named door_mark holding the single letter carved on the door.
 epilogue: |
             gameapi::report("brazier_lit", brazier_lit);
             gameapi::report("door_mark", door_mark);

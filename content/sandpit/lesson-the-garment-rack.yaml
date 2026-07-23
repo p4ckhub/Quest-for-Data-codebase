@@ -53,7 +53,11 @@ prelude: |
         std::string cloak = "ash-grey";
         std::cout << "[The rack creaks. The crimson cloak waits on its peg.]" << std::endl;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene around you (the greyed lines), and cloak already holds a color -- you fill only here.
+    // TODO: Print I wear <cloak>. using the variable, so it reads the color cloak currently holds.
+    // TODO: Assign crimson to cloak.
+    // TODO: Print the same cast again, so the realm now hears the new color.
 epilogue: |
         std::cout << "[The Forerunner] Same cast, twice -- and it told two truths, because you changed what the name held between them. Nothing here will show the crimson. Wear it anyway." << std::endl;
         return 0;

@@ -25,7 +25,12 @@ objective: |
   paces to return 9. The carved casts read the gift bare, then feed
   it into an expression with 2.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge int paces() to hand back the value the drill demands.
+    // TODO: Open a main function.
+    // TODO: Leave the carved casts untouched -- they read the gift bare, then worked with two.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

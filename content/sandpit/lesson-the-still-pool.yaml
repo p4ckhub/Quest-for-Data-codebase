@@ -52,7 +52,10 @@ prelude: |
     int main() {
         std::cout << "[The pool holds your reflection perfectly still, waiting.]" << std::endl;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene around you (the greyed lines) -- you fill only here.
+    // TODO: Declare a std::string named hair holding any color you choose.
+    // TODO: Print My hair is <hair>. using the variable.
 epilogue: |
         std::cout << "[The Forerunner] So it is, and so the realm remembers -- even though no mirror here will show it yet. What you declare, you carry." << std::endl;
         return 0;

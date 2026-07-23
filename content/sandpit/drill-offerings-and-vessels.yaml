@@ -28,7 +28,12 @@ objective: |
   Then proclaim one line, braced N, where N is the gift of
   brace(2, brace(1, 1)).
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge a function int brace(int base, int bonus) that hands back the formula the objective describes.
+    // TODO: Open a main function.
+    // TODO: Print the label, then the gift of brace called on the nested offering the objective spells out.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

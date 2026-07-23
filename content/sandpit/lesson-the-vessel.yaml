@@ -55,8 +55,10 @@ prelude: |
     #include <iostream>
 
 starter_code: |
-    // Open your vessel here -- yours alone, borrowed from no one
-
+    // TODO: The realm summoned your tools (the greyed #include lines) -- you build the vessel itself.
+    // TODO: Open a main function -- the single entry point every program starts from.
+    // TODO: Inside it, print exactly the phrase the objective names, as a line of speech.
+    // TODO: Close the function by returning 0 so the realm knows all went well.
 epilogue: ""
 
 solution: |

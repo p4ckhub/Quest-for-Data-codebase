@@ -26,7 +26,13 @@ objective: |
   next line. The carved readings speak the literal 5 and then your
   vessel.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Declare an int named lanterns with no value yet -- an empty vessel.
+    // TODO: On the next line, assign it the value the objective names.
+    // TODO: Reproduce the carved reading exactly as given -- the literal number, then your vessel.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

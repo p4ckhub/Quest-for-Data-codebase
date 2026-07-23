@@ -25,7 +25,12 @@ objective: |
   Include it and print the two gifts joined as one sum. The drill
   expects war strength 14.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Include the book the objective names, so its two heralds are known here.
+    // TODO: Open a main function.
+    // TODO: Print the label, then the two gifts joined as one sum.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
   #include "forge_allies.h"

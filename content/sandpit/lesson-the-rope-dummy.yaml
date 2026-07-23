@@ -58,7 +58,11 @@ prelude: |
         int dummy_hp = 3;
         std::cout << "[The rope dummy sways on its post. Three stitches hold it. It has no idea what is coming, because it is a dummy.]" << std::endl;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm raised the dummy around you (the greyed lines) at dummy_hp = 3 -- you strike here.
+    // TODO: Print the strike line, then lower dummy_hp by one.
+    // TODO: Do the same a second time.
+    // TODO: Do the same a third time, leaving dummy_hp at exactly 0.
 epilogue: |
         gameapi::report("dummy_hp", dummy_hp);
         if (dummy_hp <= 0) {

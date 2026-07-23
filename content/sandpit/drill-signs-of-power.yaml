@@ -24,7 +24,13 @@ objective: |
   fury + calm * 2, then bent followed by (fury + calm) * 2. Let the
   sigils do the work.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Keep the carved crystals as given -- fury and calm, already lit.
+    // TODO: Print unbent, then the value where multiplication binds before addition.
+    // TODO: Print bent, then the value where parentheses force the addition first.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

@@ -25,7 +25,12 @@ objective: |
   mend the quoted spacing so it speaks exactly: The sand holds. and
   then The shape is the drill.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Speak the first line so it reads exactly The sand holds. -- mind the spacing inside the quotes.
+    // TODO: Speak the second line so it reads exactly The shape is the drill. -- again, mind the spacing.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

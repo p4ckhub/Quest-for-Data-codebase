@@ -29,7 +29,15 @@ objective: |
   opening and closing lines, summon step_forward once and turn_about
   twice. Five lines, exactly that order.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge void step_forward() that speaks its one line.
+    // TODO: Forge void turn_about() that speaks its one line.
+    // TODO: Open a main function.
+    // TODO: Keep the carved opening line as given.
+    // TODO: Summon step_forward once, then turn_about twice -- exactly that order.
+    // TODO: Keep the carved closing line as given.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

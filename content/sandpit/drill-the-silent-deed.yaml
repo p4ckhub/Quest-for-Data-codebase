@@ -24,7 +24,13 @@ objective: |
   drill asks. with its own cast, and summon call_out() on its own
   line after. Two lines must ring out.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge void call_out() that speaks its one line.
+    // TODO: Open a main function.
+    // TODO: Speak The drill asks. on its own cast.
+    // TODO: Summon call_out() on the line after, so two lines ring out.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

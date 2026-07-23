@@ -26,7 +26,12 @@ objective: |
   forging, void tread(int paces), delete the copies, and summon
   tread(2), tread(4), tread(6). The six output lines must not change.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge one function, void tread(int paces), holding the two lines the deed speaks -- the repeated work, written once.
+    // TODO: Open a main function.
+    // TODO: Summon tread three times with the paces the objective names, in order.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

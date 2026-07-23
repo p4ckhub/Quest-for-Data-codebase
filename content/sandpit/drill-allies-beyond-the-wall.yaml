@@ -26,7 +26,12 @@ objective: |
   Herald it above main and print its gift doubled. The drill expects
   double rally 28.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: rally is forged on another scroll -- herald it above main with a declaration only, never its body.
+    // TODO: Open a main function.
+    // TODO: Print the label the drill names, then rally's gift multiplied by two.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

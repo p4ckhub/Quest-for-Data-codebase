@@ -22,7 +22,13 @@ objective: |
   In one statement, bind an int named strike to the value of
   grit * 3 + edge. The carved reading below speaks it once it exists.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Keep the carved crystals as given -- grit and edge, already lit.
+    // TODO: In one statement, bind an int named strike to the objective's formula, held in braces.
+    // TODO: Leave the carved reading below untouched -- it speaks the newborn.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

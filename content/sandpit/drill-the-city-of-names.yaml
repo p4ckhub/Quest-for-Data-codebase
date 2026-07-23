@@ -29,7 +29,14 @@ objective: |
   summons to drill::dig(). The drill expects street 3, then
   district 8.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge the first int dig() returning the objective's street value.
+    // TODO: Forge the second dig() inside namespace drill { } so the two names no longer collide.
+    // TODO: Open a main function.
+    // TODO: Print street, then the plain dig().
+    // TODO: Print district, then the dig() that lives inside drill.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

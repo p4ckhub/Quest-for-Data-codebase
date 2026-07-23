@@ -22,7 +22,12 @@ objective: |
   Cast the scroll unchanged and witness the residue. Then bind whisper
   at its birth so it holds 11.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Bind an int named whisper at its birth so it holds the value the drill names -- no residue.
+    // TODO: Leave the carved reading untouched.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

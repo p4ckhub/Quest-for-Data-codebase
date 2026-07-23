@@ -23,7 +23,13 @@ objective: |
   the drill demands: rope_count with value 3 and drill_rank with
   value 1. Leave the carved reading untouched.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Declare an int named rope_count holding the value the drill demands.
+    // TODO: Declare an int named drill_rank holding the value the drill demands.
+    // TODO: Leave the carved reading untouched -- it already speaks the ledger.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

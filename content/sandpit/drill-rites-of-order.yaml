@@ -26,7 +26,12 @@ objective: |
   line spoken is "The sand settles." and the second is "The circle is
   drawn."
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Speak the first line the drill demands, sealed with a semicolon.
+    // TODO: Speak the second line beneath it, in the exact order the objective fixes.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 
