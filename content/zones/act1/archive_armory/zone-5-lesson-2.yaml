@@ -27,7 +27,11 @@ prelude: |
       int arrow_count = 0;
       int arrow_sum = 0;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene (the greyed lines); quiver, arrow_count and arrow_sum are already declared -- you fill only here.
+    // TODO: push_back the three values the objective lists into quiver, in order.
+    // TODO: Set arrow_count to the quiver's size.
+    // TODO: Loop over the quiver, adding every element to arrow_sum.
 epilogue: |
       gameapi::report("arrow_count", arrow_count);
       gameapi::report("arrow_sum", arrow_sum);

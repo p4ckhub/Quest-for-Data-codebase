@@ -24,7 +24,10 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: ""
+starter_code: |
+    // TODO: The harness will call your function -- write only the function here.
+    // TODO: Keep what it returns unchanged (1+2+3) -- your only task is to stop the leak.
+    // TODO: Inside the loop, give every new its matching delete before the next pass.
 harness: crypt_rift_main.cpp
 extra_units: [leakcheck.cpp]
 

@@ -43,7 +43,13 @@ objective: |
   ones the ledger demands: twin_blades with value 2 and battle_class
   with value 9. Leave the Keeper's reading untouched.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Declare an int named twin_blades holding the value the ledger demands.
+    // TODO: Declare an int named battle_class holding the value the ledger demands.
+    // TODO: Leave the Keeper's reading untouched.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

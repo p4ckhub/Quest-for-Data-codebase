@@ -23,7 +23,10 @@ prelude: |
   int main() {
       int total = 0;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene around you (the greyed lines); total is already declared -- you fill only here.
+    // TODO: Declare an array of exactly 4 ints named blades holding the values the objective lists, in order.
+    // TODO: Loop over its indices 0 through 3, adding each element to total.
 epilogue: |
       gameapi::report("total", total);
       gameapi::report("first_blade", blades[0]);

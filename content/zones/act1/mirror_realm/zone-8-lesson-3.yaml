@@ -27,7 +27,10 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: ""
+starter_code: |
+    // TODO: The seal sits below your work (the greyed lines) -- you write only the two functions here.
+    // TODO: Write void polish_copy(int gleam) that takes its parameter BY VALUE and adds 50 (futile -- that is the point).
+    // TODO: Write void polish_true(int& gleam) that takes its parameter BY REFERENCE and adds 50.
 epilogue: |
   int main() {
       int blade = 10;

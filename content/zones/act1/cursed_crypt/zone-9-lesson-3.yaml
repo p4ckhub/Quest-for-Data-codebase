@@ -26,7 +26,10 @@ prelude: |
   #include <string>
   #include <memory>
 
-starter_code: ""
+starter_code: |
+    // TODO: The harness will call your function -- write only the function here.
+    // TODO: Write int bind_companion(): create a std::unique_ptr<int> holding 30 with std::make_unique.
+    // TODO: Return the bond's value plus 12 (through *bond) -- and write no delete; the binding unmakes itself.
 harness: crypt_smart_main.cpp
 extra_units: [leakcheck.cpp]
 

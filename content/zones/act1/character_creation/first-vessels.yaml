@@ -51,7 +51,13 @@ objective: |
   next line. The carved readings speak the literal 3 and then your
   vessel, and both must say the same.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Declare an int named torches with no value yet.
+    // TODO: On the next line, assign it the value the objective names.
+    // TODO: Leave the carved reading untouched -- the literal number, then your vessel.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

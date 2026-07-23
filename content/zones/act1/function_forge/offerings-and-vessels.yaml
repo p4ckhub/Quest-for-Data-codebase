@@ -41,7 +41,12 @@ objective: |
   Then in main, proclaim one line, empowered N, where N is the gift
   of empower(4, empower(1, 2)). Let the realm resolve it inside out.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge int empower(int base, int bonus) returning the objective's formula.
+    // TODO: Open a main function.
+    // TODO: Print the label, then empower called on the nested offering the objective spells out.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

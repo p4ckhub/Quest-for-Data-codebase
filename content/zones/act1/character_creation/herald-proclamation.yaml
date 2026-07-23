@@ -41,7 +41,13 @@ objective: |
   I count 3 gates before me
   — and let the 3 travel bare (unquoted), chained into the final cast.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: You may open with a bracketed scene line to set the moment (as the solution does).
+    // TODO: Speak the three proclamations the objective lists, each on its own cast, in order.
+    // TODO: In the last cast, let the gate count travel bare (unquoted), chained in with <<.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

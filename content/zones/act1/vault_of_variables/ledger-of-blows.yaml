@@ -42,7 +42,13 @@ objective: |
   named blow with the value of str * 2 + agi — computed from the
   variables themselves, not written as a bare number.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Keep the carved standing entries as given -- str and agi.
+    // TODO: Initialize an int named blow from the objective's formula, computed from the variables, not a bare number.
+    // TODO: Leave the carved tally untouched.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

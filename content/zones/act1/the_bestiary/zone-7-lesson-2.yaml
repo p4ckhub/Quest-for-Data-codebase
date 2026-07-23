@@ -26,7 +26,13 @@ prelude: |
   #include "monsters.h"
   #include <string>
 
-starter_code: ""
+starter_code: |
+    // TODO: The harness will summon your creature (the greyed lines) -- you define only the class here.
+    // TODO: Define a class CinderBat that inherits publicly from Monster.
+    // TODO: Override std::string species() const to return exactly the species name the objective gives.
+    // TODO: Override int attack() to return the light value the objective names.
+    // TODO: Override int max_hp() const to return the value the objective names.
+    // TODO: Mark each with override so the Compiler guards your spelling.
 epilogue: |
   REGISTER_MONSTER("cinder_bat", CinderBat)
 

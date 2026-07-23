@@ -21,7 +21,11 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: ""
+starter_code: |
+    // TODO: The Guild's seal sits below your work (the greyed lines) -- you define only the form here.
+    // TODO: Define a struct named Potion.
+    // TODO: Give it a std::string member called name.
+    // TODO: Give it an int member called heal.
 epilogue: |
   int main() {
       Potion p;

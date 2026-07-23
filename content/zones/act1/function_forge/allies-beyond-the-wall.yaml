@@ -39,7 +39,12 @@ objective: |
   yourself. Herald it above main with int rally(); and let the
   binding find the body. The Keeper expects rally 14.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: rally is forged on another scroll -- herald it above main with a declaration only, never its body.
+    // TODO: Open a main function.
+    // TODO: Print the label, then rally's gift.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

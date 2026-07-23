@@ -26,7 +26,10 @@ prelude: |
       int wards = 12;
       int strikes = 0;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene (the greyed lines); wards and strikes are already declared -- you fill only here.
+    // TODO: Write a while loop that runs while wards is greater than 0.
+    // TODO: Each pass, subtract 3 from wards and add 1 to strikes -- so the condition eventually turns false and the loop ends.
 epilogue: |
       gameapi::report("wards", wards);
       gameapi::report("strikes", strikes);

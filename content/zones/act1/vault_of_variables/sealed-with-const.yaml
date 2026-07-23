@@ -43,7 +43,14 @@ objective: |
   with value 100, a float named mana with value 50.5f, and a double
   named speed with value 2.5. All must be declared as const.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Declare a const int named hp with the value the objective names.
+    // TODO: Declare a const float named mana with the value the objective names.
+    // TODO: Declare a const double named speed with the value the objective names.
+    // TODO: Leave the Keeper's reading untouched.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

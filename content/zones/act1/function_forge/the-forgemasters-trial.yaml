@@ -43,7 +43,14 @@ objective: |
   proclaim(int result), speaking one line: The trial yields N. Then
   make main a single deed: the three summons, chained inside out.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge int summon_offering(): bind an int, catch one from the wind, hand it back.
+    // TODO: Forge int temper(int offering) returning the objective's formula.
+    // TODO: Forge void proclaim(int result) that speaks the one line the objective names.
+    // TODO: Open a main function.
+    // TODO: Make main a single deed -- the three summons chained inside out, the caught offering flowing through temper into proclaim.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

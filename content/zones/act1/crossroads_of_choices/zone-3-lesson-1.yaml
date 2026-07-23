@@ -24,7 +24,9 @@ prelude: |
       int gold = 7;
       std::string gate = "";
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene (the greyed lines); gold and gate are already declared -- you fill only here.
+    // TODO: Write an if/else on gold: set gate to open when gold >= 5, and to sealed otherwise -- match the words exactly.
 epilogue: |
       gameapi::report("gate", gate);
       gameapi::report("gold", gold);

@@ -42,7 +42,12 @@ objective: |
   — a line break made with \n, the indent made with \t, and the quotes
   around awake made with \" marks.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: You may open with a bracketed scene line (as the solution does).
+    // TODO: In a single cast, print the chant exactly -- a line break with \n, an indent with \t, and quotes around awake made with \" marks.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

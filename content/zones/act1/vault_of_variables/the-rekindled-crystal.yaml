@@ -41,7 +41,15 @@ objective: |
   Below it, assign lanterns 9 (no int, no redeclaring). Then initialize
   your own int named oaths with value 1, and assign it 3.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Keep the carved line that lights lanterns at 2 as given.
+    // TODO: Below it, assign lanterns the new value the objective names -- no int, no redeclaring.
+    // TODO: Initialize your own int named oaths with the objective's first value.
+    // TODO: Then assign oaths its second value.
+    // TODO: Leave the Keeper's nightfall reading untouched.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

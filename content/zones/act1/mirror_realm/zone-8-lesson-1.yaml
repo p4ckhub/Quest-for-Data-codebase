@@ -24,7 +24,10 @@ prelude: |
   int main() {
       int lantern = 20;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene (the greyed lines); lantern already burns at 20 -- you fill only here.
+    // TODO: Declare a reference named mirror bound to lantern (int& mirror = lantern;).
+    // TODO: Set mirror to 100 -- and the lantern itself will read 100, though you never touched it directly.
 epilogue: |
       gameapi::report("lantern", lantern);
       gameapi::report("mirror", mirror);

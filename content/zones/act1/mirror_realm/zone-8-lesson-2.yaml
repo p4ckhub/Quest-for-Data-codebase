@@ -26,7 +26,12 @@ prelude: |
       int copper = 5;
       int silver = 12;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene (the greyed lines); copper and silver already exist -- you fill only here.
+    // TODO: Declare an int* named finger aimed at copper (&copper).
+    // TODO: Add 10 to the value it points at, through *finger.
+    // TODO: Re-aim the same finger at silver.
+    // TODO: Add 10 there too, through the one pointer.
 epilogue: |
       gameapi::report("copper", copper);
       gameapi::report("silver", silver);

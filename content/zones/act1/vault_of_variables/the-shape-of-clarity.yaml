@@ -44,7 +44,12 @@ objective: |
   mend the spacing inside the quotes so it speaks exactly two lines:
   The vault breathes. and then Its shape is law.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Speak the first line so it reads exactly The vault breathes. -- mind the spacing inside the quotes.
+    // TODO: Speak the second line so it reads exactly Its shape is law. -- again, mind the spacing.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

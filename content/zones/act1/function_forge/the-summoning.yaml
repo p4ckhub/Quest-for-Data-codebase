@@ -51,7 +51,15 @@ objective: |
   hammer_falls once and bellows_roar twice. Five lines must ring out,
   in exactly that order.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge void hammer_falls() that prints its line.
+    // TODO: Forge void bellows_roar() that prints its line.
+    // TODO: Open a main function.
+    // TODO: Keep the carved opening cast as given.
+    // TODO: Summon hammer_falls once, then bellows_roar twice -- exactly that order.
+    // TODO: Keep the carved closing cast as given.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

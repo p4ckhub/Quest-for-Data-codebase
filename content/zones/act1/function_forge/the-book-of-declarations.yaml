@@ -45,7 +45,13 @@ objective: |
   quotes, then summon both. The Keeper expects shield 9 and hymn 5
   on their own lines.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Include the book the objective names with quotes, so its two heralds are known here.
+    // TODO: Open a main function.
+    // TODO: Print shield, then shield_wall()'s gift.
+    // TODO: Print hymn, then battle_hymn()'s gift, on its own line.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
   #include "forge_allies.h"

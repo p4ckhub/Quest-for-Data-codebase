@@ -27,7 +27,10 @@ prelude: |
       std::string item;
       int count = 0;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene (the greyed lines); item and count are already declared -- you fill only here.
+    // TODO: Read the word from standard input into item with std::cin >>.
+    // TODO: Read the number into count the same way.
 epilogue: |
       gameapi::report("item", item);
       gameapi::report("count", count);

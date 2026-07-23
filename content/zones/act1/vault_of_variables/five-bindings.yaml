@@ -49,7 +49,13 @@ objective: |
   an int named ashes with empty braces so it holds 0. Leave the
   Keeper's reading untouched.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Bind an int named embers to the whole number the objective names, in braces so the realm refuses any spill.
+    // TODO: Bind an int named ashes with EMPTY braces, so it holds 0.
+    // TODO: Leave the Keeper's reading untouched.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

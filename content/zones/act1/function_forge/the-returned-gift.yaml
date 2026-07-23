@@ -44,7 +44,12 @@ objective: |
   it keeps its promise: return 12. The carved casts in main read the
   gift bare, then feed it into an expression with 3.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge int embers() to hand back the value the objective demands.
+    // TODO: Open a main function.
+    // TODO: Leave the carved casts untouched -- they read the gift bare, then worked with three.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

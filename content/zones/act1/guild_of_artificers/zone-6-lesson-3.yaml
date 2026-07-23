@@ -29,7 +29,12 @@ prelude: |
 
   int reclaimed = 0;
 
-starter_code: ""
+starter_code: |
+    // TODO: The seal sits below your work (the greyed lines) -- you define only the class here.
+    // TODO: Define a class named Ward with a private int member strength.
+    // TODO: Add a constructor Ward(int s) that sets strength to s.
+    // TODO: Add int power() that returns strength.
+    // TODO: Add a destructor ~Ward() that ADDS strength to the global int named reclaimed (already declared).
 epilogue: |
   int main() {
       {

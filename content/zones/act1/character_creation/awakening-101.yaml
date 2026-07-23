@@ -35,14 +35,10 @@ objective: |
   the class name. Example output: "As a {{class_name}}, I enter the fray!"
 
 starter_code: |
-  #include <iostream>
-
-  int main() {
-      // TODO: Use std::cout to greet the world
-
-      return 0;
-  }
-
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Print a greeting that includes the class name, as the objective's example shows.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

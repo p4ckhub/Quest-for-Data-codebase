@@ -27,7 +27,13 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: ""
+starter_code: |
+    // TODO: The vault's seal sits below your work (the greyed lines) -- you define only the class here.
+    // TODO: Define a class named Lockbox.
+    // TODO: Give it a private int member gold, starting at 0.
+    // TODO: Add a public void deposit(int amount) that adds amount to gold.
+    // TODO: Add a public void spend(int amount) that subtracts amount ONLY if the box holds at least that much; otherwise it changes nothing.
+    // TODO: Add a public int balance() that returns the gold inside.
 epilogue: |
   int main() {
       Lockbox box;

@@ -66,7 +66,11 @@ objective: |
   with a guard so the second pasting vanishes. The forging itself
   must survive. The Keeper expects blessing 7.
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm pastes this tome twice (the greyed lines paste it) -- seal it so only one copy survives.
+    // TODO: Open the guard: an #ifndef on a name no other tome uses, then #define that same name.
+    // TODO: Forge int blessing() to hand back the value the Keeper expects.
+    // TODO: Close the guard with #endif.
 solution: |
   #ifndef SEALED_TOME
   #define SEALED_TOME

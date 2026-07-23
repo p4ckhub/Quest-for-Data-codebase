@@ -23,7 +23,9 @@ prelude: |
   int main() {
       int sparks = 0;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene (the greyed lines); sparks is already declared -- you fill only here.
+    // TODO: Write a for loop counting from 1 to 10 inclusive, adding the counter to sparks each pass.
 epilogue: |
       gameapi::report("sparks", sparks);
       return 0;

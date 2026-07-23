@@ -40,7 +40,12 @@ objective: |
   refusal. Then mend it: gold is a count, so it must be born from a
   bare number — one hundred, written in digits — not from words.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Bind an int named gold from a bare number in digits -- one hundred written as digits, not words.
+    // TODO: Leave the Keeper's reading untouched.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

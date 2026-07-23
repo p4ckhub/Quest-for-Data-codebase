@@ -52,17 +52,11 @@ objective: |
   the second is "A challenger arrives."
 
 starter_code: |
-  #include <iostream>
-
-  int main() {
-      // [carved by the realm] The rite demands this proclamation, in this order:
-      //   The realm stirs.
-      //   A challenger arrives.
-      std::cout << "A challenger arrives." << std::endl;
-      std::cout << "The realm stirs." << std::endl
-      return 0;
-  }
-
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Speak The realm stirs. first, sealed with a semicolon.
+    // TODO: Speak A challenger arrives. second, in the order the rite demands.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

@@ -42,7 +42,12 @@ objective: |
   parameter must be used in the return expression — the carved tests
   offer 5 and 10, and expect 10 and 15 back.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge int strike_with(int fury) returning the objective's formula -- the fury parameter must appear in the return.
+    // TODO: Open a main function.
+    // TODO: Leave the carved tests untouched -- they offer two furies and read the damage.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

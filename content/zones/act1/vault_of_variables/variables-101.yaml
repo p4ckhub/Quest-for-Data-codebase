@@ -40,7 +40,14 @@ objective: |
   with value 100, an int named mp with value 50, and a float named
   staminaRegen with value 1.5f. Leave the reading itself untouched.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Declare an int named hp with the value the objective names.
+    // TODO: Declare an int named mp with the value the objective names.
+    // TODO: Declare a float named staminaRegen with the value the objective names.
+    // TODO: Leave the Keeper's reading untouched.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

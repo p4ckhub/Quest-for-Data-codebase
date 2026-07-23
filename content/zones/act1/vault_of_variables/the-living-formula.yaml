@@ -48,7 +48,13 @@ objective: |
   base * 3 + bonus. The Keeper's reading below will speak it once it
   exists. Leave the carved lines untouched.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Keep the carved crystals as given -- base and bonus.
+    // TODO: In one statement, bind an int named might to the objective's formula, held in braces.
+    // TODO: Leave the carved reading below untouched.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

@@ -26,7 +26,10 @@ prelude: |
       char sigil = 'W';
       std::string element = "";
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene (the greyed lines); sigil and element are already declared -- you fill only here.
+    // TODO: Write a switch on sigil, setting element for each of F, W, E as the objective lists, plus a default for anything else.
+    // TODO: Remember a break after each case so they do not fall through.
 epilogue: |
       gameapi::report("element", element);
       return 0;

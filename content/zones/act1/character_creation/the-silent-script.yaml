@@ -44,7 +44,13 @@ objective: |
   the line itself must remain on the scroll. Then replace the TODO
   with a why-mark of your own above the working cast.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Silence the broken line with comment syntax -- it must stay on the scroll, not be destroyed.
+    // TODO: Above the working cast, write a why-mark comment of your own, in place of the TODO.
+    // TODO: Speak the working line: The script keeps what the voice cannot.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

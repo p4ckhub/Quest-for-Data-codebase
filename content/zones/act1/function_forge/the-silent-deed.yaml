@@ -42,7 +42,13 @@ objective: |
   announce() on its own line after. Two lines must ring out: The
   Forge asks. and then The deed is done.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge void announce() that speaks its one line: The deed is done.
+    // TODO: Open a main function.
+    // TODO: Print The Forge asks., ending it with a newline.
+    // TODO: Summon announce() on the line after, so two lines ring out.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

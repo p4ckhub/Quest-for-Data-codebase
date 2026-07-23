@@ -49,7 +49,14 @@ objective: |
   echo, and second followed by the second. End every line with '\n'
   and use no endl anywhere.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Bind two int crystals, first and second, empty for now.
+    // TODO: Pull both echoes from one line of wind in a single chained draw.
+    // TODO: Print first, then its value -- end the line with '\n', never endl.
+    // TODO: Print second, then its value, the same way.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

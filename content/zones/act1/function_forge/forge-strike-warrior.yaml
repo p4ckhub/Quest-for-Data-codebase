@@ -33,7 +33,12 @@ objective: |
   (inclusive). The carved lines in main will cast it and read its force
   aloud.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge int strike() to return any value between 5 and 10 inclusive.
+    // TODO: Open a main function.
+    // TODO: Leave the carved lines untouched -- they cast strike and read its force.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

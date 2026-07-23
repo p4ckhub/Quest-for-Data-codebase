@@ -25,7 +25,12 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: ""
+starter_code: |
+    // TODO: The Crypt's harness will call your function -- write only the function here.
+    // TODO: Write int bind_spirit(): allocate an int on the heap holding 21 with new.
+    // TODO: Compute double the vessel's value (through *vessel).
+    // TODO: Release the binding with delete.
+    // TODO: Return the doubled value.
 harness: crypt_bind_main.cpp
 extra_units: [leakcheck.cpp]
 

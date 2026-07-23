@@ -50,7 +50,13 @@ objective: |
   2. attack(int fury) with one int parameter, returns fury + 3
   The carved casts offer nothing, then 9 — and expect 7, then 12.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge int attack() with no parameters, returning the value the objective names.
+    // TODO: Forge int attack(int fury) with one parameter, returning the objective's formula -- same name, different form.
+    // TODO: Open a main function.
+    // TODO: Leave the carved casts untouched -- they call both forms.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

@@ -28,7 +28,10 @@ prelude: |
       std::string blade_name = "";
       int name_length = 0;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene (the greyed lines); prefix, suffix, blade_name and name_length are already declared -- you fill only here.
+    // TODO: Set blade_name to prefix, a hyphen, and suffix joined together, matching the objective exactly.
+    // TODO: Set name_length to blade_name's length.
 epilogue: |
       gameapi::report("blade_name", blade_name);
       gameapi::report("name_length", name_length);

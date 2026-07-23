@@ -19,7 +19,9 @@ objective: |
   fixed doctrine, or branch on the omen value the Crossroads passes
   you. Any solution that always returns 1 or 2 passes.
 
-starter_code: ""
+starter_code: |
+    // TODO: The Crossroads' harness will call your function -- write only the function here.
+    // TODO: Write int choose_gate(int omen) that returns either 1 (Valor) or 2 (Cunning) -- a fixed choice, or branch on omen; the choice is yours.
 harness: crossroads_gate_main.cpp
 
 solution: |

@@ -43,7 +43,13 @@ objective: |
   isAwake with value true, and a char named symbol with value 'X'.
   Leave the reading itself untouched.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Declare a bool named isAwake with the value the objective names.
+    // TODO: Declare a char named symbol with the value the objective names.
+    // TODO: Leave the carved reading untouched.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

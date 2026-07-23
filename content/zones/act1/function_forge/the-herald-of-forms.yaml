@@ -47,7 +47,13 @@ objective: |
   working with a single herald line above main: int ember(); The
   Forge expects ember 21.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Herald ember() with one declaration line above main, so the realm has met it before main calls it.
+    // TODO: Open a main function.
+    // TODO: Print the label, then ember's gift.
+    // TODO: Return 0 to close main.
+    // TODO: Below main, forge ember() to hand back the value the Forge expects.
 solution: |
   #include <iostream>
 

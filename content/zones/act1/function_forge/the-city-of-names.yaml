@@ -44,7 +44,14 @@ objective: |
   the second summons to call it by district: forge::strike(). The
   Forge expects street 7, then district 12.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge the first int strike() returning the objective's street value.
+    // TODO: Forge the second strike() inside namespace forge { } so the two names no longer collide.
+    // TODO: Open a main function.
+    // TODO: Print street, then the plain strike().
+    // TODO: Print district, then the strike() that lives inside forge.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

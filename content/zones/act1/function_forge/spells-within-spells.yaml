@@ -48,7 +48,13 @@ objective: |
   spell must CAST the small one — the Keeper reads your scroll and
   will know if you merely wrote 10.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge int base_force() returning the value the objective names.
+    // TODO: Forge int empowered() that returns base_force() plus the objective's amount -- it must CALL base_force, not just write the total.
+    // TODO: Open a main function.
+    // TODO: Leave the carved casts untouched -- they weigh both moulds.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

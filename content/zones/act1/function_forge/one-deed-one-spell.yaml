@@ -46,7 +46,12 @@ objective: |
   stoke(3), stoke(5), stoke(8), and leave the six output lines
   exactly as they were.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Forge one function, void stoke(int coals), that prints both lines for a given count -- the repeated work, written once.
+    // TODO: Open a main function.
+    // TODO: Summon stoke three times with the counts the objective names, in order.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

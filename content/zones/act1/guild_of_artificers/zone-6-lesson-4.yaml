@@ -29,7 +29,14 @@ prelude: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: ""
+starter_code: |
+    // TODO: The seal sits below your work (the greyed lines) -- you define only the class here.
+    // TODO: Define a class named Character with private members: a std::string name, an int hp, and an int str.
+    // TODO: Add a constructor Character(std::string n, int h, int s) that sets all three.
+    // TODO: Add std::string who() that returns the name.
+    // TODO: Add int attack() that returns str * 2.
+    // TODO: Add void take_damage(int amount) that reduces hp by amount, never below 0.
+    // TODO: Add int health() that returns hp.
 epilogue: |
   int main() {
       Character hero("Aster", 30, 7);

@@ -28,7 +28,13 @@ prelude: |
   #include "monsters.h"
   #include <string>
 
-starter_code: ""
+starter_code: |
+    // TODO: The harness will summon your creature (the greyed lines) -- you define only the class here.
+    // TODO: Define a class GraveTroll that inherits publicly from Monster, with a private int member rage starting at 0.
+    // TODO: Override std::string species() const to return exactly the species name the objective gives.
+    // TODO: Override int max_hp() const to return the value the objective names.
+    // TODO: Override int attack() to return the objective's formula -- its base plus rage.
+    // TODO: Override void on_hit(int amount) to grow rage by amount / 2.
 epilogue: |
   REGISTER_MONSTER("grave_troll", GraveTroll)
 

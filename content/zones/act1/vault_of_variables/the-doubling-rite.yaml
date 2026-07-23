@@ -46,7 +46,14 @@ objective: |
   reading Twice N is 2N, where N is the offering. Do the doubling
   inside the final cast, and never overwrite tribute.
 
-starter_code: ""
+starter_code: |
+    // TODO: Bring in the tool that lets you speak to the realm.
+    // TODO: Open a main function.
+    // TODO: Speak the prompt exactly as the objective names it, with no line break after it.
+    // TODO: Bind an int named tribute to catch what the wind brings.
+    // TODO: Draw one offering from the wind into tribute.
+    // TODO: Speak one line -- Twice, the tribute, then twice its value -- doubling inside the cast, never overwriting tribute.
+    // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
 

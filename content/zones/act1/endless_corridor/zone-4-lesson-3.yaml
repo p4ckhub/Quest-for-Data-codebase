@@ -26,7 +26,12 @@ prelude: |
   int main() {
       int safe_steps = 0;
 
-starter_code: ""
+starter_code: |
+    // TODO: The realm set the scene (the greyed lines); safe_steps is already declared -- you fill only here.
+    // TODO: Write a for loop counting from 1 to 20.
+    // TODO: If the counter is 13, break out before counting it.
+    // TODO: Otherwise, if it is divisible by 3, continue to the next stone without counting.
+    // TODO: Every other stone adds 1 to safe_steps.
 epilogue: |
       gameapi::report("safe_steps", safe_steps);
       return 0;
