@@ -10,6 +10,7 @@ import LessonRunnerScreen from "./components/LessonRunner";
 import CombatScreen from "./components/CombatScreen";
 import { SpellbookScreen } from "./components/SpellbookScreen";
 import { InventoryScreen } from "./components/InventoryScreen";
+import { CodexScreen } from "./components/CodexScreen";
 import { SettingsScreen } from "./components/SettingsScreen";
 
 function App() {
@@ -42,6 +43,8 @@ function App() {
         return <SpellbookScreen />;
       case "inventory":
         return <InventoryScreen />;
+      case "codex":
+        return <CodexScreen />;
       case "settings":
         return <SettingsScreen />;
       default:

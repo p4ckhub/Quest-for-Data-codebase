@@ -385,7 +385,56 @@
   min-height: 200px;
   width: 100%;
   border-bottom: 2px solid #e94560;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
+
+/* The editable region — the Monaco editor, the only part the player writes.
+   flex:1 with a min-height keeps it usable when locked wrapper bands are present. */
+.editor-region {
+  flex: 1;
+  min-height: 140px;
+}
+
+/* === Forge: given-by-the-realm wrapper bands (visible, locked) === */
+.wrapper-band {
+  background: #0d0d1a;
+  font-family: 'Consolas', monospace;
+  font-size: 0.8rem;
+  flex: 0 0 auto;
+  max-height: 33%;
+  overflow: auto;
+}
+.wrapper-band.given {
+  border-left: 3px solid rgba(230, 196, 106, 0.5);
+  background:
+    repeating-linear-gradient(135deg, rgba(230, 196, 106, 0.05) 0 8px, transparent 8px 16px),
+    #0d0d1a;
+}
+.wrapper-head {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #e6c46a;
+  padding: 0.4rem 0.75rem 0.3rem;
+}
+.wrapper-code {
+  color: #565676;
+  padding: 0.1rem 0.75rem 0.5rem;
+  white-space: pre;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+/* Epilogue folds shut by default so a one-line lesson stays calm. */
+.wrapper-fold > summary { list-style: none; cursor: pointer; }
+.wrapper-fold > summary::-webkit-details-marker { display: none; }
+.wrapper-fold > summary:focus-visible { outline: 2px solid #e94560; outline-offset: -2px; }
+.wrapper-chev { display: inline-block; transition: transform 0.15s; }
+.wrapper-fold[open] .wrapper-chev { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .wrapper-chev { transition: none; } }
 
 .console-panel {
   display: flex;
@@ -554,4 +603,203 @@
 
 .game-events {
   margin-top: 1rem;
+}
+
+.sandpit-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* === The Codex — an ancient textbook that opens over the dark realm === */
+.codex-screen {
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  background:
+    radial-gradient(900px 500px at 80% -10%, rgba(233, 69, 96, 0.08), transparent 60%),
+    #0f0f23;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1rem 3rem;
+  gap: 1.25rem;
+}
+
+.codex-book {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  border-radius: 6px 10px 10px 6px;
+  border-left: 6px solid #b7a06f;
+  color: #3a2b1b;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  overflow: hidden;
+  background:
+    radial-gradient(120px 90px at 18% 22%, rgba(120, 90, 40, 0.10), transparent 60%),
+    radial-gradient(90px 70px at 78% 68%, rgba(120, 70, 30, 0.12), transparent 60%),
+    radial-gradient(60px 50px at 62% 15%, rgba(90, 60, 20, 0.10), transparent 60%),
+    linear-gradient(100deg, #efe3c6, #e5d6b6 40%, #d4bf94);
+  box-shadow:
+    0 26px 70px -28px rgba(0, 0, 0, 0.9),
+    inset 0 0 60px rgba(120, 90, 40, 0.18),
+    inset 0 0 0 1px rgba(120, 90, 40, 0.25);
+}
+.codex-book::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 40px 8px rgba(58, 43, 27, 0.22);
+  border-radius: inherit;
+}
+.codex-ribbon {
+  position: absolute;
+  top: -4px;
+  right: 26px;
+  width: 18px;
+  height: 64px;
+  background: #e94560;
+  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.6);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+}
+.codex-head {
+  padding: 1.15rem 1.3rem 0.5rem;
+  margin: 0 1rem;
+  border-bottom: 1px double rgba(58, 43, 27, 0.35);
+}
+.codex-sm {
+  display: block;
+  font-size: 0.66rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #6c583d;
+  margin-bottom: 0.25rem;
+}
+.codex-title { font-size: 1.25rem; color: #3a2b1b; }
+.codex-epigraph {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #6c583d;
+  padding: 0.7rem 1.3rem 0.4rem;
+  margin: 0 1rem;
+}
+.codex-entry {
+  padding: 0.75rem 1.3rem;
+  margin: 0 1rem;
+  border-bottom: 1px solid rgba(58, 43, 27, 0.16);
+  display: grid;
+  grid-template-columns: 2.1rem 1fr;
+  gap: 0.65rem;
+  align-items: start;
+}
+.codex-entry:last-child { border-bottom: none; }
+.codex-drop {
+  font-size: 2rem;
+  line-height: 1;
+  color: #a9812f;
+  font-weight: 700;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.codex-cast {
+  font-family: 'Consolas', monospace;
+  font-size: 0.85rem;
+  color: #3a2b1b;
+}
+.codex-cast .codex-nm { color: #9e2b25; font-weight: 700; }
+.codex-cast .codex-ar { font-style: italic; color: #6c583d; }
+.codex-gloss {
+  font-size: 0.92rem;
+  color: #4a3a28;
+  margin-top: 0.25rem;
+  max-width: 48ch;
+}
+.codex-rubric {
+  color: #9e2b25;
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+}
+.codex-colophon {
+  padding: 0.9rem 1.3rem 1.2rem;
+  margin: 0 1rem;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: #6c583d;
+  text-align: center;
+}
+.codex-back { align-self: center; }
+
+/* === The sandpit's opening welcome (required reading, once) === */
+.sandpit-intro-screen {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(#12122a, #0d0d1f);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem 3rem;
+}
+.forerunner-scene {
+  width: 100%;
+  max-width: 760px;
+  height: 90px;
+  background:
+    radial-gradient(340px 90px at 50% 120%, rgba(233, 69, 96, 0.22), transparent 70%),
+    linear-gradient(#0c1030, #0a0a1e);
+  border: 1px solid rgba(233, 69, 96, 0.22);
+  border-radius: 14px 14px 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.forerunner-figure {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #565676;
+  padding-bottom: 0.6rem;
+  text-align: center;
+}
+.forerunner-body {
+  width: 100%;
+  max-width: 760px;
+  background: #12122a;
+  border: 1px solid rgba(233, 69, 96, 0.22);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  padding: 1.4rem 1.6rem 1.6rem;
+}
+.forerunner-speaker {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fa8231;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+.forerunner-line {
+  color: #eee;
+  line-height: 1.6;
+  margin-bottom: 0.7rem;
+  max-width: 70ch;
+}
+.forerunner-line em { color: #e6c46a; font-style: normal; }
+.tool-forge { color: #e94560; font-weight: 600; }
+.tool-codex-link {
+  color: #a9812f;
+  font-weight: 700;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline dotted;
+}
+.tool-codex-link:hover { color: #c79a3c; }
+.forerunner-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.1rem;
 }

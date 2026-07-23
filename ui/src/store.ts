@@ -12,6 +12,7 @@ export type Screen =
   | "combat"
   | "spellbook"
   | "inventory"
+  | "codex"
   | "settings";
 
 export interface PlayerData {
@@ -78,6 +79,9 @@ export interface SaveData {
   spellbook: SpellEntry[];
   inventory: Array<{ item_id: string; count: number }>;
   settings_snapshot: { reduced_motion: boolean };
+  // The sandpit's opening welcome is required reading, shown once. Absent on
+  // older saves — treated as unseen, so returning players read it once too.
+  intro_seen?: boolean;
 }
 
 interface ClassInfo {
@@ -101,6 +105,8 @@ export interface GameState {
   currentZoneId: string | null;
   currentLessonId: string | null;
   currentEncounterId: string | null;
+  // Screen to return to when the Codex is closed (it opens over a hub).
+  codexReturn: Screen;
 
   // legacy fields still referenced by older components/tests
   nodes: WorldNode[];
@@ -135,6 +141,8 @@ export interface GameState {
   persistSave: () => Promise<void>;
   selectLesson: (zoneId: string, lessonId: string) => void;
   startEncounter: (zoneId: string, encounterId: string) => void;
+  openCodex: () => void;
+  markIntroSeen: () => Promise<void>;
   recordAttempt: (lessonId: string, playerRegion: string) => void;
   completeLesson: (lesson: {
     id: string;
@@ -191,6 +199,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   currentZoneId: null,
   currentLessonId: null,
   currentEncounterId: null,
+  codexReturn: "world-map",
   nodes: [],
   saveSlots: [],
   fontSize: 16,
@@ -283,6 +292,18 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   startEncounter: (zoneId, encounterId) =>
     set({ currentZoneId: zoneId, currentEncounterId: encounterId, screen: "combat" }),
+
+  // The Codex opens over whichever hub summoned it and returns there on close.
+  openCodex: () => set({ codexReturn: get().screen, screen: "codex" }),
+
+  // Mark the sandpit's welcome as read and persist it, so it shows only once.
+  markIntroSeen: async () => {
+    const { save } = get();
+    if (!save) return;
+    save.intro_seen = true;
+    set({ save: { ...save } });
+    await get().persistSave();
+  },
 
   recordAttempt: (lessonId, playerRegion) => {
     const { save, currentZoneId, sandpit } = get();

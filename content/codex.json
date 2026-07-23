@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "The Codex of Castings",
+  "epigraph": "Herein are set the words the realm still answers to. Speak them truly, and it will act.",
+  "castings": [
+    {
+      "name": "report",
+      "signature": "report(id, value)",
+      "gloss": "Speak a reading and the realm weighs it against what it expects of the trial.",
+      "judged": true,
+      "rubric": "By this the Keeper judges."
+    },
+    {
+      "name": "log",
+      "signature": "log(message)",
+      "gloss": "Whisper a line into the realm's record. For your eyes alone — never weighed."
+    },
+    {
+      "name": "heal",
+      "signature": "heal(target, amount)",
+      "gloss": "Restore a being's vitality. The realm acts, and you see it turn in the scene."
+    },
+    {
+      "name": "deal_damage",
+      "signature": "deal_damage(target, amount)",
+      "gloss": "Spend a being's vitality by force. The blow lands in the scene as you cast it."
+    },
+    {
+      "name": "set_stat",
+      "signature": "set_stat(name, value)",
+      "gloss": "Set one of a being's standings — its strength, its wits — to a number you name."
+    },
+    {
+      "name": "add_item",
+      "signature": "add_item(id, count)",
+      "gloss": "Grant an item to the pack. The later zones lean on this."
+    },
+    {
+      "name": "remove_item",
+      "signature": "remove_item(id, count)",
+      "gloss": "Take an item from the pack, by count."
+    },
+    {
+      "name": "cast_fx",
+      "signature": "cast_fx(spell)",
+      "gloss": "Loose a visible casting — light, fire, a sign in the air. Shown, never weighed."
+    }
+  ],
+  "colophon": "— folio i of the first edition · new leaves appear as the zones wake —"
+}

@@ -23,6 +23,8 @@ interface LessonData {
   narrative?: string;
   objective?: string;
   starter_code?: string;
+  prelude?: string;
+  epilogue?: string;
   solution?: string;
   hints?: Hint[];
   rewards?: { xp?: number; items?: Array<{ item_id: string; count: number }> };
@@ -115,6 +117,32 @@ const TeachingBlock: React.FC<{
         </div>
       )}
     </div>
+  );
+};
+
+// Given-by-the-realm band: the prelude/epilogue the runner wraps around the
+// player's code (runner/src/index.ts assembles prelude + player + epilogue).
+// Shown read-only so the player can see the whole program — main(), includes,
+// and the gameapi::report() that judges them — without being able to edit and
+// forge it. The prelude sits open above the editor; the epilogue folds below,
+// so a one-line lesson stays calm.
+const ForgeWrapper: React.FC<{ code: string; where: "prelude" | "epilogue" }> = ({ code, where }) => {
+  const body = <pre className="wrapper-code">{code.replace(/\n+$/, "")}</pre>;
+  if (where === "prelude") {
+    return (
+      <div className="wrapper-band given">
+        <div className="wrapper-head">🔒 Given by the realm</div>
+        {body}
+      </div>
+    );
+  }
+  return (
+    <details className="wrapper-band given wrapper-fold">
+      <summary className="wrapper-head">
+        <span className="wrapper-chev">▸</span> 🔒 The realm's reading &amp; reply
+      </summary>
+      {body}
+    </details>
   );
 };
 
@@ -360,15 +388,19 @@ const LessonRunnerScreen: React.FC = () => {
         </div>
 
         <div className="code-editor-container">
-          <Editor
-            height="100%"
-            language="cpp"
-            theme="vs-dark"
-            value={state.code}
-            onChange={handleEditorChange}
-            loading={<div className="monaco-loading">Loading code editor...</div>}
-            options={{ minimap: { enabled: false } }}
-          />
+          {lesson?.prelude && <ForgeWrapper code={lesson.prelude} where="prelude" />}
+          <div className="editor-region">
+            <Editor
+              height="100%"
+              language="cpp"
+              theme="vs-dark"
+              value={state.code}
+              onChange={handleEditorChange}
+              loading={<div className="monaco-loading">Loading code editor...</div>}
+              options={{ minimap: { enabled: false } }}
+            />
+          </div>
+          {lesson?.epilogue && <ForgeWrapper code={lesson.epilogue} where="epilogue" />}
         </div>
 
         <div className="action-bar">

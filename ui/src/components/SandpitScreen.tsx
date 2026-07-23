@@ -1,11 +1,16 @@
 import React from "react";
 import { useGameStore } from "../store";
+import { SandpitIntro } from "./SandpitIntro";
 
 // the sandpit (PHASE1.5 §2): always lowercase in-game. Mandatory lessons gate
 // the world map; optional lessons are zero-stakes practice, replayable forever.
 
 export const SandpitScreen: React.FC = () => {
-  const { sandpit, save, player, setScreen, selectLesson, sandpitComplete } = useGameStore();
+  const { sandpit, save, player, setScreen, selectLesson, sandpitComplete, openCodex } = useGameStore();
+
+  // Required reading, shown once at the very start of the sandpit before any
+  // lesson is reachable (persisted via save.intro_seen).
+  if (save && !save.intro_seen) return <SandpitIntro />;
 
   const lessonPassed = (lessonId: string): boolean =>
     save?.zones["sandpit"]?.lessons[lessonId]?.status === "passed";
@@ -20,11 +25,14 @@ export const SandpitScreen: React.FC = () => {
     <div className="sandpit-screen">
       <div className="sandpit-header">
         <h2>the sandpit</h2>
-        {player && (
-          <div className="player-summary">
-            {player.name} — {player.class}, Lv {player.level}
-          </div>
-        )}
+        <div className="sandpit-header-right">
+          {player && (
+            <span className="player-summary">
+              {player.name} — {player.class}, Lv {player.level}
+            </span>
+          )}
+          <button className="btn" onClick={openCodex}>✶ Codex</button>
+        </div>
       </div>
 
       <div className="sandpit-body">
