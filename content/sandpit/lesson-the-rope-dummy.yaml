@@ -51,15 +51,21 @@ objective: |
   and then lowers dummy_hp by 1 (dummy_hp = dummy_hp - 1;).
   Leave it at exactly 0.
 
-prelude: |
-    #include "gameapi.h"
-    #include <iostream>
-    int main() {
-        int dummy_hp = 3;
-        std::cout << "[The rope dummy sways on its post. Three stitches hold it. It has no idea what is coming, because it is a dummy.]" << std::endl;
-
 starter_code: ""
-epilogue: |
+solution: |
+        #include "gameapi.h"
+        #include <iostream>
+        int main() {
+            int dummy_hp = 3;
+            std::cout << "[The rope dummy sways on its post. Three stitches hold it. It has no idea what is coming, because it is a dummy.]" << std::endl;
+
+        std::cout << "I strike the dummy" << std::endl;
+        dummy_hp = dummy_hp - 1;
+        std::cout << "I strike the dummy" << std::endl;
+        dummy_hp = dummy_hp - 1;
+        std::cout << "I strike the dummy" << std::endl;
+        dummy_hp = dummy_hp - 1;
+
         gameapi::report("dummy_hp", dummy_hp);
         if (dummy_hp <= 0) {
             std::cout << "[The last stitch parts. The dummy folds into the sand with what dignity it can manage.]" << std::endl;
@@ -69,14 +75,6 @@ epilogue: |
         }
         return 0;
         }
-
-solution: |
-        std::cout << "I strike the dummy" << std::endl;
-        dummy_hp = dummy_hp - 1;
-        std::cout << "I strike the dummy" << std::endl;
-        dummy_hp = dummy_hp - 1;
-        std::cout << "I strike the dummy" << std::endl;
-        dummy_hp = dummy_hp - 1;
 
 validation:
   checks:

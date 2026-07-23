@@ -18,23 +18,21 @@ objective: |
   If the reference is true, the lantern itself will read 100 — you
   never touched it directly.
 
-prelude: |
-  #include "gameapi.h"
-  #include <string>
-  int main() {
-      int lantern = 20;
-
 starter_code: ""
-epilogue: |
+solution: |
+      #include "gameapi.h"
+      #include <string>
+      int main() {
+          int lantern = 20;
+
+      int& mirror = lantern;
+      mirror = 100;
+
       gameapi::report("lantern", lantern);
       gameapi::report("mirror", mirror);
       gameapi::log("You brightened the mirror — and the lantern answered.");
       return 0;
       }
-
-solution: |
-      int& mirror = lantern;
-      mirror = 100;
 
 validation:
   checks:

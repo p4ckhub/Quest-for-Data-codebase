@@ -50,16 +50,13 @@ objective: |
   print exactly: The vessel holds
   and close it cleanly with return 0;
 
-prelude: |
-    #include "gameapi.h"
-    #include <iostream>
-
 starter_code: |
     // Open your vessel here -- yours alone, borrowed from no one
 
-epilogue: ""
-
 solution: |
+    #include "gameapi.h"
+    #include <iostream>
+
     int main() {
         std::cout << "The vessel holds" << std::endl;
         return 0;

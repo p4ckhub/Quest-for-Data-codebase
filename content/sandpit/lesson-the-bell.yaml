@@ -42,21 +42,19 @@ objective: |
   — carrying the 3 as a bare number (no quotes around it), chained
   between the words with <<.
 
-prelude: |
-    #include "gameapi.h"
-    #include <iostream>
-    int main() {
-        std::cout << "[The bell waits, tarnished and patient.]" << std::endl;
-
 starter_code: ""
-epilogue: |
+solution: |
+        #include "gameapi.h"
+        #include <iostream>
+        int main() {
+            std::cout << "[The bell waits, tarnished and patient.]" << std::endl;
+
+        std::cout << "I ring the bell " << 3 << " times." << std::endl;
+
         std::cout << "[The bell sings. Somewhere far off, something answers it.]" << std::endl;
         std::cout << "[The Forerunner] Three rings. The realm counted with you -- it always does, when a number travels bare." << std::endl;
         return 0;
         }
-
-solution: |
-        std::cout << "I ring the bell " << 3 << " times." << std::endl;
 
 validation:
   checks:

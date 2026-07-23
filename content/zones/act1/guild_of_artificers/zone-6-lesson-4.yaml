@@ -25,25 +25,11 @@ objective: |
   The seal will forge the hero "Aster" (30 hp, 7 str) and put the form
   through its paces.
 
-prelude: |
+starter_code: ""
+solution: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: ""
-epilogue: |
-  int main() {
-      Character hero("Aster", 30, 7);
-      gameapi::report("who", hero.who());
-      gameapi::report("attack", hero.attack());
-      hero.take_damage(12);
-      gameapi::report("after_wound", hero.health());
-      hero.take_damage(99);
-      gameapi::report("after_overkill", hero.health());
-      gameapi::log(hero.who() + " stands — a Character, defined by your own hand.");
-      return 0;
-  }
-
-solution: |
   class Character {
   private:
       std::string name;
@@ -67,6 +53,18 @@ solution: |
           return hp;
       }
   };
+
+  int main() {
+      Character hero("Aster", 30, 7);
+      gameapi::report("who", hero.who());
+      gameapi::report("attack", hero.attack());
+      hero.take_damage(12);
+      gameapi::report("after_wound", hero.health());
+      hero.take_damage(99);
+      gameapi::report("after_overkill", hero.health());
+      gameapi::log(hero.who() + " stands — a Character, defined by your own hand.");
+      return 0;
+  }
 
 validation:
   checks:

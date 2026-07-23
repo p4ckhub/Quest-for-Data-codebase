@@ -19,20 +19,14 @@ objective: |
   "unknown" for anything else (the default case). Remember break after
   each case.
 
-prelude: |
-  #include "gameapi.h"
-  #include <string>
-  int main() {
-      char sigil = 'W';
-      std::string element = "";
-
 starter_code: ""
-epilogue: |
-      gameapi::report("element", element);
-      return 0;
-      }
-
 solution: |
+      #include "gameapi.h"
+      #include <string>
+      int main() {
+          char sigil = 'W';
+          std::string element = "";
+
       switch (sigil) {
           case 'F':
               element = "fire";
@@ -46,6 +40,10 @@ solution: |
           default:
               element = "unknown";
               break;
+      }
+
+      gameapi::report("element", element);
+      return 0;
       }
 
 validation:

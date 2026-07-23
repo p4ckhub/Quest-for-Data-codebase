@@ -45,24 +45,22 @@ objective: |
   using the variable, then assign "crimson" to cloak and print again
   with the same cast, so the realm hears: I wear crimson
 
-prelude: |
-    #include "gameapi.h"
-    #include <iostream>
-    #include <string>
-    int main() {
-        std::string cloak = "ash-grey";
-        std::cout << "[The rack creaks. The crimson cloak waits on its peg.]" << std::endl;
-
 starter_code: ""
-epilogue: |
-        std::cout << "[The Forerunner] Same cast, twice -- and it told two truths, because you changed what the name held between them. Nothing here will show the crimson. Wear it anyway." << std::endl;
-        return 0;
-        }
-
 solution: |
+        #include "gameapi.h"
+        #include <iostream>
+        #include <string>
+        int main() {
+            std::string cloak = "ash-grey";
+            std::cout << "[The rack creaks. The crimson cloak waits on its peg.]" << std::endl;
+
         std::cout << "I wear " << cloak << "." << std::endl;
         cloak = "crimson";
         std::cout << "I wear " << cloak << "." << std::endl;
+
+        std::cout << "[The Forerunner] Same cast, twice -- and it told two truths, because you changed what the name held between them. Nothing here will show the crimson. Wear it anyway." << std::endl;
+        return 0;
+        }
 
 validation:
   checks:

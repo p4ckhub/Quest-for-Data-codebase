@@ -19,26 +19,24 @@ objective: |
   number (for this trial: "arrows 17"). Use std::cin with >> to read
   the word into item, then the number into count.
 
-prelude: |
-  #include "gameapi.h"
-  #include <iostream>
-  #include <string>
-  int main() {
-      std::string item;
-      int count = 0;
-
 starter_code: ""
-epilogue: |
+stdin_fixture: "arrows 17\n"
+
+solution: |
+      #include "gameapi.h"
+      #include <iostream>
+      #include <string>
+      int main() {
+          std::string item;
+          int count = 0;
+
+      std::cin >> item;
+      std::cin >> count;
+
       gameapi::report("item", item);
       gameapi::report("count", count);
       return 0;
       }
-
-stdin_fixture: "arrows 17\n"
-
-solution: |
-      std::cin >> item;
-      std::cin >> count;
 
 validation:
   checks:

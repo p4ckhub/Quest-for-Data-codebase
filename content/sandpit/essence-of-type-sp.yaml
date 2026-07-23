@@ -86,20 +86,18 @@ objective: |
   (the brazier is lit) and door_mark (the door is carved with the letter
   K). The Keeper inspects both when the casting ends.
 
-prelude: |
-    #include "gameapi.h"
-    int main() {
-
 starter_code: ""
-epilogue: |
+solution: |
+            #include "gameapi.h"
+            int main() {
+
+            bool brazier_lit = true;
+            char door_mark = 'K';
+
             gameapi::report("brazier_lit", brazier_lit);
             gameapi::report("door_mark", door_mark);
             return 0;
             }
-
-solution: |
-            bool brazier_lit = true;
-            char door_mark = 'K';
 
 validation:
   checks:

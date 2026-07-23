@@ -23,12 +23,18 @@ objective: |
   The seal sends the same blade (gleam 10) through both doors and
   reports what each door left behind.
 
-prelude: |
+starter_code: ""
+solution: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: ""
-epilogue: |
+  void polish_copy(int gleam) {
+      gleam += 50;
+  }
+  void polish_true(int& gleam) {
+      gleam += 50;
+  }
+
   int main() {
       int blade = 10;
       polish_copy(blade);
@@ -37,14 +43,6 @@ epilogue: |
       gameapi::report("after_true", blade);
       gameapi::log("The copy-room shrugs; the mirror-door gleams.");
       return 0;
-  }
-
-solution: |
-  void polish_copy(int gleam) {
-      gleam += 50;
-  }
-  void polish_true(int& gleam) {
-      gleam += 50;
   }
 
 validation:

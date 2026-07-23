@@ -17,25 +17,23 @@ objective: |
   sets the already-declared std::string named gate to exactly "open"
   when gold >= 5, and to exactly "sealed" otherwise.
 
-prelude: |
-  #include "gameapi.h"
-  #include <string>
-  int main() {
-      int gold = 7;
-      std::string gate = "";
-
 starter_code: ""
-epilogue: |
-      gameapi::report("gate", gate);
-      gameapi::report("gold", gold);
-      return 0;
-      }
-
 solution: |
+      #include "gameapi.h"
+      #include <string>
+      int main() {
+          int gold = 7;
+          std::string gate = "";
+
       if (gold >= 5) {
           gate = "open";
       } else {
           gate = "sealed";
+      }
+
+      gameapi::report("gate", gate);
+      gameapi::report("gold", gold);
+      return 0;
       }
 
 validation:

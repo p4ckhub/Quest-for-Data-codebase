@@ -23,23 +23,11 @@ objective: |
     int balance()              — returns the gold inside
   The vault's law: the balance may never go negative.
 
-prelude: |
+starter_code: ""
+solution: |
   #include "gameapi.h"
   #include <string>
 
-starter_code: ""
-epilogue: |
-  int main() {
-      Lockbox box;
-      box.deposit(50);
-      box.spend(20);
-      box.spend(100);  // more than the box holds — the law says: refused
-      gameapi::report("balance", box.balance());
-      gameapi::log("The Lockbox clicks shut. Its law held.");
-      return 0;
-  }
-
-solution: |
   class Lockbox {
   private:
       int gold = 0;
@@ -56,6 +44,16 @@ solution: |
           return gold;
       }
   };
+
+  int main() {
+      Lockbox box;
+      box.deposit(50);
+      box.spend(20);
+      box.spend(100);  // more than the box holds — the law says: refused
+      gameapi::report("balance", box.balance());
+      gameapi::log("The Lockbox clicks shut. Its law held.");
+      return 0;
+  }
 
 validation:
   checks:
