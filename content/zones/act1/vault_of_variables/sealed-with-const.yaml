@@ -49,7 +49,7 @@ starter_code: |
     // TODO: Declare a const int named hp with the value the objective names.
     // TODO: Declare a const float named mana with the value the objective names.
     // TODO: Declare a const double named speed with the value the objective names.
-    // TODO: Leave the Keeper's reading untouched.
+    // TODO: Print the reading -- one labelled line for each value the objective checks.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

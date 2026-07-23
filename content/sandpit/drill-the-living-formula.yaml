@@ -25,9 +25,9 @@ objective: |
 starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Open a main function.
-    // TODO: Keep the carved crystals as given -- grit and edge, already lit.
+    // TODO: Declare the two ints the objective works from -- grit and edge -- with the values it names.
     // TODO: In one statement, bind an int named strike to the objective's formula, held in braces.
-    // TODO: Leave the carved reading below untouched -- it speaks the newborn.
+    // TODO: Print the reading below -- one labelled line showing the value you just bound.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

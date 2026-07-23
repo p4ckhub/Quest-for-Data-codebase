@@ -28,7 +28,7 @@ starter_code: |
     // TODO: Open a main function.
     // TODO: Declare an int named rope_count holding the value the drill demands.
     // TODO: Declare an int named drill_rank holding the value the drill demands.
-    // TODO: Leave the carved reading untouched -- it already speaks the ledger.
+    // TODO: Print the reading -- one labelled line for each value the ledger checks.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

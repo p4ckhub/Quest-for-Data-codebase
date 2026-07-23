@@ -46,7 +46,7 @@ starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Forge int temper(int heat) -- give it a vessel to receive heat -- returning the objective's formula.
     // TODO: Open a main function.
-    // TODO: Keep the carved crystal heat as given.
+    // TODO: Declare the int heat that stays main's own, with the value the objective names.
     // TODO: Print the label, then temper called with main's own heat passed as the offering.
     // TODO: Return 0 to seal the rite.
 solution: |

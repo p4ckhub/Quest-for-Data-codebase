@@ -48,7 +48,7 @@ starter_code: |
     // TODO: Open a main function.
     // TODO: Declare a bool named isAwake with the value the objective names.
     // TODO: Declare a char named symbol with the value the objective names.
-    // TODO: Leave the carved reading untouched.
+    // TODO: Print the reading -- one labelled line showing the value the objective checks.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

@@ -31,7 +31,7 @@ starter_code: |
     // TODO: Open a main function.
     // TODO: Declare an int named lanterns with no value yet -- an empty vessel.
     // TODO: On the next line, assign it the value the objective names.
-    // TODO: Reproduce the carved reading exactly as given -- the literal number, then your vessel.
+    // TODO: Print the reading -- one line showing the literal number, then a line showing your vessel's value.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

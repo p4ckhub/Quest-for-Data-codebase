@@ -27,7 +27,7 @@ objective: |
 starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Open a main function.
-    // TODO: Keep the carved crystals as given -- fury and calm, already lit.
+    // TODO: Declare the two ints the objective works from -- fury and calm -- with the values it names.
     // TODO: Print unbent, then the value where multiplication binds before addition.
     // TODO: Print bent, then the value where parentheses force the addition first.
     // TODO: Return 0 to seal the rite.

@@ -46,7 +46,7 @@ starter_code: |
     // TODO: Declare an int named hp with the value the objective names.
     // TODO: Declare an int named mp with the value the objective names.
     // TODO: Declare a float named staminaRegen with the value the objective names.
-    // TODO: Leave the Keeper's reading untouched.
+    // TODO: Print the reading -- one labelled line for each value the objective checks.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

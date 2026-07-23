@@ -48,7 +48,7 @@ starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Forge int embers() to hand back the value the objective demands.
     // TODO: Open a main function.
-    // TODO: Leave the carved casts untouched -- they read the gift bare, then worked with three.
+    // TODO: Print two lines -- the gift bare, then the gift worked into an expression with three.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

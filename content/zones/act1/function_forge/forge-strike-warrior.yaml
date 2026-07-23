@@ -37,7 +37,7 @@ starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Forge int strike() to return any value between 5 and 10 inclusive.
     // TODO: Open a main function.
-    // TODO: Leave the carved lines untouched -- they cast strike and read its force.
+    // TODO: In main, call strike() and print its force -- a labelled line showing the returned value.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

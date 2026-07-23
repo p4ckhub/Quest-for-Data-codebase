@@ -50,7 +50,7 @@ starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Forge void war_cry() whose deed prints a war cry of your choosing -- a true one ends with an exclamation mark.
     // TODO: Open a main function.
-    // TODO: Leave the carved summons untouched -- it casts your forging.
+    // TODO: In main, call war_cry() so your forging is cast.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

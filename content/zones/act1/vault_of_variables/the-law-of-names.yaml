@@ -48,7 +48,7 @@ starter_code: |
     // TODO: Open a main function.
     // TODO: Declare an int named twin_blades holding the value the ledger demands.
     // TODO: Declare an int named battle_class holding the value the ledger demands.
-    // TODO: Leave the Keeper's reading untouched.
+    // TODO: Print the reading -- one labelled line for each value the objective checks.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

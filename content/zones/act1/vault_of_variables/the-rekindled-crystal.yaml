@@ -44,11 +44,11 @@ objective: |
 starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Open a main function.
-    // TODO: Keep the carved line that lights lanterns at 2 as given.
+    // TODO: Declare int lanterns and light it at 2 -- the line the Keeper lit at dawn.
     // TODO: Below it, assign lanterns the new value the objective names -- no int, no redeclaring.
     // TODO: Initialize your own int named oaths with the objective's first value.
     // TODO: Then assign oaths its second value.
-    // TODO: Leave the Keeper's nightfall reading untouched.
+    // TODO: Print the reading -- a labelled line for lanterns and a labelled line for oaths.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

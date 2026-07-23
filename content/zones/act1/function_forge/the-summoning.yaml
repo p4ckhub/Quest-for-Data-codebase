@@ -56,9 +56,9 @@ starter_code: |
     // TODO: Forge void hammer_falls() that prints its line.
     // TODO: Forge void bellows_roar() that prints its line.
     // TODO: Open a main function.
-    // TODO: Keep the carved opening cast as given.
+    // TODO: Print the opening line the objective names, before the summons.
     // TODO: Summon hammer_falls once, then bellows_roar twice -- exactly that order.
-    // TODO: Keep the carved closing cast as given.
+    // TODO: Print the closing line the objective names, after the summons.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

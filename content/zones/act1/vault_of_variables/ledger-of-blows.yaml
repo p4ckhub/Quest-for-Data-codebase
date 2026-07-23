@@ -45,9 +45,9 @@ objective: |
 starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Open a main function.
-    // TODO: Keep the carved standing entries as given -- str and agi.
+    // TODO: Declare the two ints the objective works from -- str and agi -- with the values it names.
     // TODO: Initialize an int named blow from the objective's formula, computed from the variables, not a bare number.
-    // TODO: Leave the carved tally untouched.
+    // TODO: Print the tally -- a labelled line showing the value you computed.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

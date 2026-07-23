@@ -29,7 +29,7 @@ starter_code: |
     // TODO: Open a main function for the whole rite to live in.
     // TODO: Bind an int named coals to the whole number the objective asks for -- keep it in braces so the realm refuses any spill.
     // TODO: Bind an int named soot with EMPTY braces, so it holds nothing but zero.
-    // TODO: Reproduce the carved reading exactly as given -- two spoken lines, each a label then its value.
+    // TODO: Print the reading -- two lines, each a label in quotes followed by its value.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

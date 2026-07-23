@@ -34,9 +34,9 @@ starter_code: |
     // TODO: Forge void step_forward() that speaks its one line.
     // TODO: Forge void turn_about() that speaks its one line.
     // TODO: Open a main function.
-    // TODO: Keep the carved opening line as given.
+    // TODO: Print the opening line the objective names, before the summons.
     // TODO: Summon step_forward once, then turn_about twice -- exactly that order.
-    // TODO: Keep the carved closing line as given.
+    // TODO: Print the closing line the objective names, after the summons.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

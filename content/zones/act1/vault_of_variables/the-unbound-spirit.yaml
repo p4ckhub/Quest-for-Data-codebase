@@ -47,7 +47,7 @@ starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Open a main function.
     // TODO: Bind an int named omen at its birth so it holds the value the objective names -- no residue.
-    // TODO: Leave the Keeper's reading untouched.
+    // TODO: Print the reading -- one labelled line for each value the objective checks.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

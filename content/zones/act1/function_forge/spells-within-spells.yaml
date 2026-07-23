@@ -53,7 +53,7 @@ starter_code: |
     // TODO: Forge int base_force() returning the value the objective names.
     // TODO: Forge int empowered() that returns base_force() plus the objective's amount -- it must CALL base_force, not just write the total.
     // TODO: Open a main function.
-    // TODO: Leave the carved casts untouched -- they weigh both moulds.
+    // TODO: Print two lines -- one showing base_force()'s value, one showing empowered()'s -- so both are cast.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

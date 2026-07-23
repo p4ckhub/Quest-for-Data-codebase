@@ -55,7 +55,7 @@ starter_code: |
     // TODO: Forge int attack() with no parameters, returning the value the objective names.
     // TODO: Forge int attack(int fury) with one parameter, returning the objective's formula -- same name, different form.
     // TODO: Open a main function.
-    // TODO: Leave the carved casts untouched -- they call both forms.
+    // TODO: Print two lines -- one calling attack() bare, one calling attack with an offering -- so both forms are cast.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

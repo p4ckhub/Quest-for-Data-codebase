@@ -31,7 +31,7 @@ starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Forge int stride(int paces) -- give it a vessel to receive paces -- returning the objective's formula.
     // TODO: Open a main function.
-    // TODO: Keep the carved crystal paces as given.
+    // TODO: Declare the int paces that stays main's own, with the value the objective names.
     // TODO: Print the label, then stride called with main's own paces passed as the offering.
     // TODO: Return 0 to seal the rite.
 solution: |

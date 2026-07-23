@@ -32,7 +32,7 @@ starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Above main, raise one directive: #define the mark the objective names, so the guarded line wakes.
     // TODO: Open a main function.
-    // TODO: Leave the carved body untouched -- the first cast, the #ifdef-guarded cast, and the #if 0 passage that stays buried.
+    // TODO: Write the body the objective describes -- the first cast, the #ifdef-guarded cast, and an #if 0 passage that stays buried.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

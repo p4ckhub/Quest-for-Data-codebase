@@ -54,7 +54,7 @@ starter_code: |
     // TODO: Open a main function.
     // TODO: Bind an int named embers to the whole number the objective names, in braces so the realm refuses any spill.
     // TODO: Bind an int named ashes with EMPTY braces, so it holds 0.
-    // TODO: Leave the Keeper's reading untouched.
+    // TODO: Print the reading -- one labelled line for each value the objective checks.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>

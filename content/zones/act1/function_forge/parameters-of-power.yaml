@@ -46,7 +46,7 @@ starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Forge int strike_with(int fury) returning the objective's formula -- the fury parameter must appear in the return.
     // TODO: Open a main function.
-    // TODO: Leave the carved tests untouched -- they offer two furies and read the damage.
+    // TODO: In main, print two lines calling strike_with with two different furies, showing the damage each returns.
     // TODO: Return 0 to seal the rite.
 solution: |
   #include <iostream>
