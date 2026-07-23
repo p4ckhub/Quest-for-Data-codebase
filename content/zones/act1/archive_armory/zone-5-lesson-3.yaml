@@ -19,23 +19,25 @@ objective: |
   suffix joined together (exactly "iron-fang"), then set name_length
   to blade_name's length (9).
 
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+  int main() {
+      std::string prefix = "iron";
+      std::string suffix = "fang";
+      std::string blade_name = "";
+      int name_length = 0;
+
 starter_code: ""
-solution: |
-      #include "gameapi.h"
-      #include <string>
-      int main() {
-          std::string prefix = "iron";
-          std::string suffix = "fang";
-          std::string blade_name = "";
-          int name_length = 0;
-
-      blade_name = prefix + "-" + suffix;
-      name_length = blade_name.length();
-
+epilogue: |
       gameapi::report("blade_name", blade_name);
       gameapi::report("name_length", name_length);
       return 0;
       }
+
+solution: |
+      blade_name = prefix + "-" + suffix;
+      name_length = blade_name.length();
 
 validation:
   checks:

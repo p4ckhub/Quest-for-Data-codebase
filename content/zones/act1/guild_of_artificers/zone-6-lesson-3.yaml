@@ -23,13 +23,26 @@ objective: |
   The seal raises a Ward of 40 inside a scope, then lets the scope end —
   your destructor must fire on its own.
 
-starter_code: ""
-solution: |
+prelude: |
   #include "gameapi.h"
   #include <string>
 
   int reclaimed = 0;
 
+starter_code: ""
+epilogue: |
+  int main() {
+      {
+          Ward w(40);
+          gameapi::report("ward_power", w.power());
+          gameapi::report("reclaimed_before", reclaimed);
+      }  // <- the scope ends here; the rite of unmaking runs by itself
+      gameapi::report("reclaimed_after", reclaimed);
+      gameapi::log("The ward dissolves; its aether flows back to the Guild.");
+      return 0;
+  }
+
+solution: |
   class Ward {
   private:
       int strength;
@@ -42,17 +55,6 @@ solution: |
           reclaimed += strength;
       }
   };
-
-  int main() {
-      {
-          Ward w(40);
-          gameapi::report("ward_power", w.power());
-          gameapi::report("reclaimed_before", reclaimed);
-      }  // <- the scope ends here; the rite of unmaking runs by itself
-      gameapi::report("reclaimed_after", reclaimed);
-      gameapi::log("The ward dissolves; its aether flows back to the Guild.");
-      return 0;
-  }
 
 validation:
   checks:

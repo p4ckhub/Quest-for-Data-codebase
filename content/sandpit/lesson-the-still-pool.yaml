@@ -45,20 +45,22 @@ objective: |
   choosing, then use it in a cast to print: My hair is <your color>.
   (For example: My hair is brown.)
 
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    #include <string>
+    int main() {
+        std::cout << "[The pool holds your reflection perfectly still, waiting.]" << std::endl;
+
 starter_code: ""
-solution: |
-        #include "gameapi.h"
-        #include <iostream>
-        #include <string>
-        int main() {
-            std::cout << "[The pool holds your reflection perfectly still, waiting.]" << std::endl;
-
-        std::string hair = "brown";
-        std::cout << "My hair is " << hair << "." << std::endl;
-
+epilogue: |
         std::cout << "[The Forerunner] So it is, and so the realm remembers -- even though no mirror here will show it yet. What you declare, you carry." << std::endl;
         return 0;
         }
+
+solution: |
+        std::string hair = "brown";
+        std::cout << "My hair is " << hair << "." << std::endl;
 
 validation:
   checks:

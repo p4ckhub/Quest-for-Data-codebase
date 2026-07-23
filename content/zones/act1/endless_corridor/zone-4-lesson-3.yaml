@@ -21,12 +21,18 @@ objective: |
   without counting. Every other stone adds 1 to safe_steps. Done right,
   you step on exactly 8 safe stones before the door.
 
-starter_code: ""
-solution: |
-      #include "gameapi.h"
-      int main() {
-          int safe_steps = 0;
+prelude: |
+  #include "gameapi.h"
+  int main() {
+      int safe_steps = 0;
 
+starter_code: ""
+epilogue: |
+      gameapi::report("safe_steps", safe_steps);
+      return 0;
+      }
+
+solution: |
       for (int stone = 1; stone <= 20; ++stone) {
           if (stone == 13) {
               break;
@@ -35,10 +41,6 @@ solution: |
               continue;
           }
           safe_steps += 1;
-      }
-
-      gameapi::report("safe_steps", safe_steps);
-      return 0;
       }
 
 validation:

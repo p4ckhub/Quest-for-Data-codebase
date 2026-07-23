@@ -45,20 +45,22 @@ objective: |
   I see the garment rack
   I see the still pool
 
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    int main() {
+        std::cout << "[You rise. The sand shifts underfoot. The Forerunner watches you go.]" << std::endl;
+
 starter_code: ""
-solution: |
-        #include "gameapi.h"
-        #include <iostream>
-        int main() {
-            std::cout << "[You rise. The sand shifts underfoot. The Forerunner watches you go.]" << std::endl;
-
-        std::cout << "I see the rope dummy" << std::endl;
-        std::cout << "I see the garment rack" << std::endl;
-        std::cout << "I see the still pool" << std::endl;
-
+epilogue: |
         std::cout << "[The Forerunner] Good. Dummy, rack, pool. You walked it exactly as you wrote it -- the realm did not skip a step, and it never will." << std::endl;
         return 0;
         }
+
+solution: |
+        std::cout << "I see the rope dummy" << std::endl;
+        std::cout << "I see the garment rack" << std::endl;
+        std::cout << "I see the still pool" << std::endl;
 
 validation:
   checks:

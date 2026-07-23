@@ -20,21 +20,23 @@ objective: |
   exactly 4. Beware: a loop whose condition never turns false marches
   until the Corridor devours you.
 
+prelude: |
+  #include "gameapi.h"
+  int main() {
+      int wards = 12;
+      int strikes = 0;
+
 starter_code: ""
-solution: |
-      #include "gameapi.h"
-      int main() {
-          int wards = 12;
-          int strikes = 0;
-
-      while (wards > 0) {
-          wards -= 3;
-          strikes += 1;
-      }
-
+epilogue: |
       gameapi::report("wards", wards);
       gameapi::report("strikes", strikes);
       return 0;
+      }
+
+solution: |
+      while (wards > 0) {
+          wards -= 3;
+          strikes += 1;
       }
 
 validation:

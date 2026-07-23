@@ -43,21 +43,23 @@ narrative: |
 objective: |
   Use std::cout to speak your first words. Print exactly: I am awake
 
+prelude: |
+    #include "gameapi.h"
+    #include <iostream>
+    int main() {
+        std::cout << "[?] Easy now. Speak: I am awake" << std::endl;
+
 starter_code: ""
-solution: |
-        #include "gameapi.h"
-        #include <iostream>
-        int main() {
-            std::cout << "[?] Easy now. Speak: I am awake" << std::endl;
-
-        std::cout << "I am awake" << std::endl;
-
+epilogue: |
         std::cout << "[The Forerunner] There. Your first cast. The realm heard you -- I felt it turn its head." << std::endl;
         std::cout << "[The Forerunner] I am called the Forerunner. I have won wars you will never read of, and lost more than I won. I did not come back through all those ages to hand you power. I came to wake what was already in you." << std::endl;
         std::cout << "[The Forerunner] The realm is quieter than it should be. Something is wrong at its foundations. So we begin with foundations." << std::endl;
         gameapi::report("awake", 1);
         return 0;
         }
+
+solution: |
+        std::cout << "I am awake" << std::endl;
 
 validation:
   checks:

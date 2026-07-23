@@ -18,18 +18,20 @@ objective: |
   with a counter running from 1 to 10 (inclusive) that adds the counter
   to sparks each pass. When the last torch is lit, sparks must equal 55.
 
+prelude: |
+  #include "gameapi.h"
+  int main() {
+      int sparks = 0;
+
 starter_code: ""
-solution: |
-      #include "gameapi.h"
-      int main() {
-          int sparks = 0;
-
-      for (int torch = 1; torch <= 10; ++torch) {
-          sparks += torch;
-      }
-
+epilogue: |
       gameapi::report("sparks", sparks);
       return 0;
+      }
+
+solution: |
+      for (int torch = 1; torch <= 10; ++torch) {
+          sparks += torch;
       }
 
 validation:

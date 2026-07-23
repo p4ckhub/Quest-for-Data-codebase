@@ -17,16 +17,12 @@ objective: |
   called name, and an int called heal. The Guild's seal (below your
   incantation) will pour a real potion into your form and read it back.
 
-starter_code: ""
-solution: |
+prelude: |
   #include "gameapi.h"
   #include <string>
 
-  struct Potion {
-      std::string name;
-      int heal;
-  };
-
+starter_code: ""
+epilogue: |
   int main() {
       Potion p;
       p.name = "Emberdew";
@@ -36,6 +32,12 @@ solution: |
       gameapi::log("The Guild presses its seal: the form '" + p.name + "' is real.");
       return 0;
   }
+
+solution: |
+  struct Potion {
+      std::string name;
+      int heal;
+  };
 
 validation:
   checks:

@@ -19,24 +19,26 @@ objective: |
   (using *finger). Then re-aim the same finger at silver and add 10
   there too. Both chests must grow — through the one pointer.
 
+prelude: |
+  #include "gameapi.h"
+  #include <string>
+  int main() {
+      int copper = 5;
+      int silver = 12;
+
 starter_code: ""
-solution: |
-      #include "gameapi.h"
-      #include <string>
-      int main() {
-          int copper = 5;
-          int silver = 12;
-
-      int* finger = &copper;
-      *finger += 10;
-      finger = &silver;
-      *finger += 10;
-
+epilogue: |
       gameapi::report("copper", copper);
       gameapi::report("silver", silver);
       gameapi::log("One finger, two chests — the Realm nods.");
       return 0;
       }
+
+solution: |
+      int* finger = &copper;
+      *finger += 10;
+      finger = &silver;
+      *finger += 10;
 
 validation:
   checks:
