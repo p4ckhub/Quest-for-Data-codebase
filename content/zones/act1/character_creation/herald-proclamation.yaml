@@ -36,10 +36,10 @@ narrative: |
 objective: |
   Deliver a proclamation of three casts, printing these three lines in
   this order:
-  Hear me, halls of stone
-  I have awakened
+  Hear me, halls of stone,
+  I have awakened,
   I count 3 gates before me
-  — and let the 3 travel bare (unquoted), chained into the final cast.
+  — and let the '3' travel bare (unquoted), chained into the final cast.
 
 starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
@@ -48,6 +48,7 @@ starter_code: |
     // TODO: Speak the three proclamations the objective lists, each on its own cast, in order.
     // TODO: In the last cast, let the gate count travel bare (unquoted), chained in with <<.
     // TODO: Return 0 to seal the rite.
+    
 solution: |
   #include <iostream>
 
