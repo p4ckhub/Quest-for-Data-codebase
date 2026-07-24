@@ -58,6 +58,7 @@ starter_code: |
     // TODO: On the next line, assign it the value the objective names.
     // TODO: Print the reading -- one line showing the literal number, then a line showing your vessel's value.
     // TODO: Return 0 to seal the rite.
+    
 solution: |
   #include <iostream>
 
