@@ -44,18 +44,22 @@ narrative: |
   exist.
 
 objective: |
-  Cast the scroll as given and read the narrowing refusal. Then mend
-  the embers crystal to hold the whole number 4 with braces, and bind
-  an int named ashes with empty braces so it holds 0. Leave the
-  Keeper's reading untouched.
+  Bind two ember crystals. The first bind an int ember crystal to hold the whole number 4 with braces, and bind the second
+  int named ashes with empty braces so it holds 0.
 
 starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Open a main function.
     // TODO: Bind an int named embers to the whole number the objective names, in braces so the realm refuses any spill.
     // TODO: Bind an int named ashes with EMPTY braces, so it holds 0.
-    // TODO: Print the reading -- one labelled line for each value the objective checks.
+    // TODO: Print the outputs carved by the realm.
+    // TODO: Use "\n"; instead of endl; for your outputs.
     // TODO: Return 0 to seal the rite.
+
+
+    // [carved by the realm] embers 4
+    // [carved by the realm] ashes 0
+
 solution: |
   #include <iostream>
 
@@ -63,7 +67,6 @@ solution: |
       int embers{ 4 };
       int ashes{};
 
-      // [carved by the realm] The Keeper reads the shelf:
       std::cout << "embers " << embers << "\n";
       std::cout << "ashes " << ashes << "\n";
       return 0;

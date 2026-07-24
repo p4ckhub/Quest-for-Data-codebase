@@ -41,15 +41,20 @@ narrative: |
 objective: |
   Above the Keeper's reading, declare and initialize: a bool named
   isAwake with value true, and a char named symbol with value 'X'.
-  Leave the reading itself untouched.
 
 starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Open a main function.
     // TODO: Declare a bool named isAwake with the value the objective names.
     // TODO: Declare a char named symbol with the value the objective names.
-    // TODO: Print the reading -- one labelled line showing the value the objective checks.
+    // TODO: Print the outputs carved by the realm
+    // TODO: Interchangethe ending of all of your outputs as "\n"; instead of endl; from now on.
     // TODO: Return 0 to seal the rite.
+
+
+    // [carved by the realm] awake 1
+    // [carved by the realm] symbol X
+
 solution: |
   #include <iostream>
 
@@ -59,7 +64,7 @@ solution: |
 
       // [carved by the realm] The Keeper reads the crystals aloud:
       std::cout << "awake " << isAwake << "\n";
-      std::cout << "sigil " << symbol << "\n";
+      std::cout << "symbol " << symbol << "\n";
       return 0;
   }
 
@@ -67,7 +72,7 @@ validation:
   checks:
     - { type: exit_status, expect: clean }
     - { type: stdout_contains, id: is_awake, text: "awake 1" }
-    - { type: stdout_contains, id: symbol, text: "sigil X" }
+    - { type: stdout_contains, id: symbol, text: "symbol X" }
     - type: source_matches
       id: awake_is_bool
       regex: "bool\\s+isAwake"

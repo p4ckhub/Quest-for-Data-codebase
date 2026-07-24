@@ -51,6 +51,15 @@ starter_code: |
     // TODO: Above the working cast, write a why-mark comment of your own, in place of the TODO.
     // TODO: Speak the working line: The script keeps what the voice cannot.
     // TODO: Return 0 to seal the rite.
+
+  #include <iostream>
+
+  int main() {
+      // [carved by the realm] An older hand left this line. Silence it; do not destroy it.
+      summon the elder scribes
+
+      }
+
 solution: |
   #include <iostream>
 

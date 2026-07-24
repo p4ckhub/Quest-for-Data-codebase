@@ -41,11 +41,12 @@ objective: |
 starter_code: |
     // TODO: Bring in the tools you need -- the one to speak to the realm, and the one that holds text.
     // TODO: Open a main function.
-    // TODO: Speak the prompt State your name: with no line break after it.
+    // TODO: Speak the prompt "State your name: " with no line break after it.
     // TODO: Declare a std::string named name to hold what comes.
     // TODO: Read one word from std::cin into name.
-    // TODO: Print the record line exactly, the name chained in: The halls record you, <name>.
+    // TODO: Print the record line exactly, the name chained in: "The halls record you, <name>."
     // TODO: Return 0 to seal the rite.
+
 solution: |
   #include <iostream>
   #include <string>

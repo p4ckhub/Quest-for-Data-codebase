@@ -46,17 +46,25 @@ narrative: |
   not open for a malformed rite.
 
 objective: |
-  Cast the scroll as written and read the realm's refusal. Then mend
-  it: seal the unsealed statement with a semicolon, and reorder the
+  Mend the unsealed statement with a semicolon, and reorder the
   two proclamations so the first line spoken is "The realm stirs." and
   the second is "A challenger arrives."
 
 starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Open a main function.
-    // TODO: Speak The realm stirs. first, sealed with a semicolon.
-    // TODO: Speak A challenger arrives. second, in the order the rite demands.
+    // TODO: Find the misplaced semicolon and add it.
+    // TODO: Then reorder the speaks to be in the following order 
+    // TODO: Speak "The realm stirs." first. Seal this with a semicolon.
+    // TODO: Speak, "A challenger arrives." second. Apply the semicolon seal.
     // TODO: Return 0 to seal the rite.
+
+    {
+      std::cout << "A challenger arrives." << std::endl;
+      std::cout << "The realm stirs." << std::endl
+      return 0;
+    }
+
 solution: |
   #include <iostream>
 
