@@ -40,8 +40,9 @@ starter_code: |
     // TODO: Bring in the tool that lets you speak to the realm.
     // TODO: Open a main function.
     // TODO: Above the cast, write a maker's mark -- a // comment saying what this working is for. Leave no TODO standing; the Keeper rejects it.
-    // TODO: Speak the one line: The world advances one tick!
+    // TODO: Print one line: The world advances one tick!
     // TODO: Return 0 to seal the rite.
+    
 solution: |
   #include <iostream>
 
